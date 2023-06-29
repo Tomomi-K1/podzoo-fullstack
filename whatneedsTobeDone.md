@@ -14,4 +14,8 @@
 - [ ] 
 
 ### search
-- [ ] 
+- [ ] sd
+
+### categories
+- [ ] have categories button or card to show podcast of a selected category
+    <span style="color:red;">use GET /podcasts/trending?lang=en&cat=1 </span>

@@ -28,7 +28,10 @@ CREATE TABLE reviews (
 CREATE TABLE fav_pods (
     id SERIAL   PRIMARY KEY,
     user_id INT   NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    feed_id INT   NOT NULL
+    feed_id INT   NOT NULL,
+    auther TEXT NOT NULL,
+    title TEXT NOT NULL,
+    artwork_url TEXT NOT NULL
 );
 
 CREATE TABLE fav_categories (
