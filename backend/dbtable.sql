@@ -1,6 +1,11 @@
 ﻿-- Link to schema: https://app.quickdatabasediagrams.com/#/d/pbR29N
+-- on ubuntu type psql <dbtable.sql
 
-\c podsearch_db
+DROP DATABASE IF EXISTS podsearch_db;
+
+CREATE DATABASE podsearch_db;
+
+\c podsearch_db;
 
 CREATE TABLE users (
     id SERIAL  PRIMARY KEY,
@@ -29,7 +34,7 @@ CREATE TABLE fav_pods (
     id SERIAL   PRIMARY KEY,
     user_id INT   NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     feed_id INT   NOT NULL,
-    auther TEXT NOT NULL,
+    author TEXT NOT NULL,
     title TEXT NOT NULL,
     artwork_url TEXT NOT NULL
 );
@@ -39,4 +44,14 @@ CREATE TABLE fav_categories (
     user_id INT   NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     category_id INT   NOT NULL REFERENCES categories (id) ON DELETE CASCADE
 );
+
+INSERT INTO categories
+    (id, name)
+VALUES (9, 'Business');
+
+INSERT INTO categories
+    (id, name)
+VALUES (16, 'Comedy');
+
+
 

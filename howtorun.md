@@ -5,4 +5,10 @@
 
 ### Starting backend
 
+## Library I used for backend
+- [Podcast Index API Javascript library] (https://github.com/comster/podcast-index-api) : calling external API 
+
+
 ### Setting frontend
+
+
