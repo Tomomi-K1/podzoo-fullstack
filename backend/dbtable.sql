@@ -10,9 +10,8 @@ CREATE DATABASE podsearch_db;
 CREATE TABLE users (
     id SERIAL  PRIMARY KEY,
     username  VARCHAR(25)  UNIQUE NOT NULL,
-    email TEXT  UNIQUE NOT NULL,
     password VARCHAR(25)   UNIQUE NOT NULL,
-    image_url TEXT   NOT NULL,
+    email TEXT  UNIQUE NOT NULL,
     signup_date DATE NOT NULL DEFAULT CURRENT_DATE
 );
 
@@ -25,7 +24,7 @@ CREATE TABLE reviews (
     id SERIAL  PRIMARY KEY,
     user_id INT  NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     feed_id INT   NOT NULL,
-    reviews TEXT   NOT NULL,
+    comment TEXT   NOT NULL,
     rating INT   NOT NULL,
     created_at DATE  NOT NULL DEFAULT CURRENT_DATE
 );

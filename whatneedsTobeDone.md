@@ -16,49 +16,26 @@
 ### search
 - [ ] sd
 
+### Podcast
+
+### Episodes
+- [ ] description has html tag. I need to filter those out. https://www.geeksforgeeks.org/how-to-strip-out-html-tags-from-a-string-using-javascript/
+- [ ] 
+
 ### categories
 - [ ] have categories button or card to show podcast of a selected category
+- [ ] for now, do not build fav_categories for user (For future)
       ==use GET /podcasts/trending?lang=en&cat=1==
-- [ ] decide which categories to use
-            "id": 9
-            "name": "Business"
-            "id": 16
-            "name": "Comedy"          
-            "id": 20
-            "name": "Education"                
-            "id": 26
-            "name": "Fiction"      
-            "id": 27
-            "name": "Drama"
-            "id": 28
-            "name": "History"
-            "id": 29
-            "name": "Health"           
-            "id": 53
-            "name": "Music"           
-            "id": 55
-            "name": "News"           
-            "id": 57
-            "name": "Entertainment"            
-            "id": 59
-            "name": "Politics"            
-            "id": 67
-            "name": "Science"            
-            "id": 74
-            "name": "Nature"            
-            "id": 78
-            "name": "Culture"            
-            "id": 79
-            "name": "Documentary"            
-            "id": 86
-            "name": "Sports"        
-            "id": 102
-            "name": "Technology"            
-            "id": 104
-            "name": "TV"            
-            "id": 105
-            "name": "Film"          
-            "id": 109
-            "name": "Weather"
+- [ ] decide which categories to use. Have it in the separate json file.
+
+### Questions
+- [ ] how do I know which media types?
+- [ ] artwork of podcast could be not on the web, how do I handle that?
+- [ ] how do I handle some podcast having over 1000 episode.... do something with backend?
+- [ ] how to cache data in the backend?
+- [ ] is it better to call external API from backend or frontend (if I'm caching data, I should call it from backend)
+
+### Design I want to do
+-[ ] Loading icon to be something music related and animate it.
             
 
