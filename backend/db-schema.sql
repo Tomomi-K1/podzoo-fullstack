@@ -1,16 +1,10 @@
 ﻿-- Link to schema: https://app.quickdatabasediagrams.com/#/d/pbR29N
--- on ubuntu type psql <dbtable.sql
-
-DROP DATABASE IF EXISTS podsearch_db;
-
-CREATE DATABASE podsearch_db;
-
-\c podsearch_db;
+-- on ubuntu type psql <db-setup.sql
 
 CREATE TABLE users (
     id SERIAL  PRIMARY KEY,
     username  VARCHAR(25)  UNIQUE NOT NULL,
-    password VARCHAR(25)   UNIQUE NOT NULL,
+    password TEXT  UNIQUE NOT NULL,
     email TEXT  UNIQUE NOT NULL,
     signup_date DATE NOT NULL DEFAULT CURRENT_DATE
 );

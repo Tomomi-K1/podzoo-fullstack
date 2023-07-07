@@ -4,6 +4,7 @@
 3. Create tables by using existing sql file. Type `$psql < dbtable.sql` on command line.
 
 ### Starting backend
+1. on command line, `$nodemon server.js`
 
 ## Library I used for backend
 - [Podcast Index API Javascript library] (https://github.com/comster/podcast-index-api) : calling external API 

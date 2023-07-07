@@ -2,25 +2,27 @@
 /* == dependencies == */
 const express = require('express');
 const cors = require('cors');
-// const { authenticateJWT } = require("./middleware/auth");
-// const morgan = require('morgan');
+const morgan = require('morgan');
+
 /* == errors ==*/
 const { NotFoundError } = require("./expressError");
+/* == middleware ==*/
+const { authenticateJWT } = require("./middleware/auth");
 /* == Routes ==*/
 const userRoutes = require('./routes/users');
+const podRoutes = require('./routes/podcasts');
 
 const app = express();
 
 app.use(cors());
-// app.use(morgan('tiny')); /**dev? */
-
-/**== allow json and form data parsing == */
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+app.use(morgan('tiny'));
+app.use(authenticateJWT);
 
 /**== Routes == */
 app.use('/users', userRoutes);
-
+app.use('/podcasts', podRoutes);
 
 /** == Handle 404 errors == */
 app.use(function (req, res, next) {
