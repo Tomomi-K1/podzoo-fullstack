@@ -1,328 +1,409 @@
 "use strict";
-
-const db = require("../db");
-const bcrypt = require("bcrypt");
-// const { sqlForPartialUpdate } = require("../helpers/sql");
-const {
-  NotFoundError,
-  BadRequestError,
-  UnauthorizedError,
-} = require("../expressError");
-
+process.env.NODE_ENV = "test";
+const { NotFoundError,
+        BadRequestError,
+        UnauthorizedError,
+        ExpressError} = require("../expressError");
+const db = require("../db.js");
+const User = require("./user.js");
 const { BCRYPT_WORK_FACTOR } = require('../config');
-/** == user db schema
-  - username
-  - password
-  - email
-  - signup date(automatically assigned)
-*/
-class User {
-  /** == authenticate user with username, password ==
-  -Returns {username, password }
-  -Throws UnauthorizedError if user not found or wrong password. 
-  **/
-  static async authenticate(username, password){
-    // check if user exist
-      const result = await db.query(
-        `SELECT username, password, email
-         FROM users
-         WHERE username = $1`,
-         [username]
-      );
-      const user = result.rows[0];
-      if(user){
-        const isValid = await bcrypt.compare(password, user.password);
-        if(isValid) {
-          // delete password before returning user information for security
-          delete user.password;
-          console.log(`authenticate ${user.username}`);
-          return user;
-        }
+const { commonBeforeEach,
+        commonAfterEach,
+        commonAfterAll} = require("./_testCommon");
+
+beforeEach(commonBeforeEach);
+afterEach(commonAfterEach);
+afterAll(commonAfterAll);
+
+//  ======== authenticate ============
+describe('authenticate', () => {
+  it('should authenticate', async () => {
+    const user = await User.authenticate('user1','password1');
+    expect(user).toEqual({
+      username: 'user1',
+      email:'user1@gmail.com'
+    }) 
+  }) 
+
+  it('give unauth error with wrong password', async () => {
+    try{
+    await User.authenticate('user1','password2');
+    fail();
+    } catch(err){
+      expect(err instanceof UnauthorizedError).toBeTruthy();
+    }  
+  })
+
+  it('give unauth error with non-existing username', async () => {
+    try{
+    await User.authenticate('no-user','password2');
+    fail();
+    } catch(err){
+      expect(err instanceof UnauthorizedError).toBeTruthy();
+    }  
+  })
+})
+
+//  ======== register ============
+describe('register a user', () => {
+  it('should create a user', async () => {
+    const newUser = { username:'user4', 
+                      password:'password4', 
+                      email:'user4@gmail.com'}
+    const user = await User.register(newUser);
+    expect(user).toEqual({
+      id: expect.any(Number),
+      username: 'user4',
+      email:'user4@gmail.com'
+    })
+  })
+
+  it('should give BadReq Error with dupe username', async () => {
+      try{
+        const newUser = { username:'user1', 
+                          password:'password1', 
+                          email:'user1@gmail.com'}
+        const user = await User.register(newUser);
+        fail();
+      } catch (err){
+        expect(err instanceof BadRequestError).toBeTruthy();
+      };
+    })  
+
+  it('should give BadReq Error with over 25 letter username', async () => {
+      try{
+        const newUser = { username:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 
+                          password:'password4', 
+                          email:'user4@gmail.com'}
+        const user = await User.register(newUser);
+        fail();
+      } catch (err){
+        expect(err instanceof BadRequestError).toBeTruthy();
+      };
+  }) 
+}) 
+
+//  ======== get user info ============
+describe('get user info', () => {
+  it('should successfully retrieve a  user', async () => {
+    const user = await User.get('user1');
+    expect(user).toEqual({
+      id: expect.any(Number),
+      username: 'user1',
+      email:'user1@gmail.com',
+      fav: [100]
+    })
+  })
+
+  it('should throw NotFoundError with wrong username', async () => {
+      try{
+        const user = await User.get('user111');
+        fail();
+      } catch (err){
+        expect(err instanceof NotFoundError).toBeTruthy();
+      };
+    })  
+}) 
+
+//  ======== update user info ============
+describe('update user info', () => {
+  it('should successfully update user data', async () => {
+    const updateData = { email:'user11@gmail.com'}
+    const user = await User.update('user1', updateData);
+    expect(user).toEqual({
+      username: 'user1',
+      email:'user11@gmail.com'
+    })
+  })
+
+  it('should throw NotFoundError with wrong username', async () => {
+      try{
+        const updateData = { email:'user11@gmail.com'}
+        const user = await User.update('user111', updateData);
+        fail();
+      } catch (err){
+        expect(err instanceof NotFoundError).toBeTruthy();
+      };
+    })  
+}) 
+
+//  ======== delete a user ============
+describe('delete a user', () => {
+  it('should successfully delete a user', async () => {
+    await User.delete('user1');
+    const res = await db.query(`SELECT * FROM users WHERE username ='user1'`);
+    expect(res.rows.length).toEqual(0);
+  })
+
+  it('should throw NotFoundError with non-existing username', async () => {
+      try{
+        await User.delete('user1111');
+        fail();
+      } catch (err){
+        expect(err instanceof NotFoundError).toBeTruthy();
+      };
+    })  
+}) 
+
+//  ======== get a user's fav podcasts ============
+describe('get fav podcasts of a user', () => {
+  it('should get all fav podcasts of a user', async () => {
+    const favPods = await User.getAllFav('user1');
+    expect(favPods).toEqual([{
+      id: expect.any(Number),
+      userId: 1, 
+      feedId: 100, 
+      author:'author1',
+      title: 'title1', 
+      artworkUrl:'artwork1.com'
+    }])
+  })
+
+  it('should throw NotFoundError with non-existing username', async () => {
+      try{
+        await User.getAllFav('user111');
+        fail();
+      } catch (err){
+        expect(err instanceof NotFoundError).toBeTruthy();
+      };
+  })  
+
+  it('should not throw Error when a user does not have any fav pods', async () => {
+      const favPods =await User.getAllFav('user10');
+      expect(favPods).toEqual([]);
+  }) 
+})
+
+//  ========  add favorites podcasts  ============
+describe('add fav podcasts', () => {
+  it('should add a fav podcast', async () => {
+    const podData ={
+        feedId:1000,
+        author: 'author1000',
+        title:'title1000',
+        artworkUrl: 'artwork1000.com'
+    }
+    await User.addFav('user1', podData);
+
+    const favPods = await db.query(
+      `SELECT fav_pods.id, 
+              fav_pods.user_id AS "userId", 
+              fav_pods.feed_id AS "feedId", 
+              fav_pods.author, 
+              fav_pods.title, 
+              fav_pods.artwork_url AS "artworkUrl"
+       FROM fav_pods
+       JOIN users ON users.id = fav_pods.user_id
+       WHERE users.username ='user1'`)
+    expect(favPods.rows).toEqual([
+        {
+          id: expect.any(Number),
+          userId: 1, 
+          feedId: 100,
+          author:'author1',
+          title: 'title1', 
+          artworkUrl:'artwork1.com'
+        },
+        {
+        id: expect.any(Number),
+        userId: 1, 
+        feedId: 1000,
+        author:'author1000',
+        title: 'title1000', 
+        artworkUrl:'artwork1000.com'
       }
-      throw new UnauthorizedError('Invalid username/password');
-  }
+    ])
+  })
 
-  /** == Register user with data. ==
-  - Returns { username, email }
-  - Throws BadRequestError on duplicates.
-  **/
-  static async register({username, password,  email}){
-    const dupeCheck = await db.query(
-       `SELECT username
-        FROM users
-        WHERE username = $1`, [username]
-    );
+  it('should throw NotFoundError with non-existing username', async () => {
+      try{
+        await User.addFav('user111');
+        fail();
+      } catch (err){
+        expect(err instanceof NotFoundError).toBeTruthy();
+      };
+  })  
 
-    if(dupeCheck.rows[0]){
-        throw new BadRequestError('Duplicate username ${username')
+  it('should throw BadReqError when adding insufficient data', async () => {
+    try{
+      // missing required author
+      const podData = {
+        feedId:1000,
+        title:'title1000',
+        artworkUrl: 'artwork1000.com'
     }
+      await User.addFav('user1', podData);
+      fail();
+    } catch(err){
+      expect(err instanceof BadRequestError).toBeTruthy();
+    }
+  }) 
 
-    const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
- 
-    const result = await db.query(
-        `INSERT INTO users 
-                    (username, 
-                     password,
-                     email)
-                VALUES ($1, $2, $3)
-                RETURNING username, email`,
-        [username, hashedPassword, email]);
-    
-    const user = result.rows[0];
-    return user;
-  }
+  it('should not add duplicate favorite', async () => {
+    try{
+      const podData ={
+      feedId:100,
+      author: 'author100',
+      title:'title100',
+      artworkUrl: 'artwork100.com'
+    } 
+    await User.addFav('user1', podData);
+    fail();
+    } catch (err){
+      expect(err instanceof BadRequestError).toBeTruthy();
+    }
+  })
+})
 
-  /** ==get a user info ==
-  - Given a username, return data about user.
-  - Returns { id, username, email, fav : [feed_id, . . . . ] }
-  - Throws NotFoundError if user not found.
-  **/
-  static async get(username){
-      const userRes = await db.query(
-        `SELECT id, username, email
-         FROM users
-         WHERE username = $1`,
-         [username]
-      );
+//  ========  delete favorites podcasts  ============
+describe('delete fav podcasts', () => {
+  it('should delete a favorite podcast', async () => {
+    const deletedFeed = await User.deleteFav('user1', 100);
+    expect(deletedFeed).toEqual({feedId:100}) 
+    const res = await db.query(
+      `SELECT fav_pods.feed_id
+       FROM fav_pods
+       JOIN users ON users.id = fav_pods.user_id
+       WHERE users.username = 'user1'`
+    )
+    expect(res.rows.length).toEqual(0);
+  })
 
-      const user = userRes.rows[0];
-      console.log(user)
-
-      if(!user) throw new NotFoundError(`No User: ${username}`);
-
-      const userFavPods = await db.query(
-        `SELECT feed_id
-         FROM fav_pods
-         WHERE user_id = $1`,
-         [user.id]
-      )
-      user.fav = userFavPods.rows.map(a => a.feed_id);
-      console.log(user)
-      return user;
-  }
+  it('should throw NotFoundError with non-existing username', async () => {
+    try{
+      await User.deleteFav('user111');
+      fail();
+    } catch (err){
+      expect(err instanceof NotFoundError).toBeTruthy();
+    };
+  }) 
   
-  /** == Update user data with `data` ==
-   - Data can include: { email }
-   - Returns { email }
-   - Throws NotFoundError if not found.
-   */
-   static async update(username, data) {
-    console.log(`User.update ran`)
-    const result = await db.query(
-        `UPDATE users 
-         SET email=$1
-         WHERE username = $2
-         RETURNING username,
-                   email`,
-          [data.email, username]);
-    const user = result.rows[0];
-    console.log(username);
+})
 
-    if (!user) throw new NotFoundError(`No user: ${username}`);
-    return user;
-  }
-
-  /** == Delete given user from database ==
-   -return undefined  */
-  static async remove(username) {
-    let result = await db.query(
-          `DELETE
-            FROM users
-            WHERE username = $1
-            RETURNING username`,
-        [username],
-    );
-    const user = result.rows[0];
-
-    if (!user) throw new NotFoundError(`No user: ${username}`);
-  }
-
-   /** == get user's favorites podcasts ==
-   - username
-   - returns {id, userId, feedId, author, title, artworkUrl}
-   **/  
-  static async getAllFav(username){
-    const checkUser = await db.query(
-      `SELECT id, username
-       FROM users
-       WHERE username = $1`, [username]
-    ) 
-
-    const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
-
-    const result = await db.query(
-      `SELECT id, user_id AS "userId", feed_id AS "feedId", author, title, artworkUrl
-       FROM fav_pods
-       WHERE user.id = $1
-       ORDER BY title`,
-       [user.id]
-    );
-    return result.rows
-   }
-
-  /** == add favorites podcasts ==
-   - username
-   - podData: {feedId, author, title, artworkUrl} **/  
-  static async addFav(username, podData){
-    // check if user exists
-    const checkUser = await db.query(
-      `SELECT id, username
-       FROM users
-       WHERE username = $1`, [username]
-    ) 
-    const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
-    // check if feedId already exists in fav_pods table
-    const dupeCheckFav = await db.query(
-      `SELECT feed_id
-       FROM fav_pods
-       WHERE feed_id =$1 AND username =$2`,
-       [podData.feed_id, username]
-    )
-    const podcast = dupeCheckFav.rows[0];
-    if(!podcast){
-      await db.query(
-        `INSERT INTO fav_pods (user_id, feed_id, author, title, artwork_url)
-         VALUES ($1, $2, $3, $4, $5)`,
-         [user.id, podData.feedId, podData.author, podData.title, podData.artworkUrl]
-        //  double check how I construct podcast data when I send from frontend
-      )
+//  ========  add reviews  ============
+describe('add reviews', () => {
+  it('should add a review podcast', async () => {
+    const reviewData = {
+      feedId: 101,
+      comment: "comment101",
+      rating: 1
     }
-  }
+    const newReview = await User.addReview('user1', reviewData);
+    expect(newReview).toEqual({
+      id: expect.any(Number),
+      userId: 1,
+      feedId: 101,
+      comment: 'comment101',
+      rating: 1 
+    })
+    
+  })
 
-  /** == delete favorites podcasts ==
-   - username
-   - feedId: feed_id in the fav_pods table
-   - returning feedId 
-   **/
-  static async deleteFav(username, feedId){
-    // check if user exists
-    const checkUser = await db.query(
-      `SELECT id, username
-       FROM users
-       WHERE username = $1`, [username]
-    );
-    const user = checkUser.rows[0];
+  it('should throw NotFoundError with non-existing username', async () => {
+    try{
+      const reviewData = {
+        feedId: 101,
+        comment: "comment101",
+        rating: 1
+      }
+      await User.addReview('user111', reviewData);
+      fail();
+    } catch (err){
+      console.log(`test error1 ${err}`)
+      expect(err instanceof NotFoundError).toBeTruthy();
+    };
+  }) 
+  
+  it('should throw BadRequestError if the user add additional review to the podcast (prevent duplicate)', async () => {
+    try{
+      const reviewData = {
+        feedId: 100,
+        comment: "comment100",
+        rating: 2
+      }
+      await User.addReview('user1', reviewData);
+      fail();
+    } catch (err){
+      console.log(`test error2 ${err}`)
+      expect(err instanceof BadRequestError).toBeTruthy();
+    };
+  }) 
+})
 
-    if(!user) throw NotFoundError(`No username :${username}`)
-    // find podcast in fav_pods table with feed_id && user.id
-      let result = await db.query(
-        `DELETE
-         FROM fav_pods
-         WHERE user.id = $1 AND feed_id =$2
-         RETURNING feed_id AS "feedId"`,
-        [user.id, feedId],
-      );
-
-      const deletedFeedId = result.rows[0];
-      if (!deletedFeedId) throw new NotFoundError(`No podcast to delete: feedId${podcast}`);  
-      return deletedFeedId;
+//  ========  update reviews  ============
+describe('update reviews', () => {
+  it('should update an existing review podcast', async () => {
+    const reviewData = {
+      comment: "updatedComment1",
+      rating: 2
     }
+    const newReview = await User.updateReview('user1', 1, reviewData);
+    expect(newReview).toEqual({
+      id: 1,
+      userId: 1,
+      feedId: 100,
+      comment: 'updatedComment1',
+      rating: 2
+    })
+    
+  })
 
-  /** == add podcasts reviews ==
-   - username
-   - data: {feed_id, comment, rating}
-   - id: reviews table's id
-   - returning : {id, userId, feedId, comment, rating}
-   **/
-   static async addReview(username, data){
-    // check if user exists
-    const checkUser = await db.query(
-      `SELECT id, username
-       FROM users
-       WHERE username = $1`, [username]
-    ) 
-    const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
-    // check if feedId already exists in fav_pods table
-    const dupeCheckReview = await db.query(
-      `SELECT feed_id
-       FROM reviews
-       WHERE feed_id =$1 AND username =$2`,
-       [data.feed_id, username]
-    )
-    const dupe = dupeCheckReview.rows[0];
-    if(!dupe){
-      const result = await db.query(
-        `INSERT INTO reviews (user_id, feed_id, comment, rating)
-         VALUES ($1, $2, $3, $4)
-         RETURNING id, user_id AS "userId", feed_id AS "feedId", comment, rating`,
-         [user.id, data.feedId, data.comment, data.rating]
-        //  double check how I construct podcast data when I send from frontend
-      )
-      const newReview =result.rows[0];
-      // use review id in the frontend of review container.
-      return newReview; 
-    }
-    throw new BadRequestError('Only one review per podcast can be added')
-  }
+  it('should throw NotFoundError with non-existing username', async () => {
+    try{
+      const reviewData = {
+        comment: "updatedComment1",
+        rating: 2
+      }
+      await User.updateReview('user111', 1, reviewData);
+      fail();
+    } catch (err){
+      expect(err instanceof NotFoundError).toBeTruthy();
+    };
+  }) 
+  
+  it('should throw NotFoundError for non-existing review id)', async () => {
+    try{
+      const reviewData = {
+        feedId: 100,
+        comment: "comment100",
+        rating: 2
+      }
+      await User.updateReview('user1', 19, reviewData);
+      fail();
+    } catch (err){
+      expect(err instanceof NotFoundError).toBeTruthy();
+    };
+  }) 
+})
 
-/** == update podcasts reviews ==
-   - username
-   - reviewId: id on reviews table (this route should include reviewId in queryString)
-   - data: {review, rating}
-   - id: reviews table's id
-   - returns :{id, userId, feedId, comment, rating}
-   **/
-   static async updateReview(username, reviewId, data){
-    // check if user exists
-    const checkUser = await db.query(
-      `SELECT id, username
-       FROM users
-       WHERE username = $1`, [username]
-    ) 
-    const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
-    // check if feedId already exists in fav_pods table
-    const dupeCheckReview = await db.query(
+//  ========  delete a review  ============
+describe('delete a review', () => {
+  it('should delete a review', async () => {
+    const deletedReviewId = await User.deleteReview('user1', 1);
+    expect(deletedReviewId).toEqual({id:1}) 
+    const res = await db.query(
       `SELECT id
        FROM reviews
-       WHERE id =$1 AND username =$2`,
-       [reviewId, username]
+       WHERE id =1 AND user_id =1`
     )
-    const dupe = dupeCheckReview.rows[0];
-    if(!dupe){
-      const result = await db.query(
-        `UPDATE reviews 
-         SET comment=$1, rating=$2
-         WHERE id =$3
-         RETURNING id, user_id AS "userId", feed_id AS "feedId", comment, rating`,
-         [data.comment, data.rating, reviewId]
-      );
-      const updatedReview = result.rows[0];
-      return updatedReview; 
-    }
-    throw new BadRequestError('Only one review per podcast can be added')
-  }
+    expect(res.rows.length).toEqual(0);
+  })
 
-  /** == delete podcasts reviews ==
-   - username
-   - reviewId : id on review table
-   **/
-  static async deleteReview(username, reviewId){
-    // check if user exists
-    const checkUser = await db.query(
-      `SELECT id, username
-       FROM users
-       WHERE username = $1`, [username]
-    ) 
-    const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
-    // check if feedId already exists in fav_pods table
-    
-    let result = await db.query(
-      `DELETE
-       FROM reviews
-       WHERE id =$1 AND user.id =$2
-       RETURNING id`,
-      [reviewId, user.id],
-    );
-
-    const review = result.rows[0];
-    if (!review) throw new NotFoundError(`no review to delete. review Id ${reviewId}`);  
-
-  } 
-}
-
-module.exports = User;
+  it('should throw NotFoundError with non-existing username', async () => {
+    try{
+      await User.deleteReview('user111');
+      fail();
+    } catch (err){
+      expect(err instanceof NotFoundError).toBeTruthy();
+    };
+  }) 
+  
+  it('should not delete if the review was not written by that user', async () => {
+    try{
+      await User.deleteReview('user1', 2);
+      fail();
+    } catch (err){
+      expect(err instanceof NotFoundError).toBeTruthy();
+    };
+  }) 
+})

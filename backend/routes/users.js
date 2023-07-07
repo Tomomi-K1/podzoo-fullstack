@@ -97,7 +97,7 @@ router.patch('/:username', userOnly, async (req, res, next) => {
  **/
   router.delete('/:username', userOnly, async (req, res, next) => {
     try{
-        await User.remove(req.params.username);
+        await User.delete(req.params.username);
         return res.json({deleted:req.params.username })
     } catch (err){
         return next(err);
@@ -139,7 +139,7 @@ router.post('/:username/fav-podcast/:id', userOnly, async (req, res, next) => {
     } 
 })
 
-// ======== remove from favorite podcast =============//
+// ======== delete from favorite podcast =============//
 /** DELETE /[username, id] => { added: feedId }
   -id: podcast's feed id
   -Authorization required: same user-as-:username
@@ -170,7 +170,7 @@ POST /[username, id] => { id, userId, feedId, comment, rating }
  **/
 router.post('/:username/reviews/:id', userOnly, async (req, res,next) => {
     try{
-        const feedId = req.params.id;
+        const feedId = +req.params.id;
         validateSchema(req.body, review);
         const newReview = User.addReview({...req.body, feedId})
         return res.status(201).json({newReview})
@@ -188,7 +188,7 @@ PATCH /[username, id] => { id, user_id, feed_id, comment, rating }
     try{
         validateSchema(req.body, review);
         let {username, reviewId } = req.params;
-        const review = await User.updateReview(username, reviewId, req.body);
+        const review = await User.updateReview(username, +reviewId, req.body);
         review.username = username;
         return res.json({review})
     } catch (err){
@@ -204,7 +204,7 @@ DELETE /[username, id] => { deleted: id }
   router.delete('/:username/reviews/:id', userOnly, async (req, res,next) => {
     try{
         let {username, reviewId } = req.params;
-        const deletedId = await User.deletedReview(username, reviewId);
+        const deletedId = await User.deletedReview(username, +reviewId);
         return res.json({deleted: deletedId})
     } catch (err){
         return next(err)

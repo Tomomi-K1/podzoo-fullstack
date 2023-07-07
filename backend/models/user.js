@@ -43,8 +43,9 @@ class User {
   }
 
   /** == Register user with data. ==
-  - Returns { username, email }
-  - Throws BadRequestError on duplicates.
+  - Returns { id, username, email }
+  - Throws BadRequestError on duplicates
+  - if adding db fails due to constraints throws BadRequest Error.
   **/
   static async register({username, password,  email}){
     const dupeCheck = await db.query(
@@ -58,18 +59,21 @@ class User {
     }
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
- 
-    const result = await db.query(
-        `INSERT INTO users 
-                    (username, 
-                     password,
-                     email)
-                VALUES ($1, $2, $3)
-                RETURNING username, email`,
-        [username, hashedPassword, email]);
-    
-    const user = result.rows[0];
-    return user;
+    try{
+      const result = await db.query(
+          `INSERT INTO users 
+                      (username, 
+                      password,
+                      email)
+                  VALUES ($1, $2, $3)
+                  RETURNING id, username, email`,
+          [username, hashedPassword, email]);
+      
+      const user = result.rows[0];
+      return user;
+    } catch (err){
+      throw new BadRequestError(err)
+    }
   }
 
   /** ==get a user info ==
@@ -124,7 +128,7 @@ class User {
 
   /** == Delete given user from database ==
    -return undefined  */
-  static async remove(username) {
+  static async delete(username) {
     let result = await db.query(
           `DELETE
             FROM users
@@ -139,7 +143,8 @@ class User {
 
    /** == get user's favorites podcasts ==
    - username
-   - returns {id, userId, feedId, author, title, artworkUrl}
+   - returns array:[{id, userId, feedId, author, title, artworkUrl}, {...}]
+   - throw NotFoundError
    **/  
   static async getAllFav(username){
     const checkUser = await db.query(
@@ -149,12 +154,12 @@ class User {
     ) 
 
     const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
+    if(!user) throw new NotFoundError(`No username :${username}`)
 
     const result = await db.query(
-      `SELECT id, user_id AS "userId", feed_id AS "feedId", author, title, artworkUrl
+      `SELECT id, user_id AS "userId", feed_id AS "feedId", author, title, artwork_url AS "artworkUrl"
        FROM fav_pods
-       WHERE user.id = $1
+       WHERE user_id = $1
        ORDER BY title`,
        [user.id]
     );
@@ -172,29 +177,35 @@ class User {
        WHERE username = $1`, [username]
     ) 
     const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
+    if(!user) throw new NotFoundError(`No username :${username}`)
     // check if feedId already exists in fav_pods table
     const dupeCheckFav = await db.query(
       `SELECT feed_id
        FROM fav_pods
-       WHERE feed_id =$1 AND username =$2`,
-       [podData.feed_id, username]
+       WHERE feed_id =$1 AND user_id =$2`,
+       [podData.feedId, user.id]
     )
-    const podcast = dupeCheckFav.rows[0];
-    if(!podcast){
-      await db.query(
-        `INSERT INTO fav_pods (user_id, feed_id, author, title, artwork_url)
-         VALUES ($1, $2, $3, $4, $5)`,
-         [user.id, podData.feedId, podData.author, podData.title, podData.artworkUrl]
-        //  double check how I construct podcast data when I send from frontend
-      )
-    }
+    const dupe = dupeCheckFav.rows[0];
+    if(dupe) throw new BadRequestError(`Already in Favorite. feedId : ${podData.feedId}`)
+    
+    try{
+        await db.query(
+          `INSERT INTO fav_pods (user_id, feed_id, author, title, artwork_url)
+          VALUES ($1, $2, $3, $4, $5)`,
+          [user.id, podData.feedId, podData.author, podData.title, podData.artworkUrl]
+          //  double check how I construct podcast data when I send from frontend
+        );
+      } catch (err){
+        // if db constraints throw an error we will catch here
+        throw new BadRequestError('Failed to add to Favorite. DB error : ${err}')
+      }
+    
   }
 
   /** == delete favorites podcasts ==
    - username
    - feedId: feed_id in the fav_pods table
-   - returning feedId 
+   - returning {feedId: Integer} 
    **/
   static async deleteFav(username, feedId){
     // check if user exists
@@ -205,12 +216,12 @@ class User {
     );
     const user = checkUser.rows[0];
 
-    if(!user) throw NotFoundError(`No username :${username}`)
+    if(!user) throw new NotFoundError(`No username :${username}`)
     // find podcast in fav_pods table with feed_id && user.id
       let result = await db.query(
         `DELETE
          FROM fav_pods
-         WHERE user.id = $1 AND feed_id =$2
+         WHERE user_id = $1 AND feed_id =$2
          RETURNING feed_id AS "feedId"`,
         [user.id, feedId],
       );
@@ -234,28 +245,32 @@ class User {
        WHERE username = $1`, [username]
     ) 
     const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
+    if(!user) throw new NotFoundError(`No username :${username}`)
     // check if feedId already exists in fav_pods table
     const dupeCheckReview = await db.query(
       `SELECT feed_id
        FROM reviews
-       WHERE feed_id =$1 AND username =$2`,
-       [data.feed_id, username]
+       WHERE feed_id =$1 AND user_id =$2`,
+       [data.feedId, user.id]
     )
     const dupe = dupeCheckReview.rows[0];
-    if(!dupe){
-      const result = await db.query(
-        `INSERT INTO reviews (user_id, feed_id, comment, rating)
-         VALUES ($1, $2, $3, $4)
-         RETURNING id, user_id AS "userId", feed_id AS "feedId", comment, rating`,
-         [user.id, data.feedId, data.comment, data.rating]
-        //  double check how I construct podcast data when I send from frontend
-      )
-      const newReview =result.rows[0];
-      // use review id in the frontend of review container.
-      return newReview; 
+    
+    if(dupe) throw new BadRequestError('Only one review per podcast can be added')
+
+    try{
+        const result = await db.query(
+          `INSERT INTO reviews (user_id, feed_id, comment, rating)
+          VALUES ($1, $2, $3, $4)
+          RETURNING id, user_id AS "userId", feed_id AS "feedId", comment, rating`,
+          [user.id, data.feedId, data.comment, data.rating]
+        )
+        const newReview =result.rows[0];
+        // use review id in the frontend of review container.
+        return newReview; 
+    } catch(err){
+      throw new BadRequestError(`could not add to db. DB error: ${err}`)
     }
-    throw new BadRequestError('Only one review per podcast can be added')
+    
   }
 
 /** == update podcasts reviews ==
@@ -273,29 +288,23 @@ class User {
        WHERE username = $1`, [username]
     ) 
     const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
+    if(!user) throw new NotFoundError(`No username :${username}`)
     // check if feedId already exists in fav_pods table
-    const dupeCheckReview = await db.query(
-      `SELECT id
-       FROM reviews
-       WHERE id =$1 AND username =$2`,
-       [reviewId, username]
-    )
-    const dupe = dupeCheckReview.rows[0];
-    if(!dupe){
-      const result = await db.query(
+  
+    const result = await db.query(
         `UPDATE reviews 
-         SET comment=$1, rating=$2
-         WHERE id =$3
-         RETURNING id, user_id AS "userId", feed_id AS "feedId", comment, rating`,
-         [data.comment, data.rating, reviewId]
+        SET comment=$1, rating=$2
+        WHERE id =$3
+        RETURNING id, user_id AS "userId", feed_id AS "feedId", comment, rating`,
+        [data.comment, data.rating, reviewId]
       );
-      const updatedReview = result.rows[0];
+    const updatedReview = result.rows[0];
+    
+    if(!updatedReview) throw new NotFoundError(`No Review Found. ReviewId ${reviewId}`)
+      
       return updatedReview; 
-    }
-    throw new BadRequestError('Only one review per podcast can be added')
   }
-
+    
   /** == delete podcasts reviews ==
    - username
    - reviewId : id on review table
@@ -308,20 +317,20 @@ class User {
        WHERE username = $1`, [username]
     ) 
     const user = checkUser.rows[0];
-    if(!user) throw NotFoundError(`No username :${username}`)
+    if(!user) throw new NotFoundError(`No username :${username}`)
     // check if feedId already exists in fav_pods table
     
     let result = await db.query(
       `DELETE
        FROM reviews
-       WHERE id =$1 AND user.id =$2
+       WHERE id =$1 AND user_id =$2
        RETURNING id`,
       [reviewId, user.id],
     );
 
-    const review = result.rows[0];
-    if (!review) throw new NotFoundError(`no review to delete. review Id ${reviewId}`);  
-
+    const deletedReviewId = result.rows[0];
+    if (!deletedReviewId) throw new NotFoundError(`no review to delete. reviewId ${reviewId}`); 
+    return deletedReviewId;
   } 
 }
 

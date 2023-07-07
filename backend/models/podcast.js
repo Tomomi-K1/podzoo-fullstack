@@ -20,10 +20,10 @@ class Podcast {
 
    /** == get all reviews for a podcast ==
    - feedId
-   - returns {id, userId, feedId, author, title, artworkUrl}
+   - returns [{id, userId, username, feedId, comment, rating, createdAt ], if there is no review then return []
    **/  
   static async getReviews(feedId){
-    // use join table so that I can get username double check hot it works.
+ 
     const reviews = await db.query(
       `SELECT r.id, r.user_id AS "userId", u.username, r.feed_id AS "feedId", r.comment, r.rating, r.created_at AS "createdAt"
        FROM reviews AS r
@@ -32,11 +32,9 @@ class Podcast {
        ORDER BY r.created_at`,
        [feedId]       
     );
-      //should I get an average rating here or at front end? 
+
      return reviews.rows
    }
-
-  
 
 }
 
