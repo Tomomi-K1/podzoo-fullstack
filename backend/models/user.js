@@ -227,7 +227,8 @@ class User {
       );
 
       const deletedFeedId = result.rows[0];
-      if (!deletedFeedId) throw new NotFoundError(`No podcast to delete: feedId${podcast}`);  
+      console.log(`deletedfeedid ${deletedFeedId}`);
+      if (!deletedFeedId) throw new NotFoundError(`No podcast to delete: feedId${feedId}`);  
       return deletedFeedId;
     }
 

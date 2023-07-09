@@ -5,7 +5,7 @@ const db = require('../db');
 const router = new express.Router();
 
 /**== EXTERNAL API related == */
-const { API_KEY, API_SECRET } = require('./secret')
+const { API_KEY, API_SECRET } = require('../secret')
 const api = require('podcast-index-api')(API_KEY, API_SECRET) 
 
 // models to communicate with DB

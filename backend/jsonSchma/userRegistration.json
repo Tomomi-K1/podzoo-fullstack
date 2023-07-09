@@ -28,6 +28,7 @@
         "email": {
             "type": "string",
             "minLength": 1,
+            "format": "email",
             "examples": [
                 "test@gmail.com"
             ]

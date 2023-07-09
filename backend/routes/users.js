@@ -62,7 +62,7 @@ router.post('/login', async (req, res, next) => {
 
 
 /** GET /[username] => { user }
-  -Returns { username, email, fav_podcasts} *
+  -Returns { user:{ username, email, fav_podcasts}} *
   -Authorization required: same user-as-:username
  **/
 router.get('/:username', userOnly, async (req, res, next) => {
@@ -77,7 +77,8 @@ router.get('/:username', userOnly, async (req, res, next) => {
 })
 
 /** PATCH /[username] => { user }
-  -Data that can be updated { email} *
+  -Data that can be updated { email}
+  -Returns { user:{username, email}}
   -Authorization required: same user-as-:username
  **/
 router.patch('/:username', userOnly, async (req, res, next) => {
@@ -109,7 +110,7 @@ router.patch('/:username', userOnly, async (req, res, next) => {
 //================================================//
 
 /** == getting favorite podcast ==
- GET /[username] => [{podcast1}, {podcast2},...]*/
+ GET /[username]/fav-podcast => [{podcast1}, {podcast2},...]*/
 router.get('/:username/fav-podcast', userOnly, async (req, res, next) =>{
     try{
         const favPods =await User.getAllFav(req.params.username);
@@ -121,11 +122,12 @@ router.get('/:username/fav-podcast', userOnly, async (req, res, next) =>{
 });
 
 /**== adding favorite podcast ==
- POST /[username, id] => { added: feedId }
+ POST /[username]/fav-podcast/[id] => { added: feedId }
   -id: podcast's feed id
   -Authorization required: same user-as-:username **/
 router.post('/:username/fav-podcast/:id', userOnly, async (req, res, next) => {
     try{
+        // should I verify data even though it's not entered by user?
         const feedIdParam = +req.params.id;
         // call podcast api to get necessary data to make podData? or get frontend data
         // current setup is to get necessary data from frontend
@@ -140,20 +142,15 @@ router.post('/:username/fav-podcast/:id', userOnly, async (req, res, next) => {
 })
 
 // ======== delete from favorite podcast =============//
-/** DELETE /[username, id] => { added: feedId }
+/** DELETE /[username]/fav-podcast/[id] => { deleted: feedId }
   -id: podcast's feed id
   -Authorization required: same user-as-:username
  **/
 router.delete('/:username/fav-podcast/:id', userOnly, async (req, res, next) => {
     try{
-        const feedIdParam = +req.params.id;
-        // call podcast api to get necessary data to make podData? or get frontend data
-        // current setup is to get necessary data from frontend
-        if(feedIdParam !== req.body.feedId){
-            throw new BadRequestError('podcast Id does not match with request body')
-        } 
+        const feedIdParam = +req.params.id;        
         const deletedFeeId = await User.deleteFav(req.params.username, feedIdParam);
-        return res.json({ deleted: deletedFeeId })
+        return res.json({ deleted: deletedFeeId.feedId })
     } catch (err){
         return next(err);
     } 
@@ -164,13 +161,13 @@ router.delete('/:username/fav-podcast/:id', userOnly, async (req, res, next) => 
 //================================================//
 
 /**== adding review comment and rating ==
-POST /[username, id] => { id, userId, feedId, comment, rating }
+POST /[username]/reviews/[feedid] => { id, userId, feedId, comment, rating }
   -id: review table's feed_id
   -Authorization required: same user-as-:username
  **/
-router.post('/:username/reviews/:id', userOnly, async (req, res,next) => {
+router.post('/:username/reviews/:feedid', userOnly, async (req, res,next) => {
     try{
-        const feedId = +req.params.id;
+        const feedId = +req.params.feedid;
         validateSchema(req.body, review);
         const newReview = User.addReview({...req.body, feedId})
         return res.status(201).json({newReview})
@@ -180,7 +177,7 @@ router.post('/:username/reviews/:id', userOnly, async (req, res,next) => {
 })
 
 /**== update review comment and rating ==
-PATCH /[username, id] => { id, user_id, feed_id, comment, rating }
+PATCH /[username]/reviews/[id]  => { id, user_id, feed_id, comment, rating }
   -id: reviews table's id
   -Authorization required: same user-as-:username
  **/
@@ -197,7 +194,7 @@ PATCH /[username, id] => { id, user_id, feed_id, comment, rating }
 })
 
 /**== delete review comment and rating ==
-DELETE /[username, id] => { deleted: id }
+DELETE /[username]/reviews/[id] => { deleted: id }
   -id: reviews table's id
   -Authorization required: same user-as-:username
  **/
