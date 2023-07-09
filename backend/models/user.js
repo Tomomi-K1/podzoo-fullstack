@@ -238,7 +238,7 @@ class User {
    - id: reviews table's id
    - returning : {id, userId, feedId, comment, rating}
    **/
-   static async addReview(username, data){
+   static async addReview(username, feedId, data){
     // check if user exists
     const checkUser = await db.query(
       `SELECT id, username
@@ -252,7 +252,7 @@ class User {
       `SELECT feed_id
        FROM reviews
        WHERE feed_id =$1 AND user_id =$2`,
-       [data.feedId, user.id]
+       [feedId, user.id]
     )
     const dupe = dupeCheckReview.rows[0];
     
@@ -263,7 +263,7 @@ class User {
           `INSERT INTO reviews (user_id, feed_id, comment, rating)
           VALUES ($1, $2, $3, $4)
           RETURNING id, user_id AS "userId", feed_id AS "feedId", comment, rating`,
-          [user.id, data.feedId, data.comment, data.rating]
+          [user.id, feedId, data.comment, data.rating]
         )
         const newReview =result.rows[0];
         // use review id in the frontend of review container.

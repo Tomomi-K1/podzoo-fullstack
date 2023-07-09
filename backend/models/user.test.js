@@ -284,11 +284,10 @@ describe('delete fav podcasts', () => {
 describe('add reviews', () => {
   it('should add a review podcast', async () => {
     const reviewData = {
-      feedId: 101,
       comment: "comment101",
       rating: 1
     }
-    const newReview = await User.addReview('user1', reviewData);
+    const newReview = await User.addReview('user1', 101, reviewData);
     expect(newReview).toEqual({
       id: expect.any(Number),
       userId: 1,
@@ -302,11 +301,10 @@ describe('add reviews', () => {
   it('should throw NotFoundError with non-existing username', async () => {
     try{
       const reviewData = {
-        feedId: 101,
         comment: "comment101",
         rating: 1
       }
-      await User.addReview('user111', reviewData);
+      await User.addReview('user111', 101, reviewData);
       fail();
     } catch (err){
       console.log(`test error1 ${err}`)
@@ -317,11 +315,10 @@ describe('add reviews', () => {
   it('should throw BadRequestError if the user add additional review to the podcast (prevent duplicate)', async () => {
     try{
       const reviewData = {
-        feedId: 100,
         comment: "comment100",
         rating: 2
       }
-      await User.addReview('user1', reviewData);
+      await User.addReview('user1', 100, reviewData);
       fail();
     } catch (err){
       console.log(`test error2 ${err}`)

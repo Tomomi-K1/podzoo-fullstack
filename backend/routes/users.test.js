@@ -393,41 +393,166 @@ describe('DELETE /users/:username/fav-podcast/:id', () => {
 // // ============ user's review route ==============//
 // //================================================//
 
-// /**== adding review comment and rating ==
-// POST /[username, id] => { id, userId, feedId, comment, rating }
-//   -id: review table's feed_id
-//   -Authorization required: same user-as-:username
-//  **/
-// router.post('/:username/reviews/:feedid', userOnly, async (req, res,next) => {
-//     try{
-//         const feedId = req.params.feedid;
-//         validateSchema(req.body, review);
-//         const newReview = User.addReview({...req.body, feedId})
-//         return res.status(201).json({newReview})
-//     } catch (err){
-//         return next(err)
-//     }
-// })
+// == POST /[username, id] => { id, userId, feedId, comment, rating }
+describe('POST/:username/reviews/:feedid', () => {
+    it('adds reviews', async () => {
+        const reviewData = {
+            comment: "comment101",
+            rating: 1
+          }
 
-// /**== update review comment and rating ==
-// PATCH /[username, id] => { id, user_id, feed_id, comment, rating }
-//   -id: reviews table's id
-//   -Authorization required: same user-as-:username
-//  **/
-//   router.patch('/:username/reviews/:id', userOnly, async (req, res,next) => {
-//     try{
-//         validateSchema(req.body, review);
-//         let {username, reviewId } = req.params;
-//         const review = await User.updateReview(username, reviewId, req.body);
-//         review.username = username;
-//         return res.json({review})
-//     } catch (err){
-//         return next(err)
-//     }
-// })
+        const res = await request(app)
+                        .post('/users/user1/reviews/101')
+                        .send(reviewData)
+                        .set("authorization", `Bearer ${u1Token}`);
+    
+        expect(res.statusCode).toEqual(201);
+        expect(res.body).toEqual({newReview:{
+            id: expect.any(Number),
+            userId: 1,
+            feedId: 101,
+            comment: 'comment101',
+            rating: 1 
+          }});
+    }) 
 
-// /**== delete review comment and rating ==
-// DELETE /[username, id] => { deleted: id }
+    it('throws BadReq Error with invalid data', async () => {
+        const reviewData = {
+            comment: "comment101"
+          }
+
+        const res = await request(app)
+                        .post('/users/user1/reviews/101')
+                        .send(reviewData)
+                        .set("authorization", `Bearer ${u1Token}`);
+    
+        expect(res.statusCode).toEqual(400);
+    }) 
+
+    it('unauth for non-existtent user', async () => {
+        const reviewData = {
+            comment: "comment101",
+            rating: 1
+          }
+
+        const res = await request(app)
+                        .post('/users/nope/reviews/101')
+                        .send(reviewData)
+                        .set("authorization", `Bearer ${u1Token}`);
+    
+        expect(res.statusCode).toEqual(401);
+    }) 
+
+    it('BadReq for duplicate review from a same user', async () => {
+        const reviewData = {
+            comment: "comment100dupe",
+            rating: 1
+          }
+
+        const res = await request(app)
+                        .post('/users/user1/reviews/100')
+                        .send(reviewData)
+                        .set("authorization", `Bearer ${u1Token}`);
+    
+        expect(res.statusCode).toEqual(400);
+    })
+})
+
+// == PATCH /[username, id] 
+describe('PATCH /:username/reviews/:id', () => {
+    it('update a review', async () => {
+        const reviewData = {
+            comment: 'updatedComment1',
+            rating: 2
+          }
+        const res = await request(app)
+                    .patch('/users/user1/reviews/1')
+                    .send(reviewData)
+                    .set("authorization", `Bearer ${u1Token}`);  
+                    
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toEqual({
+            review:{
+                    id: 1,
+                    userId: 1,
+                    username: 'user1',
+                    feedId: 100,
+                    comment: 'updatedComment1',
+                    rating: 2
+            }
+        })
+    }) 
+
+    it('throws BadReq error with invalid data', async () => {
+        const reviewData = {
+            comment: 'updatedComment1'
+          }
+        const res = await request(app)
+                    .patch('/users/user1/reviews/1')
+                    .send(reviewData)
+                    .set("authorization", `Bearer ${u1Token}`);  
+                    
+        expect(res.statusCode).toEqual(400); 
+    })
+
+    it('throws unauth for changing other user review', async () => {
+        const reviewData = {
+            comment: 'updatedComment1',
+            rating: 2
+          }
+        const res = await request(app)
+                    .patch('/users/user1/reviews/1')
+                    .send(reviewData)
+                    .set("authorization", `Bearer ${u3Token}`);  
+                    
+        expect(res.statusCode).toEqual(401); 
+    })
+
+    it('throws NotFound Err for non-existent review', async () => {
+        const reviewData = {
+            comment: 'updatedComment1',
+            rating: 2
+          }
+        const res = await request(app)
+                    .patch('/users/user1/reviews/100')
+                    .send(reviewData)
+                    .set("authorization", `Bearer ${u1Token}`);  
+                    
+        expect(res.statusCode).toEqual(404); 
+    })
+})
+
+// == DELETE /[username, id] => { deleted: id }
+describe('DELETE /users/:username/reviews/:id', () => {
+    it('deletes review', async () => {
+        const res = await request(app)
+                        .delete('/users/user1/reviews/1')
+                        .set('authorization', `Bearer ${u1Token}`);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toEqual({deleted:1});
+    })  
+
+    it('throws unauth when deleting other user review', async () => {
+        const res = await request(app)
+                        .delete('/users/user1/reviews/1')
+                        .set('authorization', `Bearer ${u3Token}`);
+        expect(res.statusCode).toEqual(401);
+    }) 
+
+    it('throws NotFound Err when deleting non-existent review', async () => {
+        const res = await request(app)
+                        .delete('/users/user1/reviews/100')
+                        .set('authorization', `Bearer ${u1Token}`);
+        expect(res.statusCode).toEqual(404);
+    })
+
+    it('throws unauth for non-existent user', async () => {
+        const res = await request(app)
+                        .delete('/users/nope/reviews/1')
+                        .set('authorization', `Bearer ${u3Token}`);
+        expect(res.statusCode).toEqual(401);
+    }) 
+})
 //   -id: reviews table's id
 //   -Authorization required: same user-as-:username
 //  **/
@@ -435,7 +560,7 @@ describe('DELETE /users/:username/fav-podcast/:id', () => {
 //     try{
 //         let {username, reviewId } = req.params;
 //         const deletedId = await User.deletedReview(username, reviewId);
-//         return res.json({deleted: deletedId})
+//         return res.json({deleted: deletedId.reviewId})
 //     } catch (err){
 //         return next(err)
 //     }

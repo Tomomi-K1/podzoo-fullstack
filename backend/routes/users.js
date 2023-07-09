@@ -19,7 +19,7 @@ const { validateSchema } =require('../helper/jsonsValidates');
 const userRegistration = require('../jsonSchma/userRegistration.json')
 const userLogin =require('../jsonSchma/userLogin.json')
 const userUpdate =require('../jsonSchma/userUpdate.json')
-const review =require('../jsonSchma/review.json')
+const reviewSchema =require('../jsonSchma/review.json')
 
 
 /**  == POST /users/register  ==
@@ -168,8 +168,8 @@ POST /[username]/reviews/[feedid] => { id, userId, feedId, comment, rating }
 router.post('/:username/reviews/:feedid', userOnly, async (req, res,next) => {
     try{
         const feedId = +req.params.feedid;
-        validateSchema(req.body, review);
-        const newReview = User.addReview({...req.body, feedId})
+        validateSchema(req.body, reviewSchema);
+        const newReview = await User.addReview(req.params.username, feedId, req.body)
         return res.status(201).json({newReview})
     } catch (err){
         return next(err)
@@ -183,9 +183,11 @@ PATCH /[username]/reviews/[id]  => { id, user_id, feed_id, comment, rating }
  **/
   router.patch('/:username/reviews/:id', userOnly, async (req, res,next) => {
     try{
-        validateSchema(req.body, review);
-        let {username, reviewId } = req.params;
-        const review = await User.updateReview(username, +reviewId, req.body);
+        validateSchema(req.body, reviewSchema);
+        const reviewId = +req.params.id;
+        console.log(`reviewId :${reviewId}`)
+        const username = req.params.username;
+        const review = await User.updateReview(username, reviewId, req.body);
         review.username = username;
         return res.json({review})
     } catch (err){
@@ -200,9 +202,9 @@ DELETE /[username]/reviews/[id] => { deleted: id }
  **/
   router.delete('/:username/reviews/:id', userOnly, async (req, res,next) => {
     try{
-        let {username, reviewId } = req.params;
-        const deletedId = await User.deletedReview(username, +reviewId);
-        return res.json({deleted: deletedId})
+        const reviewId  = +req.params.id;
+        const deletedId = await User.deleteReview(req.params.username, reviewId);
+        return res.json({deleted: deletedId.id})
     } catch (err){
         return next(err)
     }
