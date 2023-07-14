@@ -553,18 +553,3 @@ describe('DELETE /users/:username/reviews/:id', () => {
         expect(res.statusCode).toEqual(401);
     }) 
 })
-//   -id: reviews table's id
-//   -Authorization required: same user-as-:username
-//  **/
-//   router.delete('/:username/reviews/:id', userOnly, async (req, res,next) => {
-//     try{
-//         let {username, reviewId } = req.params;
-//         const deletedId = await User.deletedReview(username, reviewId);
-//         return res.json({deleted: deletedId.reviewId})
-//     } catch (err){
-//         return next(err)
-//     }
-// })
-
-
-// module.exports = router;
