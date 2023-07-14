@@ -8,10 +8,15 @@
 
 
 ### user login
-- [ ] 
+- [ ] password should be hidden
+
+### user profile edit
+- [ ] user can edit email
 
 ### landing page
-- [ ] 
+- [ ] show trending podcasts
+- [ ] show categories
+- [ ] maybe show most recent reviews?
 
 ### search
 - [ ] sd
@@ -34,6 +39,7 @@
 - [ ] how do I handle some podcast having over 1000 episode.... do something with backend?
 - [ ] how to cache data in the backend?
 - [ ] is it better to call external API from backend or frontend (if I'm caching data, I should call it from backend)
+- [ ] how do I test backend api route when I have an external api call in it?
 
 ### Design I want to do
 -[ ] Loading icon to be something music related and animate it.
