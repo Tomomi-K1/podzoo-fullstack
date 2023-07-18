@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import removeTags from "./helper";
+import removeTags from "../common/helper";
 
 
 function Home() {
