@@ -125,10 +125,10 @@ router.get('/:username/fav-podcast', userOnly, async (req, res, next) =>{
  POST /[username]/fav-podcast/[id] => { added: feedId }
   -id: podcast's feed id
   -Authorization required: same user-as-:username **/
-router.post('/:username/fav-podcast/:id', userOnly, async (req, res, next) => {
+router.post('/:username/fav-podcast/:feedid', userOnly, async (req, res, next) => {
     try{
         // should I verify data even though it's not entered by user?
-        const feedIdParam = +req.params.id;
+        const feedIdParam = +req.params.feedid;
         // call podcast api to get necessary data to make podData? or get frontend data
         // current setup is to get necessary data from frontend
         if(feedIdParam !== req.body.feedId){
@@ -146,9 +146,9 @@ router.post('/:username/fav-podcast/:id', userOnly, async (req, res, next) => {
   -id: podcast's feed id
   -Authorization required: same user-as-:username
  **/
-router.delete('/:username/fav-podcast/:id', userOnly, async (req, res, next) => {
+router.delete('/:username/fav-podcast/:feedid', userOnly, async (req, res, next) => {
     try{
-        const feedIdParam = +req.params.id;        
+        const feedIdParam = +req.params.feedid;        
         const deletedFeeId = await User.deleteFav(req.params.username, feedIdParam);
         return res.json({ deleted: deletedFeeId.feedId })
     } catch (err){

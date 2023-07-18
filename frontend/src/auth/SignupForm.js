@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 // import { useHistory } from "react-router-dom";
 // import Alert from "../common/Alert";
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Container, FormControl, FormLabel, Grid, TextField, autocompleteClasses, dividerClasses, OutlinedInput, InputAdornment, FormHelperText, InputLabel, IconButton, FilledInput, Input} from "@mui/material";
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -14,7 +21,10 @@ function SignupForm(){
       event.preventDefault();
     };
     return (
-        <Container display='flex' height ='100vh' alignItems='center'>
+        <Container sx ={{
+            display:'flex', 
+            height:'100vh' 
+            }}>
            
             <Paper 
                 alignItems='center' 
@@ -23,32 +33,49 @@ function SignupForm(){
                 sx={{
                     p:3,
                     margin: 'auto',
-                    maxWidth: 400,
+                    maxWidth: 500,
                     flexGrow: 1
                 }}>
             <form>
                 <h2>Signup Form</h2>
-                <Box size ='large'>
-                    <FormControl>
-                        <FormLabel>Username</FormLabel>
-                        <TextField type='text' required='true' size='large'/>
-                    </FormControl>
-                </Box>
-                <div>
-                    <FormControl>
-                        <FormLabel>password</FormLabel>
-                        <TextField type='password' />
-                    </FormControl>
-                </div>
-                <div>
-                <FormControl>
-                    <FormLabel>Email</FormLabel>
-                    <TextField type='email'/>
+                <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
+                    <InputLabel htmlFor="username">Username</InputLabel>
+                    <OutlinedInput
+                        id="username"
+                        label="Username"
+                        required
+                    />
                 </FormControl>
-                </div>
-                <div>
+                <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
+                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <OutlinedInput
+                        id="password"
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                            >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                        }
+                        label="Password"
+                        required
+                    />
+                </FormControl>
+                <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
+                    <InputLabel htmlFor="email">Email</InputLabel>
+                    <OutlinedInput
+                        id="email"
+                        label="Email"
+                        required
+                    />
+                </FormControl>     
                 <Button margin='normal'>Submit</Button>
-                </div>
             </form>
         </Paper>
     

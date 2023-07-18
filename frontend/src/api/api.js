@@ -29,48 +29,104 @@ class PodApi{
     }
 
     
-  // ============Individual API routes ======== //
+    // ============Individual API routes ======== //
 
-  /** Get the current user. */
-  static async getCurrentUser(username) {
-    let res = await this.request(`users/${username}`);
-    return res.user;
-  }
+    /** Get the current user. */
+    static async getCurrentUser(username) {
+        let res = await this.request(`users/${username}`);
+        return res.user;
+    }
 
-  /** Get token for login from username, password. */
-  static async login(data) {
-    let res = await this.request(`users/login`, data, "post");
-    return res.token;
-  }
+    /** Get token for login from username, password. */
+    static async login(data) {
+        let res = await this.request(`users/login`, data, "post");
+        return res.token;
+    }
 
-  /** Signup  */
-  static async signup(data) {
-    let res = await this.request(`users/register`, data, "post");
-    return res.token;
-  }
+    /** Signup  */
+    static async signup(data) {
+        let res = await this.request(`users/register`, data, "post");
+        return res.token;
+    }
 
-  /** update user profile page. */
-  static async updateProfile(username, data) {
-    let res = await this.request(`users/${username}`, data, "patch");
-    return res.user;
-  }
-
-
-  /** delete user */
-  static async deleteUser(username){
-    let res = await this.request(`users/${username}`, "delete");
-    return res.deleted
-  }
-
-  /** get user's favorite podcasts */
-  static async getFavPodcasts(username){
-    let res = await this.request(`users/${username}/fav-podcast`);
-    return res.favPods;
+    /** update user profile page. */
+    static async updateProfile(username, data) {
+        let res = await this.request(`users/${username}`, data, "patch");
+        return res.user;
+    }
 
 
-  
+    /** delete user */
+    static async deleteUser(username){
+        let res = await this.request(`users/${username}`, "delete");
+        return res.deleted
+    }
 
-  
+    // ====== for user's favorite podcasts =======//
+    /** get user's favorite podcasts */
+    static async getFavPodcasts(username){
+        let res = await this.request(`users/${username}/fav-podcast`);
+        return res.favPods;
+    }
+
+    /** add a podcast to user's favorite */
+    static async addFavPodcasts(username, feedId){
+        let res = await this.request(`users/${username}/fav-podcast/${feedId}`,{}, "post");
+        return res.added;
+    }
+
+    /** delete a podcast from user's favorite */
+    static async deleteFavPodcasts(username, feedId){
+        let res = await this.request(`users/${username}/fav-podcast/${feedId}`, "delete");
+        return res.deleted;
+    }
+
+    // ====== for user's podcasts reviews =======//
+    /** add user's reviews */
+    static async addReviews(username, feedId, data){
+        let res = await this.request(`users/${username}/reviews/${feedId}`, data, "post");
+        return res.newReviews;
+    }
+
+    /** update user's reviews */
+    static async updateReviews(username, reviewId, data){
+    let res = await this.request(`users/${username}/reviews/${reviewId}`, data, "patch");
+    return res.review;
+    }
+
+    /** delete user's reviews */
+    static async deleteReviews(username, reviewId){
+        let res = await this.request(`users/${username}/reviews/${reviewId}`, {}, "delete");
+        return res.deleted;
+    }
+
+    // ====== for podcast routes =======//
+    /** search and get podcasts */
+    static async searchPodcasts(userInput){
+        let res= await this.request(`podcasts/?term=${userInput}`);
+        return res; 
+    }
+
+    /** get trending podcasts and podcast by categories */
+    static async getTrendingPodcasts(category){
+        let baseUrl =`podcasts/trending`;
+        let query = baseUrl +(category ? `?category=${category}` : '');
+        let res = await this.request(query);
+        return res; 
+    }
+
+    /** get episodes of a podcast */
+    static async getEpisodes(feedId){
+        let res= await this.request(`podcasts/${feedId}/episodes`);
+        return res; 
+    }
+
+    /** get reviews of a podcast */
+    static async getReviews(feedId){
+        let res= await this.request(`podcasts/${feedId}/reviews`);
+        return res.reviews; 
+    }
+     
 }
 
 export default PodApi;
