@@ -4,6 +4,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 /** API Class.
  * Static class tying together methods used to get/send to to the backend API.
+ * until user login is established 
  */
 class PodApi{
     //  == store received token ==== //
@@ -128,5 +129,8 @@ class PodApi{
     }
      
 }
+
+// for now use token for {username: test1, password: password1}
+PodApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxIiwiaWF0IjoxNjg5NzIzMzc0fQ.ShElsvZOmlUWqSMuX_Wlk_olDSpl1XI6JCbX4YEfSkg";
 
 export default PodApi;
