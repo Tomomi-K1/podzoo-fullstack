@@ -14,8 +14,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
-function SignupForm({signup}){
-    /** below are needed for Materil UI visual purposes */
+function ReviewForm(){
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
@@ -39,7 +38,7 @@ function SignupForm({signup}){
                     flexGrow: 1
                 }}>
             <form>
-                <h2>Signup Form</h2>
+                <h2>Write Your Review</h2>
                 <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
                     <InputLabel htmlFor="username">Username</InputLabel>
                     <OutlinedInput
@@ -48,27 +47,7 @@ function SignupForm({signup}){
                         required
                     />
                 </FormControl>
-                <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <OutlinedInput
-                        id="password"
-                        type={showPassword ? 'text' : 'password'}
-                        endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                            >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                        }
-                        label="Password"
-                        required
-                    />
-                </FormControl>
+            
                 <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
                     <InputLabel htmlFor="email">Email</InputLabel>
                     <OutlinedInput
@@ -85,4 +64,4 @@ function SignupForm({signup}){
     )
 }
 
-export default SignupForm;
+export default ReviewForm;

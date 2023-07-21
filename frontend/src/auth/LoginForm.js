@@ -23,7 +23,7 @@ function LoginForm(){
     return (
         <Container sx ={{
             display:'flex', 
-            height:'100vh' 
+            mt: 10
             }}>
            
             <Paper 

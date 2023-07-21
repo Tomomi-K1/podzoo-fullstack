@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+
 import removeTags from "../common/helper";
+import Loader from "../common/Loader";
+
+import PodApi from "../api/PodApi";
+
+import PodcastList from "../podcasts/PodcastList";
+import CategoryList from "../category/CategoryList";
+import categories from "../category/categories";
+// Material UI
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+
 
 
 function Home() {
@@ -14,30 +26,31 @@ function Home() {
 
     async function api(){
         console.log(`api call`)
-        let result =await axios.get("http://localhost:3001/podcasts/trending");
-        setPodcasts(result.data);
+        try{
+            let result =await PodApi.getTrendingPodcasts();
+            setPodcasts(result);
+        }catch(err){
+            console.log(`error when making api call`)
+        }
     }
     
     console.log(podcasts)
     if(!podcasts){
-        return <h1>loading...</h1>
+        return <Loader />
     }
   
     return (
         <div className="Homepage">
-        <h1> PodZoo! </h1>    
-         <h2>Trending podcasts</h2>
-{podcasts.map(feed =>{
-    return (
-        <div className={feed.id}>
-            <img src={feed.artwork} alt="podcast artwork" height={100} width={100}/>
-            <h3>{feed.title}</h3>
-            <p>{removeTags(feed.description)}</p>
+            <form>
+                <h1>Search</h1>
+            </form>
+            <Typography variant="h3" sx={{m:5, fontWeight:'bold'}}> Find by Categories</Typography>
+                <CategoryList categories={categories}/>
+        
+            <Typography variant="h3" sx={{m:5, fontWeight:'bold'}}>Trending podcasts</Typography>
+                <PodcastList podcasts={podcasts}/>
         </div>
-    ) 
- })}
-    
-        </div>
+        
     );
   }
   

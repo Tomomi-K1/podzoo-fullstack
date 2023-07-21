@@ -2,7 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 
-function Podcast(feedId) {
+function PodcastDetail(){
+  return(
+      <div>
+          <h1>This is Podcast Detail</h1>
+      </div>
+  )
+}
+
+export default PodcastDetail;
     
 //   const [episodes, setEpisodes] = useState(null);
 
@@ -44,9 +52,7 @@ function Podcast(feedId) {
     
 //         </div>
 //     );
-  }
-  
-  export default Podcast;
+
 
   
 // <h2>Episode</h2>
