@@ -23,7 +23,7 @@ const Podcast = require("../models/podcast");
 // -search podcast by terms
 router.get('/', async (req, res, next) => {
     let term = req.query.term; 
-    const queryItems={ q:term, max: 20, fulltext: true, pretty:true}
+    const queryItems={ q:term, max: 60, fulltext: true, pretty:true}
     const searchPath ='search/byterm'
     try{
         const resp = await api.custom(path=searchPath, queries=queryItems);
@@ -44,8 +44,8 @@ router.get('/', async (req, res, next) => {
 router.get('/trending', async (req, res, next) => {
      try{
         const category = req.query.cat;
-        // if max is NOT given in query, returns 20 podcasts.
-        const maxPod = req.query.max? req.query.max: 20;
+        // if max is NOT given in query, returns 18 podcasts.
+        const maxPod = req.query.max? req.query.max: 24;
         const resp= await api.podcastsTrending(max=maxPod, since=null, lang='en,en-us,en-gb,en-ca', cat = category);
         const data = simplifyPod(resp.feeds)
         return res.json(data)
@@ -53,7 +53,8 @@ router.get('/trending', async (req, res, next) => {
         return next(err);
      }
 })
-/** ==GET podcasts/[feedid]/epidodes
+/** ==GET podcasts/[feedid]/epidodes 
+ * limit the number of podcasts to 100;
  * params: feedId
  * get all episodes -most recent to the oldest(default)
  * == do pagenation? or have other windows for showing more episodes?
@@ -63,23 +64,29 @@ router.get('/:feedid/episodes', async (req, res, next) => {
     try{
         const feedId = +req.params.feedid;
         console.log(feedId)
-        const resp = await api.episodesByFeedId(feedId, null, 1000);
+        const data ={};
+        const {feed} = await api.podcastsByFeedId(feedId);
+        const resp = await api.episodesByFeedId(feedId, null, 100);
         const episodes = resp.items;
+        data.feed=feed;
+        data.episodeData = {count: resp.count, episodes}
    
         // make object with page number and total count? or should i return everything?
-        return res.json({count: resp.count, episodes})
+        return res.json(data)
     }catch(err){
         next(err);
     }
 })
 
 /** GET /podcasts/[feedid]/reviews
-  -Returns { reviews: [{id, userId, username, feedId, comment, rating, createdAt}, {...},{}]}
+  -Returns { reviews: [{id, userId, username, feedId, comment, rating, createdAt}, {...},{}],
+             avgRating: Number }
   -Authorization: None **/
 router.get('/:feedid/reviews', async (req, res, next) => {
     try{
         const reviews = await Podcast.getReviews(req.params.feedid);
-        return res.json({reviews})
+        const avgRating = (reviews.reduce((sum, review) => sum+=review.rating, 0))/reviews.length
+        return res.json({reviews: reviews, avgRating: avgRating})
     } catch(err){
         return next(err);
     }

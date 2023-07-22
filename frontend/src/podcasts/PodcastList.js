@@ -6,12 +6,13 @@ import PodcastCard from "./PodcastCard";
 
 function PodcastList({podcasts}){
     return(
+        // add hover effect
         <Grid container spacing={1} sx={{flexGrow:1}} justifyContent="center">
-            <Grid item xs={12} md={11} lg={10} sx={{ display:"flex", justifyContent:"center", backgroundColor: "grey"}}>
+            <Grid item xs={12} md={11} lg={10} sx={{ display:"flex", justifyContent:"center"}}>
                 <Grid container justifyContent="center" spacing={1}>
                     {podcasts.map(podcast =>{
                         return (         
-                            <Grid item xs ={5} md={3} lg={2} sx={{display:"flex", justifyContent:"center", backgroundColor:'pink'}}>
+                            <Grid key={podcast.feedId} item xs ={5} md={3} lg={2} sx={{display:"flex", justifyContent:"center"}}>
                                 <PodcastCard podcast={podcast} />
                             </Grid>
                         

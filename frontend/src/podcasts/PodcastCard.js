@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { redirect, Link } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -14,10 +15,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function PodcastCard({podcast}){
-    console.log(`podcard :${podcast}`)
+    
     return(
         // how do I keep image ratio 1:1?
-        <Card sx={{maxWidth: "200px", m:2}} raised={true} className={podcast.id}>
+        
+        <Card sx={{maxWidth: "200px", m:2}} raised={true} >
+            <Link to={`/podcast/${podcast.feedId}`}>
             {/* <CardContent> */}
             <CardMedia
                 component="img"
@@ -35,7 +38,9 @@ function PodcastCard({podcast}){
                         {podcast.author}
                     </Typography>
                 </CardContent>
+            </Link>
         </Card>
+        
     )
 }
 

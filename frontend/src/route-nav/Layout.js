@@ -209,7 +209,7 @@ function Layout() {
 
 function takeFirstLetter(string){
   return {
-    children: string.charAt(0)
+    children: string.charAt(0).toUpperCase()
   };
 }
 

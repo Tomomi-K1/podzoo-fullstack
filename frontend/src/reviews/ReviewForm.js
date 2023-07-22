@@ -7,15 +7,16 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Rating from '@mui/material/Rating';
+import { TextField } from "@mui/material";
+
 
 
 function ReviewForm(){
     const [showPassword, setShowPassword] = useState(false);
+    const [rating, setRating] =useState(0);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
       event.preventDefault();
@@ -34,28 +35,22 @@ function ReviewForm(){
                 sx={{
                     p:3,
                     margin: 'auto',
-                    maxWidth: 500,
+                    maxWidth: '80%',
                     flexGrow: 1
                 }}>
             <form>
                 <h2>Write Your Review</h2>
+                <Rating value={rating} onChange ={(event, newValue) =>{
+                    setRating(newValue);
+                }}/>
                 <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
-                    <InputLabel htmlFor="username">Username</InputLabel>
+                    <InputLabel htmlFor="username">Comment</InputLabel>
                     <OutlinedInput
                         id="username"
                         label="Username"
                         required
                     />
-                </FormControl>
-            
-                <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
-                    <InputLabel htmlFor="email">Email</InputLabel>
-                    <OutlinedInput
-                        id="email"
-                        label="Email"
-                        required
-                    />
-                </FormControl>     
+                </FormControl>    
                 <Button margin='normal'>Submit</Button>
             </form>
         </Paper>

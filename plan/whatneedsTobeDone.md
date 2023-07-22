@@ -43,5 +43,6 @@
 
 ### Design I want to do
 -[ ] Loading icon to be something music related and animate it.
+-[ ] add semantic meaning to the page structure
             
 

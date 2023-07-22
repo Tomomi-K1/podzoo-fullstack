@@ -15,9 +15,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 function CategoryCard({category}){
-    console.log(`category:${category}`)
     return(
-        <Card sx={{maxWidth: "200px", display:"inline-block"}} raised={true} className={category.id}>
+        <Card sx={{maxWidth: "200px", display:"inline-block"}} raised={true}>
             {/* <CardMedia
                 component="img"
                 height="200px"

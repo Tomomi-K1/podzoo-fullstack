@@ -8,8 +8,9 @@ import ProfileForm from "../profile/ProfileForm";
 import PodcastList from "../podcasts/PodcastList";
 import FavoriteList from "../podcasts/FavoriteList";
 import ReviewForm from "../reviews/ReviewForm";
-import PodcastDetail from "../podcasts/PodcastDetail";
+import PodcastDetailLayout from "../podcasts/PodcastDetailLayout";
 import PodcastReviewList from "../reviews/PodcastReviewList";
+import EpisodeList from "../episodes/EpisodeList";
 
 
 function AllRoutes({signup, logout, login}){
@@ -23,9 +24,11 @@ function AllRoutes({signup, logout, login}){
                 <Route path="search/:term" element={<PodcastList />} />
                 <Route path="user/favorites" element={<FavoriteList/>} />
                 <Route path="user/review" element={<ReviewForm />} />
-                <Route path="podcast/:feedid" element={<PodcastDetail />} />
-                <Route path="podcast/reviews" element={<PodcastReviewList />} />
-                <Route path="podcast/reviews" element={<PodcastReviewList />} />
+                <Route path="podcast/:feedid" element={<PodcastDetailLayout />} >
+                    <Route index element={<EpisodeList />} />
+                    <Route path="reviews" element={<PodcastReviewList />} />
+                    <Route path="reviews/form" element ={<ReviewForm />} />
+                </Route>
                 <Route path="*" element={<Home />} />
                 {/* if not route matches then it will show homepage.
                 this route acts like a catch-all for URLs that we don't have explicit

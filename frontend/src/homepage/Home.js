@@ -25,7 +25,7 @@ function Home() {
     }, []);
 
     async function api(){
-        console.log(`api call`)
+        console.log(`api call at Home`)
         try{
             let result =await PodApi.getTrendingPodcasts();
             setPodcasts(result);

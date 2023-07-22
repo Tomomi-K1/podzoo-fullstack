@@ -124,8 +124,13 @@ class PodApi{
 
     /** get reviews of a podcast */
     static async getReviews(feedId){
-        let res= await this.request(`podcasts/${feedId}/reviews`);
-        return res.reviews; 
+        try{
+            let res= await this.request(`podcasts/${feedId}/reviews`);
+            console.log(`getReviews in PodApi ran ${res}`)
+            return res; 
+        } catch(err){
+            console.log(err);
+        }
     }
      
 }

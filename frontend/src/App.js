@@ -6,9 +6,10 @@ import AllRoutes from './route-nav/AllRoutes';
 import Home from './homepage/Home';
 import SignupForm from './auth/SignupForm';
 import CssBaseline from '@mui/material/CssBaseline';
+import { getImageListItemBarUtilityClass } from '@mui/material';
 
-// const currentUser = {username:'Tomomi'};
-const currentUser = null;
+const currentUser = {username:'test1', email:'test1@gmail.com', fav_podcasts:[1, 5718023] };
+// const currentUser = null;
 
 export default function App() {
 
