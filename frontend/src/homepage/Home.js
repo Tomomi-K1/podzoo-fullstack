@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import removeTags from "../common/helper";
 import Loader from "../common/Loader";
@@ -11,13 +12,14 @@ import categories from "../category/categories";
 // Material UI
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
-
-
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
 
 function Home() {
     
     const [podcasts, setPodcasts] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
 
     useEffect(function getPodcasts() {
         console.debug("get podcasts in useEffect");
@@ -33,16 +35,35 @@ function Home() {
             console.log(`error when making api call`)
         }
     }
+
+    function handleSubmit(evt){
+        evt.preventDefault();
+        navigate(`/search/${searchTerm}`);
+    }
+
+    function handleChange(evt){
+        evt.preventDefault();
+        let {value} =evt.target;
+        setSearchTerm(value);
+        console.log(searchTerm);
+    }
     
-    console.log(podcasts)
     if(!podcasts){
         return <Loader />
     }
   
     return (
         <div className="Homepage">
-            <form>
-                <h1>Search</h1>
+            <form onSubmit={handleSubmit}>
+            <Box sx={{display:'flex', width: '100%', justifyContent:'center', alignItems:'center', height:'100px', pt:'20px'}}>
+            <TextField sx ={{width: '90%'}}
+                placeholder='search'
+                value={searchTerm}
+                onChange={handleChange}
+            >
+                <SearchIcon />
+            </TextField>
+            </Box>
             </form>
             <Typography variant="h3" sx={{m:5, fontWeight:'bold'}}> Find by Categories</Typography>
                 <CategoryList categories={categories}/>

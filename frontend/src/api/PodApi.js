@@ -124,18 +124,13 @@ class PodApi{
 
     /** get reviews of a podcast */
     static async getReviews(feedId){
-        try{
             let res= await this.request(`podcasts/${feedId}/reviews`);
             console.log(`getReviews in PodApi ran ${res}`)
             return res; 
-        } catch(err){
-            console.log(err);
-        }
-    }
-     
+    }   
 }
 
 // for now use token for {username: test1, password: password1}
-PodApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxIiwiaWF0IjoxNjg5NzIzMzc0fQ.ShElsvZOmlUWqSMuX_Wlk_olDSpl1XI6JCbX4YEfSkg";
+// PodApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxIiwiaWF0IjoxNjg5NzIzMzc0fQ.ShElsvZOmlUWqSMuX_Wlk_olDSpl1XI6JCbX4YEfSkg";
 
 export default PodApi;

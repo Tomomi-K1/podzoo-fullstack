@@ -1,30 +1,31 @@
 # Checklist
+- [ ] protect route that a specific user can access
 
 ### user registration
 - [ ] if a user tries to create new account with existing email bring a user to login page
-- [ ] user can sign up
-- [ ] user can hide or show password
+- [x] user can sign up
+- [x] user can hide or show password
 - [ ] forgot password button? --> if I have time.
-
+- [ ] form validation can be done on frontend? right now error messages comes from pg and not nicely worded.
 
 ### user login
-- [ ] password should be hidden
+- [x] password should be hidden
 
 ### user profile edit
-- [ ] user can edit email
+- [x] user can edit email
 
 ### landing page
-- [ ] show trending podcasts
-- [ ] show categories
+- [x] show trending podcasts
+- [x] show categories
 - [ ] maybe show most recent reviews?
 
 ### search
 - [ ] sd
 
 ### Podcast
-
+- [x] filter out description has html tag.
 ### Episodes
-- [ ] description has html tag. I need to filter those out. https://www.geeksforgeeks.org/how-to-strip-out-html-tags-from-a-string-using-javascript/
+- [x] filter out description has html tag.
 - [ ] 
 
 ### categories

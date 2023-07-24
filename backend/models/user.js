@@ -157,7 +157,7 @@ class User {
     if(!user) throw new NotFoundError(`No username :${username}`)
 
     const result = await db.query(
-      `SELECT id, user_id AS "userId", feed_id AS "feedId", author, title, artwork_url AS "artworkUrl"
+      `SELECT id, user_id AS "userId", feed_id AS "feedId", author, title, artwork_url AS "artwork"
        FROM fav_pods
        WHERE user_id = $1
        ORDER BY title`,

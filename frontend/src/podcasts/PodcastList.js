@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-
 import PodcastCard from "./PodcastCard";
+// Material UI
+import Grid from '@mui/material/Grid';
+
 
 function PodcastList({podcasts}){
     return(

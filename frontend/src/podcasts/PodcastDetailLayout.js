@@ -119,7 +119,9 @@ function PodcastDetailLayout(){
                             <Grid item xs={12} md={6}>
                             <Button>
                             <Typography variant='body1' sx={{display:'inline-block', mx:1}}>Favorite</Typography>
-                            {((currentUser.fav_podcasts)&&(currentUser.fav_podcasts.includes(+feedid)))? <FavoriteIcon color='error'/>:<FavoriteBorderIcon />}
+                            {/* if there is currentUser then we show favorite bottom either colored or not 
+                            but if there is no curretUser, just show button that shows msg to signup or login*/}
+                            {/* {((currentUser.fav_podcasts)&&(currentUser.fav_podcasts.includes(+feedid)))? <FavoriteIcon color='error'/>:<FavoriteBorderIcon />} */}
                             {/* add onclick={handleClick} handleClick will add this to user's favorite */}
                             </Button>
                             </Grid>

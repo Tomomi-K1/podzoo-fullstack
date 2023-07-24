@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, Navigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,8 +17,8 @@ import UserContext from '../UserContext';
 
 const pages = ['Profile', 'Favorites'];
 
-function Layout() {
-  const {currentUser } = useContext(UserContext);
+function Layout({logout}) {
+  const {currentUser} = useContext(UserContext);
   console.log(currentUser)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -34,6 +34,16 @@ function Layout() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleUserMenuAndLogout = () => {
+    handleCloseUserMenu();
+    logout();
+  }
+
+  const handleNavMenuAndLogout = () => {
+    handleCloseNavMenu();
+    logout();   
+  }
 
  
   function loggedInNav(){
@@ -80,7 +90,6 @@ function Layout() {
               >
                 {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseUserMenu}>
-                    
                     <Typography 
                       textAlign="center" component="a" href={`/user/${page}`}
                       sx={{
@@ -92,13 +101,15 @@ function Layout() {
                 
                   </MenuItem>
                 ))}
-                <MenuItem key="logout" onClick={handleCloseUserMenu}>
+                {/* <MenuItem key="logout" onClick={handleCloseUserMenu}> */}
+                <MenuItem key="logout" onClick={handleUserMenuAndLogout} component ="a"
+                  href="/">
                     <Typography textAlign="center">Logout</Typography>
                   </MenuItem>
               </Menu>
             </Box>       
           
-            {/* mi view */}
+            {/* md view */}
             <AlbumIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Typography variant="h6" noWrap component="a" href="/" 
               sx={{
@@ -126,8 +137,11 @@ function Layout() {
             ))}
             <Button
                 key="logout"
-                onClick={handleCloseNavMenu}
+                // onClick={handleCloseNavMenu}
+                onClick={handleNavMenuAndLogout}
                 sx={{ my: 2, color: 'black', display: 'block' }}
+                component ="a"
+                href="/"
               >
                 Logout
               </Button>
@@ -173,7 +187,7 @@ function Layout() {
                   Login
                 </Button>
                 <Button
-                  key="logout"
+                  key="signup"
                   onClick={handleCloseNavMenu}
                   component ="a"
                   href="/signup"
