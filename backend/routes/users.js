@@ -62,7 +62,7 @@ router.post('/login', async (req, res, next) => {
 
 
 /** GET /[username] => { user }
-  -Returns { user:{ username, email, fav_podcasts}} *
+  -Returns { user:{ username, email, fav:[feedId]}} *
   -Authorization required: same user-as-:username
  **/
 router.get('/:username', userOnly, async (req, res, next) => {
@@ -124,6 +124,7 @@ router.get('/:username/fav-podcast', userOnly, async (req, res, next) =>{
 /**== adding favorite podcast ==
  POST /[username]/fav-podcast/[id] => { added: feedId }
   -id: podcast's feed id
+  -receives podcastData(feedId, author, title, artwork)
   -Authorization required: same user-as-:username **/
 router.post('/:username/fav-podcast/:feedid', userOnly, async (req, res, next) => {
     try{

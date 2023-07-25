@@ -14,10 +14,7 @@ import Rating from '@mui/material/Rating';
 import List from "@mui/material/List";
 import { ListItem } from "@mui/material";
 import UserContext from "../UserContext";
-
-
-
-
+import MessageToLogin from "../common/MessageToLogin";
 
 /** This page shows:
  * Podcast detailed Information
@@ -35,8 +32,18 @@ function PodcastReviewList(){
 
     return(
         <List>
-            <Typography variant='h5' sx={{p:2}}> Reviews </Typography>
-            <Button><Link to='./form'>Write your Review</Link></Button>
+            {reviews.reviews.length===0
+            ? <Typography variant='h5' sx={{p:2}}>There is no review.</Typography>
+            : <Typography variant='h5' sx={{p:2}}> Reviews </Typography>}
+            
+            {/* if currentUser is null, when user click write a review button, dialog shows up
+            to direct user to either/login or signin 
+             ex. */}
+            {currentUser
+              ?  <Button><Link to='./form'>Write your Review</Link></Button>
+              :  <MessageToLogin message={"Write your Review"}/>
+              }
+            
             {reviews.reviews.map(review =>{
                 return(
                     <Box key={review.id}>

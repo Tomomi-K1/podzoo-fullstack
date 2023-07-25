@@ -51,7 +51,7 @@ function Home() {
     if(!podcasts){
         return <Loader />
     }
-  
+    console.log(podcasts)
     return (
         <div className="Homepage">
             <form onSubmit={handleSubmit}>
@@ -60,8 +60,7 @@ function Home() {
                 placeholder='search'
                 value={searchTerm}
                 onChange={handleChange}
-            >
-                <SearchIcon />
+            >   
             </TextField>
             </Box>
             </form>

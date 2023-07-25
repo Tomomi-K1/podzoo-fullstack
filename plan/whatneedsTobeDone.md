@@ -1,15 +1,14 @@
 # Checklist
-- [ ] protect route that a specific user can access
 
 ### user registration
 - [ ] if a user tries to create new account with existing email bring a user to login page
 - [x] user can sign up
 - [x] user can hide or show password
-- [ ] forgot password button? --> if I have time.
 - [ ] form validation can be done on frontend? right now error messages comes from pg and not nicely worded.
 
 ### user login
 - [x] password should be hidden
+- [ ] change submit botton from "onClick" to "onSubmit" (having issue onSubmit not working)
 
 ### user profile edit
 - [x] user can edit email
@@ -17,22 +16,42 @@
 ### landing page
 - [x] show trending podcasts
 - [x] show categories
-- [ ] maybe show most recent reviews?
+- [x] show search box  
 
-### search
-- [ ] sd
+### search page
+- [ ] sort and filter ( more than CRUD)
 
 ### Podcast
 - [x] filter out description has html tag.
+- [ ] add functions to favorite button (add podcast to user favorite)
+  
 ### Episodes
 - [x] filter out description has html tag.
-- [ ] 
+- [ ] review page - change design to list by including collapse function
+- [ ] fix audio component position
 
 ### categories
-- [ ] have categories button or card to show podcast of a selected category
-- [ ] for now, do not build fav_categories for user (For future)
-      ==use GET /podcasts/trending?lang=en&cat=1==
-- [ ] decide which categories to use. Have it in the separate json file.
+- [X] have categories button or card to show podcast of a selected category
+- [X] decide which categories to use. Have it in the separate json file.
+
+### reviews
+- [ ] review page - change design to list
+- [ ] add functions to save a user's review on the backend
+- [ ] fix submit button position on review form
+
+### others
+- [ ] protect route that a specific user can access
+- [ ] create a page that shows a list of favorites 
+    - [ ] On the list, each favorite podcast will have 'remove' button
+
+### DOM  
+- [ ] add semantic meaning to the page structure
+
+### Extra things to complete if I have time
+- [ ] Loading icon to be something music related and animate it.--> if I have time.    
+- [ ] for now, do not build fav_categories for user (For future)    
+- [ ] show most recent reviews. If I have time.  
+- [ ] forgot password button? --> if I have time.
 
 ### Questions
 - [ ] how do I know which media types?
@@ -42,8 +61,8 @@
 - [ ] is it better to call external API from backend or frontend (if I'm caching data, I should call it from backend)
 - [ ] how do I test backend api route when I have an external api call in it?
 
-### Design I want to do
--[ ] Loading icon to be something music related and animate it.
--[ ] add semantic meaning to the page structure
-            
+
+### what I am learning
+- when creating backend, make it clear what kind of data will be sent back. e.g {user:{ name, id etc..}} If I had a easy documentation for my own API it would be helpful.
+- when using external API, before creating backend API and frontend structure, think about naming of columns in database so it would be easier to understand but could also utilize same naming as external api response.
 

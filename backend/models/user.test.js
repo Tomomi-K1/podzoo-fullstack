@@ -155,7 +155,7 @@ describe('get fav podcasts of a user', () => {
       feedId: 100, 
       author:'author1',
       title: 'title1', 
-      artworkUrl:'artwork1.com'
+      artwork:'artwork1.com'
     }])
   })
 
@@ -181,7 +181,7 @@ describe('add fav podcasts', () => {
         feedId:1000,
         author: 'author1000',
         title:'title1000',
-        artworkUrl: 'artwork1000.com'
+        artwork: 'artwork1000.com'
     }
     await User.addFav('user1', podData);
 
@@ -191,7 +191,7 @@ describe('add fav podcasts', () => {
               fav_pods.feed_id AS "feedId", 
               fav_pods.author, 
               fav_pods.title, 
-              fav_pods.artwork_url AS "artworkUrl"
+              fav_pods.artwork_url AS "artwork"
        FROM fav_pods
        JOIN users ON users.id = fav_pods.user_id
        WHERE users.username ='user1'`)
@@ -202,7 +202,7 @@ describe('add fav podcasts', () => {
           feedId: 100,
           author:'author1',
           title: 'title1', 
-          artworkUrl:'artwork1.com'
+          artwork:'artwork1.com'
         },
         {
         id: expect.any(Number),
@@ -210,7 +210,7 @@ describe('add fav podcasts', () => {
         feedId: 1000,
         author:'author1000',
         title: 'title1000', 
-        artworkUrl:'artwork1000.com'
+        artwork:'artwork1000.com'
       }
     ])
   })
@@ -230,7 +230,7 @@ describe('add fav podcasts', () => {
       const podData = {
         feedId:1000,
         title:'title1000',
-        artworkUrl: 'artwork1000.com'
+        artwork: 'artwork1000.com'
     }
       await User.addFav('user1', podData);
       fail();
@@ -245,7 +245,7 @@ describe('add fav podcasts', () => {
       feedId:100,
       author: 'author100',
       title:'title100',
-      artworkUrl: 'artwork100.com'
+      artwork: 'artwork100.com'
     } 
     await User.addFav('user1', podData);
     fail();

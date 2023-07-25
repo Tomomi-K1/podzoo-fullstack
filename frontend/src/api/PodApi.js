@@ -71,14 +71,15 @@ class PodApi{
     }
 
     /** add a podcast to user's favorite */
-    static async addFavPodcasts(username, feedId){
-        let res = await this.request(`users/${username}/fav-podcast/${feedId}`,{}, "post");
+    static async addFavPodcasts(username, feedId, podData){
+        let res = await this.request(`users/${username}/fav-podcast/${feedId}`, podData, "post");
+        console.debug(`addFavPodcasts run in PodApi`, res);
         return res.added;
     }
 
     /** delete a podcast from user's favorite */
     static async deleteFavPodcasts(username, feedId){
-        let res = await this.request(`users/${username}/fav-podcast/${feedId}`, "delete");
+        let res = await this.request(`users/${username}/fav-podcast/${feedId}`, {}, "delete");
         return res.deleted;
     }
 

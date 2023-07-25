@@ -143,7 +143,7 @@ class User {
 
    /** == get user's favorites podcasts ==
    - username
-   - returns array:[{id, userId, feedId, author, title, artworkUrl}, {...}]
+   - returns array:[{id, userId, feedId, author, title, artwork}, {...}]
    - throw NotFoundError
    **/  
   static async getAllFav(username){
@@ -168,7 +168,7 @@ class User {
 
   /** == add favorites podcasts ==
    - username
-   - podData: {feedId, author, title, artworkUrl} **/  
+   - podData: {feedId, author, title, artwork} **/  
   static async addFav(username, podData){
     // check if user exists
     const checkUser = await db.query(
@@ -192,7 +192,7 @@ class User {
         await db.query(
           `INSERT INTO fav_pods (user_id, feed_id, author, title, artwork_url)
           VALUES ($1, $2, $3, $4, $5)`,
-          [user.id, podData.feedId, podData.author, podData.title, podData.artworkUrl]
+          [user.id, podData.feedId, podData.author, podData.title, podData.artwork]
           //  double check how I construct podcast data when I send from frontend
         );
       } catch (err){

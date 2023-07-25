@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import MessageToLogin from "../common/MessageToLogin";
+import FavoriteButton from "../common/FavoriteButton";
 
 /** This page shows:
  * Podcast detailed Information
@@ -56,6 +58,11 @@ function PodcastDetailLayout(){
             console.log(err);
         }
     }
+    /**when favorite botton is clicked */
+    async function handleClick(evt){
+        evt.preventDefault();
+
+    }
   
     if(reviews){
         totalRating = reviews.avgRating? reviews.avgRating: 0;
@@ -74,7 +81,7 @@ function PodcastDetailLayout(){
     if(!podcast){
         return <Loader />
     }
-
+    console.log(podcast)
     return(
         <>
         <header>
@@ -110,6 +117,7 @@ function PodcastDetailLayout(){
                         </Typography>
                         <Grid container sx={{display:'flex',flexDirection:'row', mt:2}}>
                             <Grid item xs={12} md={6}>
+                        {/*if CurrentUser does not exist, create a version that user  */}
                             <Button>
                             <Link to={`./reviews`}>
                                 <Rating value={totalRating} readOnly/>
@@ -117,13 +125,14 @@ function PodcastDetailLayout(){
                             </Button>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                            <Button>
-                            <Typography variant='body1' sx={{display:'inline-block', mx:1}}>Favorite</Typography>
-                            {/* if there is currentUser then we show favorite bottom either colored or not 
-                            but if there is no curretUser, just show button that shows msg to signup or login*/}
-                            {/* {((currentUser.fav_podcasts)&&(currentUser.fav_podcasts.includes(+feedid)))? <FavoriteIcon color='error'/>:<FavoriteBorderIcon />} */}
-                            {/* add onclick={handleClick} handleClick will add this to user's favorite */}
-                            </Button>
+                            {currentUser
+                            ? (
+                                // <Button>
+                                    <FavoriteButton podcastData={podcast.feed} feedId={feedid} />
+                                // </Button>
+                              )
+                            : <MessageToLogin message={"favorite"} />
+                            }
                             </Grid>
                         </Grid>
                     </Grid>

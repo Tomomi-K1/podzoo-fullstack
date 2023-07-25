@@ -30,7 +30,7 @@ export default function App() {
           PodApi.token = token;
           let currentUser = await PodApi.getCurrentUser(username);
           setCurrentUser(currentUser);
-          setFavorites(new Set(currentUser.fav_podcasts));
+          setFavorites(new Set(currentUser.fav));
         } catch(err){
           console.error('LoadUser func: problem loading', err);
           setCurrentUser(null);
@@ -82,6 +82,41 @@ export default function App() {
     setCurrentUser(null);
     setToken(null);
   }
+
+  function checkFavPod(feedId){
+    return favorites.has(+feedId);
+  }
+
+
+    /** == handle liking a podcast ==
+   * add podcast to favorite
+   * update favorites (set)
+   */
+  async function likePod(username, feedId, data){
+    if(checkFavPod(+feedId)) return;
+            try{
+                const res =await PodApi.addFavPodcasts(username, feedId, data)
+                setFavorites(new Set([...favorites, +feedId]));
+                console.debug(`added to fav`, data, favorites, res, currentUser);
+            } catch(err){
+                console.error(err);
+            }
+  }
+
+  async function removeLike(username, feedId){
+    try{
+      const res =await PodApi.deleteFavPodcasts(username, feedId);
+      favorites.delete(+feedId);
+      setFavorites(favorites => new Set([...favorites]));
+      console.debug(`deleted from fav`, favorites, res, currentUser)
+    } catch (err){
+        console.error(err);
+    }    
+  }
+
+
+  
+
   
   /**if we need to show Loader until we fully update userInfo including when we use 'setCurrentUser'  
    */
@@ -89,7 +124,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value ={{currentUser, setCurrentUser}}> 
+      <UserContext.Provider value ={{currentUser, setCurrentUser, favorites, likePod, removeLike, checkFavPod}}> 
       {/* <UserContext.Provider>  */}
         <div className='App'>
           <CssBaseline />
