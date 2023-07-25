@@ -33,6 +33,7 @@
 ### categories
 - [X] have categories button or card to show podcast of a selected category
 - [X] decide which categories to use. Have it in the separate json file.
+- [ ] Is it better to make search by categories dropdown menu
 
 ### reviews
 - [ ] review page - change design to list
@@ -41,6 +42,7 @@
 
 ### others
 - [ ] protect route that a specific user can access
+- [ ] [make Material UI font responsive] (https://mui.com/material-ui/customization/typography/#responsive-font-sizes) especially on PodcastList.js
 - [ ] create a page that shows a list of favorites 
     - [ ] On the list, each favorite podcast will have 'remove' button
 
@@ -48,10 +50,12 @@
 - [ ] add semantic meaning to the page structure
 
 ### Extra things to complete if I have time
-- [ ] Loading icon to be something music related and animate it.--> if I have time.    
+- [ ] Loading icon to be something music related and animate it.--> if I have time.   
+- [ ] hover effect on Podcast Card 
 - [ ] for now, do not build fav_categories for user (For future)    
 - [ ] show most recent reviews. If I have time.  
 - [ ] forgot password button? --> if I have time.
+- [ ] Add "footer section with 'about' etc"
 
 ### Questions
 - [ ] how do I know which media types?

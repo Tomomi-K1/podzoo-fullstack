@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-import removeTags from "../common/helper";
 import Loader from "../common/Loader";
-
 import PodApi from "../api/PodApi";
-
 import PodcastList from "../podcasts/PodcastList";
 import CategoryList from "../category/CategoryList";
 import categories from "../category/categories";
@@ -64,7 +60,7 @@ function Home() {
             </TextField>
             </Box>
             </form>
-            <Typography variant="h3" sx={{m:5, fontWeight:'bold'}}> Find by Categories</Typography>
+            <Typography variant="h6" sx={{m:3, fontWeight:'bold'}}> Find by Categories</Typography>
                 <CategoryList categories={categories}/>
         
             <Typography variant="h3" sx={{m:5, fontWeight:'bold'}}>Trending podcasts</Typography>

@@ -1,41 +1,38 @@
 import React, { useState, useEffect, useContext } from "react";
 import PodcastCard from "./PodcastCard";
 import UserContext from "../UserContext";
+import Loader from "../common/Loader";
 
-import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import PodApi from "../api/PodApi";
 import { Typography } from "@mui/material";
+import PodcastList from "./PodcastList";
+
 
 function FavoriteList(){
-    const { currentUser } = useContext(UserContext);
-    const favorites = currentUser.fav_podcasts;
+    const { currentUser, favorites } = useContext(UserContext);
+    const [favPodcasts, setFavPodcast] = useState(null);
 
     useEffect(function getFavs(){
-        // async function getFavPods(){
-        // let res = await PodApi.getFavPodcasts(currentUser.username)
-        // }
-    })
+        async function getFavPods(){
+        let res = await PodApi.getFavPodcasts(currentUser.username);
+        setFavPodcast(res);
+        }
+        getFavPods();
+    },[currentUser.username])
+
+    if(!favPodcasts) return <Loader />;
     
-    if(!favorites) return <Typography>You have no Favorites</Typography>
+    console.log(favorites)
+    if(favorites.size ===0) return (
+        <Typography variant="h6" sx={{pt:'20px'}} >You have no Favorites</Typography>
+    ) 
 
     return(
-        // add hover effect
-        <Grid container spacing={1} sx={{flexGrow:1}} justifyContent="center">
-            <Grid item xs={12} md={11} lg={10} sx={{ display:"flex", justifyContent:"center"}}>
-                <Grid container justifyContent="center" spacing={1}>
-                   
-                    {favorites.map(favPodcast =>{
-                        return (         
-                            <Grid key={favPodcast.feedId} item xs ={5} md={3} lg={2} sx={{display:"flex", justifyContent:"center"}}>
-                                <PodcastCard podcast={favPodcast} />
-                            </Grid>
-                        
-                        )})
-                    }
-                 
-                </Grid>
-            </Grid>
-        </Grid>
+        <Box sx={{pt: '40px'}}>
+            <Typography variant="h6">Your Favorites</Typography>
+            <PodcastList podcasts={favPodcasts} />
+        </Box>
     )
 }
 
