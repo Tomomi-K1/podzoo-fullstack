@@ -13,24 +13,38 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Rating from '@mui/material/Rating';
 
-function ReviewForm(){
+function EditReviewForm(){
     const {currentUser} = useContext(UserContext);
     const{reviews, setReviews} =useOutletContext();
     const navigate = useNavigate();
-    const {feedid} = useParams();
+    const {feedid, reviewid} = useParams();
     const [rating, setRating] =useState(0);
-    const [formData, setFormData] = useState({
-        rating: 0,
-        comment:''
-    });
+    const matchingReview = reviews.reviews.filter(r => r.id === +reviewid)[0];
+    console.debug(`matching review`, matchingReview);
+    const [formData, setFormData] = useState(()=>({
+        rating: Number(matchingReview.rating),
+        comment: matchingReview.comment
+    }));
+    console.log(formData);
+    
     const [formErrors, setFormErrors] = useState([]);
     console.debug('reviews', reviews)
+    
+    /** ==handle submit ==
+     * make api calls to backend to update user's review
+     * setReviews to updated reviews
+    */
+
+    // static async updateReviews(username, reviewId, data){
+    //     let res = await this.request(`users/${username}/reviews/${reviewId}`, data, "patch");
+    //     return res.review;
+    //     }
+
     async function handleSubmit(evt){
         evt.preventDefault();
-        console.log(`did this run?`)
         try{
-            let res = await PodApi.addReviews(currentUser.username, feedid, formData);
-            console.debug('ReviewForm: handleSubmit', res);
+            let res = await PodApi.updateReviews(currentUser.username, reviewid, formData);
+            console.debug('EditReviewForm: handleSubmit', res);
             let updatedReviews = await PodApi.getReviews(feedid);
             setReviews(updatedReviews)
             return navigate(`../reviews`);
@@ -63,7 +77,7 @@ function ReviewForm(){
                     justifyContent:'center' 
                 }}>
             <form onSubmit={handleSubmit}>
-                <h2>Write Your Review</h2>
+                <h2>Edit Your Review</h2>
                 <Rating name="rating" value={formData.rating} onChange ={handleChange}/>
                 <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
                     <InputLabel htmlFor="comment">Comment</InputLabel>
@@ -89,4 +103,4 @@ function ReviewForm(){
     )
 }
 
-export default ReviewForm;
+export default EditReviewForm;

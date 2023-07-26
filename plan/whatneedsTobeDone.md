@@ -23,7 +23,8 @@
 
 ### Podcast
 - [x] filter out description has html tag.
-- [ ] add functions to favorite button (add podcast to user favorite)
+- [x] add functions to favorite button (add podcast to user favorite)
+- [X] add fallback image on PodcastCard ( use onError? )
   
 ### Episodes
 - [x] filter out description has html tag.
@@ -36,9 +37,9 @@
 - [ ] Is it better to make search by categories dropdown menu
 
 ### reviews
-- [ ] review page - change design to list
-- [ ] add functions to save a user's review on the backend
-- [ ] fix submit button position on review form
+- [X] review page - change design to list
+- [x] add functions to save a user's review on the backend
+- [x] fix submit button position on review form
 
 ### others
 - [ ] protect route that a specific user can access

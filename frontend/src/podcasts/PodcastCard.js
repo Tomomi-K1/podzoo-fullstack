@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import handleImageError from "../common/handleImageError";
+// Material UI
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 
 function PodcastCard({podcast}){
     
+    // const handleImageError = (e) => {
+    //     e.target.onerror = null;
+    //     e.target.src = fallbackImg;
+    // }
+     
     return(
         // how do I keep image ratio 1:1?
         
-        <Card sx={{maxWidth: "200px", m:2}} raised={true} >
+        <Card sx={{maxWidth: "200px", m:2}} raised>
             <Link to={`/podcast/${podcast.feedId}`}>
             {/* <CardContent> */}
             <CardMedia
@@ -28,6 +28,7 @@ function PodcastCard({podcast}){
                 height="auto"
                 image={podcast.artwork}
                 alt="podcast artwork"
+                onError={handleImageError}
             />
             {/* </CardContent> */}
                 <CardContent>

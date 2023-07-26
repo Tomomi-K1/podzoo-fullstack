@@ -12,7 +12,7 @@ class PodApi{
 
     // ============ method to make api call easier  ======== //
     static async request(endpoint, data = {}, method = "get") {
-        console.debug("API Call:", endpoint, data, method);
+        console.debug("API Call:", endpoint, data, method, this.token);
 
         const url = `${BASE_URL}/${endpoint}`;
         const headers = { Authorization: `Bearer ${PodApi.token}` };
@@ -86,14 +86,17 @@ class PodApi{
     // ====== for user's podcasts reviews =======//
     /** add user's reviews */
     static async addReviews(username, feedId, data){
+        data = {...data, rating: +(data.rating)};
+        console.log(data);
         let res = await this.request(`users/${username}/reviews/${feedId}`, data, "post");
-        return res.newReviews;
+        return res.newReview;
     }
 
     /** update user's reviews */
     static async updateReviews(username, reviewId, data){
-    let res = await this.request(`users/${username}/reviews/${reviewId}`, data, "patch");
-    return res.review;
+        data = {...data, rating: +(data.rating)};
+        let res = await this.request(`users/${username}/reviews/${reviewId}`, data, "patch");
+        return res.review;
     }
 
     /** delete user's reviews */

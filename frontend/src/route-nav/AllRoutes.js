@@ -10,8 +10,9 @@ import PodcastList from "../podcasts/PodcastList";
 import FavoriteList from "../podcasts/FavoriteList";
 import ReviewForm from "../reviews/ReviewForm";
 import PodcastDetailLayout from "../podcasts/PodcastDetailLayout";
-import PodcastReviewList from "../reviews/PodcastReviewList";
+import ReviewList from "../reviews/ReviewList";
 import EpisodeList from "../episodes/EpisodeList";
+import EditReviewForm from "../reviews/EditReviewForm";
 
 
 function AllRoutes({signup, logout, login}){
@@ -26,8 +27,9 @@ function AllRoutes({signup, logout, login}){
                 <Route path="user/favorites" element={<FavoriteList/>} />
                 <Route path="podcast/:feedid" element={<PodcastDetailLayout />} >
                     <Route index element={<EpisodeList />} />
-                    <Route path="reviews" element={<PodcastReviewList />} />
+                    <Route path="reviews" element={<ReviewList />} />
                     <Route path="reviews/form" element ={<ReviewForm />} />
+                    <Route path="reviews/:reviewid/edit" element ={<EditReviewForm />} />
                 </Route>
                 <Route path="*" element={<Home />} />
                 {/* if not route matches then it will show homepage.

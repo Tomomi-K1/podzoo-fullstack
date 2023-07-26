@@ -85,7 +85,7 @@ router.get('/:feedid/episodes', async (req, res, next) => {
 router.get('/:feedid/reviews', async (req, res, next) => {
     try{
         const reviews = await Podcast.getReviews(req.params.feedid);
-        const avgRating = (reviews.reduce((sum, review) => sum+=review.rating, 0))/reviews.length
+        const avgRating = Math.floor((reviews.reduce((sum, review) => sum+=review.rating, 0))/reviews.length)
         return res.json({reviews: reviews, avgRating: avgRating})
     } catch(err){
         return next(err);

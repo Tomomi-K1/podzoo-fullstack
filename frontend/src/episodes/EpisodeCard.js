@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import removeTags from "../common/helper";
+import handleImageError from "../common/handleImageError";
+
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 
@@ -8,7 +10,7 @@ import Card from "@mui/material/Card";
 function EpisodeCard({episode}){
     return (
         <Card className={`${episode.id}`}>
-                <img src={episode.image} alt="podcast artwork" height={100} width={100}/>
+                <img src={episode.image} alt="podcast artwork" height={100} width={100} onError={handleImageError}/>
                 <Typography variant='body2'>{episode.title}</Typography>
                 <Typography variant='body2'>{removeTags(episode.description)}</Typography>
                 <figure>

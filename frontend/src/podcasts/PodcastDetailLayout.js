@@ -4,7 +4,7 @@ import PodApi from "../api/PodApi";
 import removeTags from "../common/helper"
 import Loader from "../common/Loader";
 import UserContext from '../UserContext';
-// component
+import handleImageError from "../common/handleImageError";
 import EpisodeList from "../episodes/EpisodeList";
 // Material UI
 import Grid from "@mui/material/Grid";
@@ -31,13 +31,14 @@ function PodcastDetailLayout(){
     const [reviews, setReviews] = useState(null);
     let totalRating = 0;
     // const avgRating = (reviews.avgRating ===null)? 0 :reviews.avgRating;
-   
+//  how can I update star rating after adding
 
     useEffect(function getPodcastAndEpisodes(){
         console.log(`feedid in useEffect ${feedid}`)
         getEpisodes();
         getReviews();
-    },[feedid] )
+        // updateTotalRating();
+    },[feedid, setReviews] )
     
     async function getEpisodes(){
         try{
@@ -45,8 +46,7 @@ function PodcastDetailLayout(){
             setPodcast(res);
         }catch(err){
             console.log(err);
-        }
-        
+        }  
     }
 
     async function getReviews(){
@@ -58,26 +58,11 @@ function PodcastDetailLayout(){
             console.log(err);
         }
     }
-    /**when favorite botton is clicked */
-    async function handleClick(evt){
-        evt.preventDefault();
-
-    }
-  
+    
     if(reviews){
         totalRating = reviews.avgRating? reviews.avgRating: 0;
     }
    
-    // function handleClick(evt){
-    //     evt.preventDefault();
-    //     if(!currentUser.fav_podcasts.includes(feedid)){
-    //         currentUser.fav_podcasts.push(feedid);
-    //        // call api to add favorite but also to CurrentUser fav_podcasts
-    //     } else {
-      
-    //     }
-    // }
-
     if(!podcast){
         return <Loader />
     }
@@ -91,7 +76,7 @@ function PodcastDetailLayout(){
                 <Grid container spacing={1} sx={{flexGrow:1, justifyContent:"center"}} > 
                     <Grid item xs={12} md={6} lg={6} sx={{ display:"flex", justifyContent:"center"}}>
                         {/* <Grid container justifyContent="center" spacing={1}> */}
-                        <img src={podcast.feed.artwork} height='300px' width='300px' alt='podcast artwork'/>   
+                        <img src={podcast.feed.artwork} height='300px' width='300px' alt='podcast artwork' onError={handleImageError}/>   
                     </Grid>
                     <Grid item xs={10} md={6} lg={6} sx={{ display:"flex", flexDirection: 'column', justifyContent:"left"}}>
                         {/* md and above version */}
@@ -126,11 +111,7 @@ function PodcastDetailLayout(){
                             </Grid>
                             <Grid item xs={12} md={6}>
                             {currentUser
-                            ? (
-                                // <Button>
-                                    <FavoriteButton podcastData={podcast.feed} feedId={feedid} />
-                                // </Button>
-                              )
+                            ? <FavoriteButton podcastData={podcast.feed} feedId={feedid} />
                             : <MessageToLogin message={"favorite"} />
                             }
                             </Grid>
@@ -143,8 +124,7 @@ function PodcastDetailLayout(){
       </Box>
       </header>
       <section>
-        {/* <EpisodeList count ={podcast.episodeData.count} episodes={podcast.episodeData.episodes}/> */}
-        <Outlet context={{reviews:reviews, count:podcast.episodeData.count, episodes:podcast.episodeData.episodes, link:podcast.feed.link}}/>
+        <Outlet context={{reviews:reviews, count:podcast.episodeData.count, episodes:podcast.episodeData.episodes, link:podcast.feed.link, setReviews}}/>
     
       </section>
       </>

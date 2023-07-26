@@ -266,6 +266,7 @@ class User {
           [user.id, feedId, data.comment, data.rating]
         )
         const newReview =result.rows[0];
+        newReview.username = username;
         // use review id in the frontend of review container.
         return newReview; 
     } catch(err){
