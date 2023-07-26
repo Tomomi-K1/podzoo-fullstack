@@ -5,6 +5,7 @@ import removeTags from "../common/helper"
 import Loader from "../common/Loader";
 import UserContext from '../UserContext';
 import handleImageError from "../common/handleImageError";
+import fallbackImage from "../image/default.jpg"
 import EpisodeList from "../episodes/EpisodeList";
 // Material UI
 import Grid from "@mui/material/Grid";
@@ -76,7 +77,7 @@ function PodcastDetailLayout(){
                 <Grid container spacing={1} sx={{flexGrow:1, justifyContent:"center"}} > 
                     <Grid item xs={12} md={6} lg={6} sx={{ display:"flex", justifyContent:"center"}}>
                         {/* <Grid container justifyContent="center" spacing={1}> */}
-                        <img src={podcast.feed.artwork} height='300px' width='300px' alt='podcast artwork' onError={handleImageError}/>   
+                        <img src={podcast.feed.artwork?podcast.feed.artwork:fallbackImage} height='300px' width='300px' alt='podcast artwork' onError={handleImageError}/>   
                     </Grid>
                     <Grid item xs={10} md={6} lg={6} sx={{ display:"flex", flexDirection: 'column', justifyContent:"left"}}>
                         {/* md and above version */}
@@ -123,10 +124,10 @@ function PodcastDetailLayout(){
       </Grid>
       </Box>
       </header>
-      <section>
+      <Box component='section' sx={{backgroundColor:'#fafafa', height:'100vh'}}>
         <Outlet context={{reviews:reviews, count:podcast.episodeData.count, episodes:podcast.episodeData.episodes, link:podcast.feed.link, setReviews}}/>
     
-      </section>
+      </Box>
       </>
   )
 }

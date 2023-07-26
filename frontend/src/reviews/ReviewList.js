@@ -10,6 +10,7 @@ import moment from 'moment';
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import List from '@mui/material/List';
@@ -98,20 +99,22 @@ function ReviewList(){
                 <Grid item xs={11} md={8} sx={{justifyContent:'center', alignItems:'center'}}>
                 {reviews.reviews.map(review =>{
                     return(
-                        <ListItem key={review.id} sx={{border:'solid 1px grey', display:'flex', flexDirection:'column'}}>              
-                        <Box sx={{display:"flex", justifyContent:'space-between', alignItems:'center', width:'100%', p:1}}>
-                            <Rating value={review.rating} readOnly/>
-                            <Typography variant="body2">{moment(review.createdAt).utc().format("MM/DD/YYYY")}</Typography>
-                        </Box>
-                        <Box sx={{width:'100%', p:1}}>             
-                            <Typography sx={{display:'flex', flexWrap:'wrap', wordBreak:'break-all'}}>Username: {review.username}</Typography>
-                        </Box>
-                        <Box sx={{width:'100%', p:1}}>
-                        <Typography variant="body2">{review.comment}</Typography>
-                        </Box>
-                        {currentUser
-                        ? <EditAndDeleteButton review={review} />
-                        : ''}                                      
+                        <ListItem key={review.id} sx={{display:'flex', flexDirection:'column'}} >              
+                            <Card sx={{width:"100%", p:2}}>
+                                <Box sx={{display:"flex", justifyContent:'space-between', alignItems:'center', width:'100%', p:1}}>
+                                    <Rating value={review.rating} readOnly/>
+                                    <Typography variant="body2">{moment(review.createdAt).utc().format("MM/DD/YYYY")}</Typography>
+                                </Box>
+                                <Box sx={{width:'100%', p:1}}>             
+                                    <Typography sx={{display:'flex', flexWrap:'wrap', wordBreak:'break-all'}}>Username: {review.username}</Typography>
+                                </Box>
+                                <Box sx={{width:'100%', p:1}}>
+                                <Typography variant="body2">{review.comment}</Typography>
+                                </Box>
+                                {currentUser
+                                ? <EditAndDeleteButton review={review} />
+                                : ''}
+                            </Card>                                   
                         </ListItem>
                     )
                 })}
