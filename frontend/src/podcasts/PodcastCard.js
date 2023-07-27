@@ -27,7 +27,7 @@ function PodcastCard({podcast}){
             />
    
                 <CardContent>
-                    <Typography variant="body1" color="text.secondary" sx={{fontWeight:'bold'}}>
+                    <Typography variant="body1" color="text.secondary" sx={{fontWeight:'bold', textDecoration:'none'}}>
                         {podcast.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">

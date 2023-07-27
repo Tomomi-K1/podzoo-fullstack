@@ -41,7 +41,7 @@
 - [x] fix submit button position on review form
 
 ### others
-- [ ] protect route that a specific user can access
+- [x] protect route that a specific user can access
 - [ ] Loader component update
 - [ ] audio error handling
 - [ ] [make Material UI font responsive] (https://mui.com/material-ui/customization/typography/#responsive-font-sizes) especially on PodcastList.js
