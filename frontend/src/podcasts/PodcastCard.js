@@ -14,7 +14,7 @@ function PodcastCard({podcast}){
      
     return(
         
-        <Card sx={{maxWidth: "200px", m:2}} raised>
+        <Card sx={{maxWidth: "200px", m:2}}>
             <Link to={`/podcast/${podcast.feedId}`}>
    
             <CardMedia

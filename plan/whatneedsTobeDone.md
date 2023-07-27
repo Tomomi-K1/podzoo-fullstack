@@ -34,7 +34,6 @@
 ### categories
 - [X] have categories button or card to show podcast of a selected category
 - [X] decide which categories to use. Have it in the separate json file.
-- [ ] Is it better to make search by categories dropdown menu
 
 ### reviews
 - [X] review page - change design to list
@@ -44,6 +43,7 @@
 ### others
 - [ ] protect route that a specific user can access
 - [ ] Loader component update
+- [ ] audio error handling
 - [ ] [make Material UI font responsive] (https://mui.com/material-ui/customization/typography/#responsive-font-sizes) especially on PodcastList.js
 - [ ] create a page that shows a list of favorites 
     - [ ] On the list, each favorite podcast will have 'remove' button
@@ -60,6 +60,7 @@
 - [ ] Add "footer section with 'about' etc"
 - [ ] podcast detail's background to have gradient color(if I have time)
 - [ ] add footer?
+- [ ] this of better design for search by categories section on Home.js
 
 ### Questions
 - [ ] how do I know which media types?
@@ -73,4 +74,6 @@
 ### what I am learning
 - when creating backend, make it clear what kind of data will be sent back. e.g {user:{ name, id etc..}} If I had a easy documentation for my own API it would be helpful.
 - when using external API, before creating backend API and frontend structure, think about naming of columns in database so it would be easier to understand but could also utilize same naming as external api response.
+- variable that is created useState() won't be updated right away so I cannot use the variable new value after using the setter in the same function. For example, I may try to use `data` by declaring like `const[ data, setData] = useState(null)` in `handleSubmit function`. Inside `handleSubmit`, I want to `setData` to new data and use that value in `handleSubmit`. However `data` won't be updated inside `handleSubmit` function.
+- for image fallback, you can use `onerror = ...`
 

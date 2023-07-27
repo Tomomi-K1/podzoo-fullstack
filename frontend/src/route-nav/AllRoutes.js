@@ -6,13 +6,13 @@ import SignupForm from "../auth/SignupForm";
 import LoginForm from "../auth/LoginForm";
 import ProfileForm from "../profile/ProfileForm";
 import SearchResult from "../podcasts/SearchResult";
-import PodcastList from "../podcasts/PodcastList";
 import FavoriteList from "../podcasts/FavoriteList";
 import ReviewForm from "../reviews/ReviewForm";
 import PodcastDetailLayout from "../podcasts/PodcastDetailLayout";
 import ReviewList from "../reviews/ReviewList";
 import EpisodeList from "../episodes/EpisodeList";
 import EditReviewForm from "../reviews/EditReviewForm";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 function AllRoutes({signup, logout, login}){
@@ -23,17 +23,37 @@ function AllRoutes({signup, logout, login}){
                 <Route path="signup" element={<SignupForm signup = {signup} />} />
                 <Route path="login" element={<LoginForm login ={login} />} />
                 <Route path="search/:term" element={<SearchResult />} />
-                {/* protect */}
-                <Route path="user/profile" element={<ProfileForm />} />
-                 {/* protect */}
-                <Route path="user/favorites" element={<FavoriteList/>} />
+                <Route path="user/profile" 
+                       element={
+                            <ProtectedRoute>
+                                <ProfileForm />
+                            </ProtectedRoute>
+                            } 
+                />
+                <Route path="user/favorites" 
+                       element={
+                        <ProtectedRoute>
+                            <FavoriteList/>
+                       </ProtectedRoute>
+                       } 
+                />
                 <Route path="podcast/:feedid" element={<PodcastDetailLayout />} >
                     <Route index element={<EpisodeList />} />
                     <Route path="reviews" element={<ReviewList />} />
-                    {/* protect */}
-                    <Route path="reviews/form" element ={<ReviewForm />} />
-                     {/* protect */}
-                    <Route path="reviews/:reviewid/edit" element ={<EditReviewForm />} />
+                    <Route path="reviews/form" 
+                           element ={
+                            <ProtectedRoute>
+                                <ReviewForm />
+                            </ProtectedRoute>
+                           } 
+                    />
+                    <Route path="reviews/:reviewid/edit" 
+                           element ={
+                            <ProtectedRoute>
+                                <EditReviewForm />
+                            </ProtectedRoute>
+                            } 
+                    />
                 </Route>
                 <Route path="*" element={<Home />} />
                 {/* if not route matches then it will show homepage.
