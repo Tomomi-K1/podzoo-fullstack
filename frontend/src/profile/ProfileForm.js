@@ -79,7 +79,7 @@ function ProfileForm(){
                     maxWidth: 500,
                     flexGrow: 1
                 }}>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h2> User Profile </h2>
                 <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
                     <InputLabel htmlFor="username">Username</InputLabel>
@@ -109,7 +109,7 @@ function ProfileForm(){
               {isSaved?
                   <ShowAlert type="success" messages={["Updated successfully."]} />
                   : null}  
-                <Button margin='normal' onClick={handleSubmit}>Submit</Button>
+                <Button type ='submit' margin='normal'>Submit</Button>
             </form>
         </Paper>
     

@@ -55,7 +55,7 @@ function LoginForm({login}){
     }
     
     return (
-        <form>
+        
         <Container sx ={{
             display:'flex', 
             mt: 10
@@ -71,7 +71,7 @@ function LoginForm({login}){
                     alignItems:'center', 
                     justifyContent:'center' 
                 }}>
-
+            <form onSubmit={handleSubmit}>
                 <h2>Login Form</h2>
                 <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
                     <InputLabel htmlFor="username">Username</InputLabel>
@@ -113,12 +113,12 @@ function LoginForm({login}){
                 <ShowAlert type ='error' messages={formErrors} />
                 </Box>
                 : null}
-                <Button margin='normal' onClick={handleSubmit}>Submit</Button>     
+                <Button type='submit' margin='normal' >Submit</Button>     
             {/* onSubmit={handleSubmit} on form element did not work. Why? */}
-           
+            </form>    
         </Paper>            
       </Container>
-      </form> 
+     
     )
 }
 

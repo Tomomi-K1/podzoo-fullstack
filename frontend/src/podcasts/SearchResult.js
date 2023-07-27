@@ -86,8 +86,13 @@ function SearchResult(){
             return;
           };
           console.log(`is this running tooo?`)
-          const data = podcasts.filter(p => p.categories !==null);
-          const filteredpods = data.filter(d => evt.target.value in d.categories);
+        //   const data = podcasts.filter(p => p.categories !==null);
+          const filteredpods = podcasts.filter(p => {
+                if(p.categories !==null){
+                    return evt.target.value in p.categories
+                }
+            });
+        //   const filteredpods = data.filter(d =>d.categories !==null && evt.target.value in d.categories);
           setData(filteredpods);
           setSortBy('')
       }    

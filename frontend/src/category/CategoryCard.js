@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 function CategoryCard({category}){
     return(
-        <Button sx={{maxWidth: "200px", display:"inline-block", p:0}} raised={true}>
+        <Button sx={{maxWidth: "200px", display:"inline-block", p:1}} >
             <Link to={`/search/${category.name}`} >
                     <Typography variant="body2" color="text.secondary" sx={{fontWeight:'bold'}}>
                         {category.name}

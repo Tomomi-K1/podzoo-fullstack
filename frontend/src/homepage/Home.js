@@ -8,6 +8,7 @@ import categories from "../category/categories";
 // Material UI
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -56,8 +57,7 @@ function Home() {
                 placeholder='search'
                 value={searchTerm}
                 onChange={handleChange}
-            >   
-            </TextField>
+            />     
             </Box>
             </form>
             <Typography variant="h6" sx={{m:3, fontWeight:'bold'}}> Find by Categories</Typography>
@@ -72,23 +72,5 @@ function Home() {
   
   export default Home;
 
-  
-// <h2>Episode</h2>
-// {podcasts.map(feed =>{
-//     return (
-//         <div className={feed.id}>
-//             <img src={feed.image} alt="podcast artwork" height={100} width={100}/>
-//             <h3>{feed.title}</h3>
-//             <p>{feed.description}</p>
-//             <figure>
-//             <figcaption>Listen to episode {feed.episode}</figcaption>
-//                 <audio
-//                     controls
-//                     src={feed.enclosureUrl}>
 
-//                 </audio>
-//             </figure>
-//         </div>
-//     ) 
-//  })}
   
