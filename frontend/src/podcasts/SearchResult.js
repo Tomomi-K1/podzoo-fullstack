@@ -12,7 +12,11 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Typography  from "@mui/material/Typography";
 
-
+/** SearchResult
+ * Route: "search/:term"
+ * -shows list of podcasts that matches to the search term using PodcastList component
+ * -Filter and sorts list of podcasts
+ */
 function SearchResult(){
     const navigate = useNavigate();
     const {term} = useParams();
@@ -29,6 +33,12 @@ function SearchResult(){
     // data to save user selected filter item
     const [filterByCateg, setFilterByCateg] = useState('');
     
+    /**  Use effect will run if 'term' changes
+     * - get podcasts from backend that matches to search term
+     * - get podcast categories from third party api to use it in the filter
+     * - assign podcasts data to 'data' state so that we can keep original podcasts data when we filter data
+     * -set sortby, filterByCateg to reset to original state
+    */
     useEffect(() => {
         async function getPodcastsByTerm(){
             let res = await PodApi.searchPodcasts(term);
@@ -47,6 +57,8 @@ function SearchResult(){
         getPodcastsByTerm();
     }, [term]);
 
+      /**handle submit on search box
+       * -reset filter and sort */
     function handleSubmit(evt){
         evt.preventDefault();
         navigate(`/search/${searchTerm}`);
@@ -54,12 +66,18 @@ function SearchResult(){
         setSortBy('');
     }
 
+    /**handleChange on search box */
     function handleChange(evt){
         evt.preventDefault();
         let {value} =evt.target;
         setSearchTerm(value);
     }
 
+    /**handle sorting
+     * get user's input as 'value'
+     * short depending on either 'title' or 'author'
+     * setData to newly sorted data
+     */
     function handleSortChange(evt){
         evt.preventDefault()
         const {value} =evt.target
@@ -76,7 +94,13 @@ function SearchResult(){
         }) 
         setData(p =>[...sortedPodcasts]);
       };
-  
+      
+    /**handle filtering
+     * -reset filter if value is 0
+     * - filter by category id number
+     * - setData to filtered podcasts
+     * - every time we filter, reset sort value
+     */
       function handleFilterChange(evt){
           evt.preventDefault();
           setFilterByCateg(evt.target.value);
@@ -85,21 +109,19 @@ function SearchResult(){
             setData(podcasts)
             return;
           };
-          console.log(`is this running tooo?`)
         //   const data = podcasts.filter(p => p.categories !==null);
+        //   const filteredpods = data.filter(d =>evt.target.value in d.categories);
           const filteredpods = podcasts.filter(p => {
                 if(p.categories !==null){
                     return evt.target.value in p.categories
                 }
             });
-        //   const filteredpods = data.filter(d =>d.categories !==null && evt.target.value in d.categories);
           setData(filteredpods);
           setSortBy('')
       }    
     
     if(!podcasts) return <Loader />
- 
-    
+     
     console.debug(`data`, data);
     console.debug('filteredByCateg', filterByCateg);
     console.debug(`podcast`, podcasts)

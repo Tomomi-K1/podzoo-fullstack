@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { useParams, Link, useOutletContext } from "react-router-dom";
 import PodApi from "../api/PodApi";
-import Loader from "../common/Loader";
 import UserContext from "../UserContext";
 import MessageToLogin from "../common/MessageToLogin";
-import EpisodeList from "../episodes/EpisodeList";
 import moment from 'moment';
 // Material UI
 import Grid from "@mui/material/Grid";
@@ -15,21 +13,16 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 
 
 
-/** This page shows:
- * Podcast detailed Information
- * Rating
- * List of Episode 
- * User likes or not
+/** ReviewList
+ * This page shows:
+ * - Podcast detailed Information
+ * - Rating
+ * - List of Episode 
+ * - User likes or not
  * */
-
-// need to decode date
 
 function ReviewList(){
     const {currentUser} = useContext(UserContext);
@@ -40,7 +33,9 @@ function ReviewList(){
     console.log(reviews)
 
     /**Review Link component
-     * 
+     * a user can only write one review per podcast
+     * if there is a user's review on the showing podcast
+     * then we will not show "Write Your Review" Button
      */
     function ReviewLink(){
         const reviewUsername = reviews.reviews.filter(review=>review.username === currentUser.username);
@@ -61,7 +56,10 @@ function ReviewList(){
      * handleClick on delete will setReviews and delete data from database
     */
      function EditAndDeleteButton({review}){
-
+        /** handleClick
+         * -request to delete reviews
+         * -get updated reviews from backend and assign it to reviews state
+          */
        async function handleClick(evt){
             evt.preventDefault();
             try{

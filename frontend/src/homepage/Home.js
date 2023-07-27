@@ -12,17 +12,23 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 
+/** Home
+ * Route : '/' main route
+ * shows trending podcasts using PodcastList, categories using CategoryLists
+ * Have a searchbox that linked to search route
+ */
+
 function Home() {
-    
     const [podcasts, setPodcasts] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 
+    // runs at first render to get podcasts
     useEffect(function getPodcasts() {
-        console.debug("get podcasts in useEffect");
         api();
     }, []);
 
+    // get trending podcasts data and assign it to podcasts state
     async function api(){
         console.log(`api call at Home`)
         try{
@@ -32,12 +38,15 @@ function Home() {
             console.log(`error when making api call`)
         }
     }
-
+    /** handleSubmit of search box
+     * it navigates to search route
+     */
     function handleSubmit(evt){
         evt.preventDefault();
         navigate(`/search/${searchTerm}`);
     }
 
+    /** handleChange in search box*/
     function handleChange(evt){
         evt.preventDefault();
         let {value} =evt.target;
@@ -45,10 +54,11 @@ function Home() {
         console.log(searchTerm);
     }
     
+    // if podcasts is not received yet, then show Loader component
     if(!podcasts){
         return <Loader />
     }
-    console.log(podcasts)
+
     return (
         <div className="Homepage">
             <form onSubmit={handleSubmit}>
@@ -66,7 +76,6 @@ function Home() {
             <Typography variant="h3" sx={{m:5, fontWeight:'bold'}}>Trending podcasts</Typography>
                 <PodcastList podcasts={podcasts}/>
         </div>
-        
     );
   }
   

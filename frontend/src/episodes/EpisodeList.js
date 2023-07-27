@@ -8,8 +8,11 @@ import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-/**show list of episode. nest EpisodeCard */
-
+/** EpisodeList
+ * Route: used in ("/podcast/:feedid") route
+ * show list of episode using EpisodeCard component
+ * component using EpisodeList: PodcastDetailLayout.js
+*/
 function EpisodeList(){
     const{count, episodes, link} =useOutletContext()
     console.debug('episodeList')
@@ -18,19 +21,21 @@ function EpisodeList(){
         // add hover effect
         <Box sx ={{pt:5}}>
             <List>
-            <Typography variant='body2' sx={{p:4}}>Number of Episodes shown here is {count}. For more episode and details, visit <a href={link} target="_blank">Podcast Homepage</a></Typography>
-          
-            <Grid container spacing={1} sx={{flexGrow:1}} justifyContent="center">
-                <Grid item xs={12} md={9} lg={7} sx={{ display:"flex", justifyContent:"center", flexDirection: 'column'}}>
-                    {episodes.map(episode =>{
-                        return (  
-                            <ListItem key={episode.id}>    
-                            <EpisodeCard  episode={episode} />
-                            </ListItem>   
-                        )})
-                    }
+                <Typography variant='body2' sx={{p:4}}>
+                    Number of Episodes shown here is {count}. For more episode and details, visit 
+                    <a href={link} target="_blank">Podcast Homepage</a>
+                </Typography>
+                <Grid container spacing={1} sx={{flexGrow:1}} justifyContent="center">
+                    <Grid item xs={12} md={9} lg={7} sx={{ display:"flex", justifyContent:"center", flexDirection: 'column'}}>
+                        {episodes.map(episode =>{
+                            return (  
+                                <ListItem key={episode.id}>    
+                                <EpisodeCard  episode={episode} />
+                                </ListItem>   
+                            )})
+                        }
+                    </Grid>
                 </Grid>
-            </Grid>
             </List>
         </Box>
         

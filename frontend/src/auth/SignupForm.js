@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import ShowAlert from "../common/ShowAlert";
-import UserContext from "../UserContext";
 // material UI
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -15,8 +14,13 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
-
+/** Signup form.
+ * Route: '/signup'
+ * Shows form and manages update to formData state on changes.
+ * On submission:
+ * - calls signup function prop
+ * - redirects to home ('/') route
+ */
 function SignupForm({signup}){
     // ---material UI pssword setting related ---
     const [showPassword, setShowPassword] = useState(false);
@@ -35,8 +39,9 @@ function SignupForm({signup}){
     const [formErrors, setFormErrors] = useState([]);
 
     /**== handle submit signup form ==
-     * calls signup func
+     * calls signup function prop (update token => trigger useEffect on App.js to assign currentUser)
      * if successful, redirect to home
+     * if error, assign errors to FormErrors state
     */
     async function handleSubmit(evt){
         evt.preventDefault();

@@ -3,7 +3,7 @@ import PodApi from "../api/PodApi";
 import UserContext from "../UserContext";
 import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 import ShowAlert from "../common/ShowAlert";
-// import Alert from "../common/Alert";
+// Material UI
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -13,6 +13,11 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Rating from '@mui/material/Rating';
 
+/*Edit Review Form
+* Route:"/podcast/:feedid/reviews/:reviewid/edit"
+* -shows form and let user edit their own comment and rating
+* this route can only be accessed if a user is logged in
+*/
 function EditReviewForm(){
     const {currentUser} = useContext(UserContext);
     const{reviews, setReviews} =useOutletContext();
@@ -34,12 +39,6 @@ function EditReviewForm(){
      * make api calls to backend to update user's review
      * setReviews to updated reviews
     */
-
-    // static async updateReviews(username, reviewId, data){
-    //     let res = await this.request(`users/${username}/reviews/${reviewId}`, data, "patch");
-    //     return res.review;
-    //     }
-
     async function handleSubmit(evt){
         evt.preventDefault();
         try{
@@ -54,6 +53,7 @@ function EditReviewForm(){
         }
     }
 
+    /** handle user input change */
     function handleChange(evt){
         const { name, value } = evt.target;
         setFormData(l => ({ ...l, [name]: value }));

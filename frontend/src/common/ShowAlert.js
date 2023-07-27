@@ -2,9 +2,9 @@ import React from "react";
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 
-/** component to effectively show alert messages.
- *
- * { LoginForm, SignupForm, ProfileForm } -> Alert
+/** ShowAlert 
+ * component to effectively show alert messages.
+ * Component using this: LoginForm, SignupForm, ProfileForm 
  **/
 
 function ShowAlert({ type = "error", messages = [] }) {

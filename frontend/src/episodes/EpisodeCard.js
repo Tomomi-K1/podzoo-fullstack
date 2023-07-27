@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from "react";
-import removeTags from "../common/helper";
-import handleImageError from "../common/handleImageError";
+import React from "react";
+import {removeTags} from "../common/helper";
+import {handleImageError} from "../common/helper";
 import fallbackImage from "../image/default.jpg"
 // Material UI
 import { styled } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-// material UI
+// material UI function
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
@@ -28,9 +25,12 @@ const ExpandMore = styled((props) => {
     }),
   }));
 
-/**use as a card in a episode list */
+/**EpisodeCard
+ * Route: used in ("/podcast/:feedid") route
+ * shows a episode's audio and info
+ * Component using EpisodeCard: PodcastDetailLayout.js
+*/
 function EpisodeCard({episode}){
-
     // material UI
     const [expanded, setExpanded] = React.useState(false);
     const handleExpandClick = () => {
@@ -39,7 +39,6 @@ function EpisodeCard({episode}){
 
     return (
         <Card className={`${episode.id}`} sx={{display:'flex', width:'100%', p:1, m:1}}>
-            {/* <img src={episode.image} alt="podcast artwork" height={100} width={100} onError={handleImageError}/> */}
             <Box sx={{display:{xs:'none', md:'flex'}, justifyContent: 'center', alignItems:'center', p:1}} >
                 <CardMedia 
                     component="img"
@@ -61,8 +60,6 @@ function EpisodeCard({episode}){
                         >
                     </audio>
                 </CardContent>
-                
-                {/* <CardActions disableSpacing sx={{p:0}}> */}
                     <ExpandMore
                         expand={expanded}
                         onClick={handleExpandClick}
@@ -71,7 +68,6 @@ function EpisodeCard({episode}){
                     >
                         <ExpandMoreIcon />
                     </ExpandMore>
-                {/* </CardActions> */}
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph variant='body2'>{removeTags(episode.description)}</Typography>

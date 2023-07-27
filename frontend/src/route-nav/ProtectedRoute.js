@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import UserContext from "../UserContext";
 
+/** Protected Route
+ *
+ * This component will check if there is a valid current user and only continues to the
+ * route if so. If no user is present, redirects to homepage.
+ */
 const ProtectedRoute = ({children}) => {
-    const navigate = useNavigate();
     const {currentUser} = useContext(UserContext);
     if (!currentUser) {
-      console.log(`no user`)
       return <Navigate to='/'/>;
     }
-    console.log(`this ran?`)
     return children;
   };
 

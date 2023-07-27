@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import Card from '@mui/material/Card';
+// Material UI
 import Button from '@mui/material/Button';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
+/** CategoryCard
+ * Route: used inside homepage('/')
+ * receives categories as a prop and create a button with link to Search route where it shows search resutls 
+ * component using CategoryCard : CategoryList.js
+ */
 
 function CategoryCard({category}){
     return(

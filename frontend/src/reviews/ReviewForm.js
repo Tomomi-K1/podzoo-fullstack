@@ -13,18 +13,30 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Rating from '@mui/material/Rating';
 
+/*Review Form
+* Route:"/podcast/:feedid/reviews/form"
+* -shows form and let user write their own comment and rating
+* this route can only be accessed if a user is logged in
+*/
 function ReviewForm(){
     const {currentUser} = useContext(UserContext);
     const{reviews, setReviews} =useOutletContext();
     const navigate = useNavigate();
     const {feedid} = useParams();
-    const [rating, setRating] =useState(0);
     const [formData, setFormData] = useState({
         rating: 0,
         comment:''
     });
     const [formErrors, setFormErrors] = useState([]);
     console.debug('reviews', reviews)
+    /** handleSubmit
+     * if success:
+     * -request backend to add a user's review
+     * -get newly updated reviews for a podcasts
+     * -set reviews state to newly updated reviews and redirect user to reviews page
+     * if error:
+     * - assign errors to FormErrors
+     */
     async function handleSubmit(evt){
         evt.preventDefault();
         console.log(`did this run?`)
@@ -40,18 +52,14 @@ function ReviewForm(){
         }
     }
 
+    /** handle user input */
     function handleChange(evt){
         const { name, value } = evt.target;
         setFormData(l => ({ ...l, [name]: value }));
         }
     console.log(formData);
     return (
-        <Container sx ={{
-            display:'flex', 
-            mt: 10
-            // height:'100vh' 
-            }}>
-           
+        <Container sx ={{display:'flex', mt: 10}}>
             <Paper
                 elevation={4}
                 sx={{
@@ -84,7 +92,6 @@ function ReviewForm(){
                 <Button type='submit' margin='normal'>Submit</Button>
             </form>
         </Paper>
-    
       </Container>
     )
 }

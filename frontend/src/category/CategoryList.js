@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
+// Material UI
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-
 import CategoryCard from "./CategoryCard";
 
-
+/** CategoryList
+ * Route : used in homepage('/')
+ * renders CategoryCard components and show it as a list
+ * component using CategoryList : Home.js
+ */
 function CategoryList({categories}){
-
-
-
     return(
-        // <Grid container spacing={1} >
         <Grid container spacing={1} sx={{flexGrow:1}} justifyContent="center">
             <Grid item xs={12} md={11} lg={10} sx={{ display:"flex", justifyContent:"center"}}>
                 <Grid container justifyContent="center" spacing={1}>
@@ -23,19 +22,7 @@ function CategoryList({categories}){
                 })}
                 </Grid>
             </Grid>
-     </Grid>
-    //     <Container sx={{display:"flex", justifyContent:"center", flexWrap:"wrap"}}>
-    //     {categories.map(category =>{
-    //         return (
-    //            <div key={category.id}>
-    //             {/* <Grid item xs ={6} md={4} lg={3} sx={{m:'auto'}} > */}
-    //               <CategoryCard  category={category}/>
-    //              {/* </Grid> */}
-    //              </div>
-    //         ) 
-    //     })}
-    //  {/* </Grid> */}
-    //  </Container>
+        </Grid>
     )
 }
 

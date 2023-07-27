@@ -14,16 +14,22 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
+/** Login form
+ * Route : ('/login')
+ * Shows form and error manages
+ * On submission:
+ * - calls login function prop
+ * - redirects to homepage ('/') route
+ */
 
 function LoginForm({login}){
-    // ---material UI pssword setting related ---
+    // ---material UI password setting related ---
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
       event.preventDefault();
     };
-    // ---end of material UI pssword setting related ---
+    // ---end of material UI password setting related ---
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -33,8 +39,8 @@ function LoginForm({login}){
     const [formErrors, setFormErrors] = useState([]);
 
     /**== handle submit login form ==
-     * calls login func
-     * if successful, redirect to home
+     * calls login function prop
+     * if successful, redirect to home('/')
     */
     async function handleSubmit(evt){
         evt.preventDefault();
@@ -48,19 +54,14 @@ function LoginForm({login}){
         }
     }
 
-    /** == Update form data field  ==*/
+    /** == Update form data field as user type in  ==*/
     function handleChange(evt) {
     const { name, value } = evt.target;
     setFormData(l => ({ ...l, [name]: value }));
     }
     
     return (
-        
-        <Container sx ={{
-            display:'flex', 
-            mt: 10
-            }}>
-            
+        <Container sx ={{display:'flex', mt: 10}}>
             <Paper 
                 elevation={4}
                 sx={{
@@ -113,12 +114,10 @@ function LoginForm({login}){
                 <ShowAlert type ='error' messages={formErrors} />
                 </Box>
                 : null}
-                <Button type='submit' margin='normal' >Submit</Button>     
-            {/* onSubmit={handleSubmit} on form element did not work. Why? */}
+                <Button type='submit' margin='normal' >Submit</Button>  
             </form>    
         </Paper>            
       </Container>
-     
     )
 }
 

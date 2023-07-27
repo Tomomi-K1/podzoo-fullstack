@@ -1,24 +1,23 @@
 import React, {useState, useContext} from "react";
 import UserContext from "../UserContext";
-
+// Material UI
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
-
-
 const label = { inputProps: { "aria-label": "like button" }};
-/** shows favorite button
+
+/** FavoriteButton
+ * shows favorite button
  * makes api call to backend to remove and add user's favorite
  * update heart colored when it is clicked
- * component using this : PodcastDetailedLayout.js
+ * component using FavoriteButton : PodcastDetailedLayout.js
  */
-function FavoriteButton({podcastData, feedId}) {
-   
-    const { currentUser, likePod, favorites, removeLike, checkFavPod } = useContext(UserContext);
+function FavoriteButton({podcastData, feedId}) {  
+    const { currentUser, likePod, removeLike, checkFavPod } = useContext(UserContext);
     const [checked, setChecked] = useState(()=> checkFavPod(feedId));
-   
     const username = currentUser.username;
+    // make podcastData suitable for backend database
     const data = {
         feedId: podcastData.id,
         author: podcastData.author,
@@ -26,9 +25,11 @@ function FavoriteButton({podcastData, feedId}) {
         artwork: podcastData.artwork
     }
 
-    function handleChange (evt){
-        console.debug(`handleChange ran in favoriteButton`)
-        
+     /** == handleChange function  ==
+      * Update checkbox information field
+      * runs removeLike, LikePod functions
+     */
+    function handleChange (evt){        
         if(evt.target.checked === true){
             console.debug(`add`)
             setChecked(true);

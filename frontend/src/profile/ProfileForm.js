@@ -3,20 +3,19 @@ import UserContext from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import ShowAlert from "../common/ShowAlert";
 import PodApi from "../api/PodApi";
-
+// Material UI
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
+/** ProfileForm
+ * Route: "user/profile"
+ * -shows form with currentUser's info in it
+ * -update user info and redirect to home after 3 seconds
+ */
 function ProfileForm(){
     const navigate = useNavigate();
     const {currentUser, setCurrentUser} = useContext(UserContext);

@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-import PodcastCard from "./PodcastCard";
 import UserContext from "../UserContext";
 import Loader from "../common/Loader";
-
+import PodcastList from "./PodcastList";
+// Material UI
 import Box from '@mui/material/Box';
 import PodApi from "../api/PodApi";
-import { Typography } from "@mui/material";
-import PodcastList from "./PodcastList";
+import Typography from "@mui/material/Typography";
 
-
+/**FavoriteList
+ * Route: '/user/favorites'
+ * shows favorite podcasts of a user using PodcastList component.
+ */
 function FavoriteList(){
     const { currentUser, favorites } = useContext(UserContext);
     const [favPodcasts, setFavPodcast] = useState(null);

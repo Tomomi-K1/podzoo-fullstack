@@ -3,7 +3,11 @@ import PodcastCard from "./PodcastCard";
 // Material UI
 import Grid from '@mui/material/Grid';
 
-
+/** PodcastList : stateless
+ * receives podcasts as a prop
+ * shows list of podcasts using PodcastCard
+ * component using PodcastList: Home, SearchResults, FavoriteList
+ */
 function PodcastList({podcasts}){
     return(
         // add hover effect
@@ -20,8 +24,7 @@ function PodcastList({podcasts}){
                     }
                 </Grid>
             </Grid>
-     </Grid>
-        
+        </Grid>
     )
 }
 

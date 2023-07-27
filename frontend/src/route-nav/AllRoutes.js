@@ -14,7 +14,11 @@ import EpisodeList from "../episodes/EpisodeList";
 import EditReviewForm from "../reviews/EditReviewForm";
 import ProtectedRoute from "./ProtectedRoute";
 
-
+/** Site-wide routes.
+ * Parts of site should only be visitable when logged in. Those routes are
+ * wrapped by <ProtectedRoute>, which is an authorization component.
+ * Visiting a non-existent route redirects to the homepage.
+ */
 function AllRoutes({signup, logout, login}){
     return (
         <Routes>

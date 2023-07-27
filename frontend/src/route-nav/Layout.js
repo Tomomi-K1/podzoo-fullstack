@@ -1,5 +1,7 @@
 import React, {useState, useContext} from "react";
+import UserContext from '../UserContext';
 import { Outlet } from "react-router-dom";
+// Material UI
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,10 +14,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AlbumIcon from '@mui/icons-material/Album';
-import UserContext from '../UserContext';
 
 const pages = ['Profile', 'Favorites'];
 
+/** Layout.
+ * Route: /
+ * Provides site-wide outline with navbar
+ * shows different nav link depending on user is logged in or not.
+ * Rendered by App.
+ */
 function Layout({logout}) {
   const {currentUser} = useContext(UserContext);
   console.log(currentUser)
