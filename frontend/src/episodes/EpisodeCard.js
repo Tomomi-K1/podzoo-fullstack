@@ -40,7 +40,7 @@ function EpisodeCard({episode}){
     return (
         <Card className={`${episode.id}`} sx={{display:'flex', width:'100%', p:1, m:1}}>
             {/* <img src={episode.image} alt="podcast artwork" height={100} width={100} onError={handleImageError}/> */}
-            <Box sx={{display:'flex', justifyContent: 'center', alignItems:'center', p:1}} >
+            <Box sx={{display:{xs:'none', md:'flex'}, justifyContent: 'center', alignItems:'center', p:1}} >
                 <CardMedia 
                     component="img"
                     sx={{width: 100, height:100}}

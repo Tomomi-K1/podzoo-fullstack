@@ -22,13 +22,17 @@ function AllRoutes({signup, logout, login}){
                 <Route index element={<Home />} />  
                 <Route path="signup" element={<SignupForm signup = {signup} />} />
                 <Route path="login" element={<LoginForm login ={login} />} />
-                <Route path="user/profile" element={<ProfileForm />} />
                 <Route path="search/:term" element={<SearchResult />} />
+                {/* protect */}
+                <Route path="user/profile" element={<ProfileForm />} />
+                 {/* protect */}
                 <Route path="user/favorites" element={<FavoriteList/>} />
                 <Route path="podcast/:feedid" element={<PodcastDetailLayout />} >
                     <Route index element={<EpisodeList />} />
                     <Route path="reviews" element={<ReviewList />} />
+                    {/* protect */}
                     <Route path="reviews/form" element ={<ReviewForm />} />
+                     {/* protect */}
                     <Route path="reviews/:reviewid/edit" element ={<EditReviewForm />} />
                 </Route>
                 <Route path="*" element={<Home />} />

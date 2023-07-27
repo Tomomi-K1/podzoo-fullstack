@@ -1,12 +1,11 @@
 import React, {useState, useContext} from "react";
-import { Outlet, NavLink, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -195,13 +194,6 @@ function Layout({logout}) {
                 >
                   Signup
                 </Button>
-
-                  {/* <Button>
-                    <NavLink to="login">Login</NavLink>
-                  </Button>
-                  <Button >
-                    <NavLink to="signup">Signup</NavLink>
-                  </Button> */}
               </Box>
             </Toolbar>
       </Container>

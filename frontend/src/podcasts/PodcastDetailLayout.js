@@ -71,7 +71,7 @@ function PodcastDetailLayout(){
     return(
         <>
         <header>
-        <Box sx={{backgroundColor:"lightgrey", flexGrow:1, pt:3, pb:3}}>
+        <Box sx={{backgroundColor:"#e0e0e0", flexGrow:1, pt:3, pb:3}}>
         <Grid container spacing={1} sx={{flexGrow:1, justifyContent:"center"}} >
             <Grid item xs={12} md={11} lg={8} sx={{ display:"flex", justifyContent:"center"}}>
                 <Grid container spacing={1} sx={{flexGrow:1, justifyContent:"center"}} > 
@@ -81,7 +81,7 @@ function PodcastDetailLayout(){
                     </Grid>
                     <Grid item xs={10} md={6} lg={6} sx={{ display:"flex", flexDirection: 'column', justifyContent:"left"}}>
                         {/* md and above version */}
-                        <Typography variant="h4" color="text.primary" sx={{mt: '10px', textAlign: "left", display:{ xs:'none', md:'block'}}}>
+                        <Typography variant="h4" color="text.primary" sx={{fontWeight:'bold', mt: '10px', textAlign: "left", display:{ xs:'none', md:'block'}}}>
                             {podcast.feed.title}
                         </Typography>
                         <Typography variant="h6" color="text.primary" sx={{mt: '10px', textAlign: "left", display:{ xs:'none', md:'block'}}}>
@@ -92,7 +92,7 @@ function PodcastDetailLayout(){
                         </Typography>
 
                         {/* xs version */}
-                        <Typography variant="h4" color="text.primary" sx={{mt: '10px', textAlign: "center", display:{ xs:'block', md:'none'}}}>
+                        <Typography variant="h4" color="text.primary" sx={{fontWeight:'bold', mt: '10px', textAlign: "center", display:{ xs:'block', md:'none'}}}>
                             {podcast.feed.title}
                         </Typography>
                         <Typography variant="h6" color="text.primary" sx={{mt: '10px', textAlign: "center", display:{ xs:'block', md:'none'}}}>

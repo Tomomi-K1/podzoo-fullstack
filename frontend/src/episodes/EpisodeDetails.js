@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 /**show a episodes's detailed info in one page after clicking one episode out of episode list */
-function EpisodeDetail() {
+function EpisodeDetail({episode}) {
     return(
       <div>
         <h1>This is Episode Detail</h1>

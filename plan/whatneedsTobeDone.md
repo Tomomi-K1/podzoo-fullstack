@@ -28,8 +28,8 @@
   
 ### Episodes
 - [x] filter out description has html tag.
-- [ ] review page - change design to list by including collapse function
-- [ ] fix audio component position
+- [x] review page - change design to list by including collapse function
+- [x] fix audio component position
 
 ### categories
 - [X] have categories button or card to show podcast of a selected category
@@ -43,6 +43,7 @@
 
 ### others
 - [ ] protect route that a specific user can access
+- [ ] Loader component update
 - [ ] [make Material UI font responsive] (https://mui.com/material-ui/customization/typography/#responsive-font-sizes) especially on PodcastList.js
 - [ ] create a page that shows a list of favorites 
     - [ ] On the list, each favorite podcast will have 'remove' button
@@ -57,6 +58,8 @@
 - [ ] show most recent reviews. If I have time.  
 - [ ] forgot password button? --> if I have time.
 - [ ] Add "footer section with 'about' etc"
+- [ ] podcast detail's background to have gradient color(if I have time)
+- [ ] add footer?
 
 ### Questions
 - [ ] how do I know which media types?

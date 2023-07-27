@@ -132,6 +132,12 @@ class PodApi{
             console.log(`getReviews in PodApi ran ${res}`)
             return res; 
     }   
+
+    /** get categories */
+    static async getCategories(){
+        let res = await this.request('podcasts/categories');
+        return res.categories;
+    }
 }
 
 // for now use token for {username: test1, password: password1}

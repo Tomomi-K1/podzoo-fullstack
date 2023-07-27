@@ -92,6 +92,19 @@ router.get('/:feedid/reviews', async (req, res, next) => {
     }
 })
 
+// == GET /podcasts/categories =''
+// -search podcast by terms
+router.get('/categories', async (req, res, next) => {
+    try{
+        const resp = await api.categoriesList();
+        const categories = resp.feeds
+        return res.json({categories});
+    } catch(err){
+        return next(err);
+    }
+})
+
+
 function simplifyPod(array){
     return array.map(feed => {
         // check if I need other return items, do I want to specify language?
