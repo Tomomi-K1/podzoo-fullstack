@@ -56,7 +56,9 @@ function EpisodeCard({episode}){
                     {/* if not audio, how  can I show no audio? */}
                     <audio
                         controls
-                        src={episode.enclosureUrl}>
+                        src={episode.enclosureUrl}
+                        type ={episode.enclosureType? episode.enclosureType:''}
+                        >
                     </audio>
                 </CardContent>
                 
