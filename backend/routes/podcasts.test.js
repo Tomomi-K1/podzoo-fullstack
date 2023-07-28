@@ -7,7 +7,7 @@ const request = require("supertest");
 
 const db = require("../db.js");
 const app = require("../app.js");
-const { API_KEY, API_SECRET } = require('../secret')
+const { API_KEY, API_SECRET } = require('../config')
 const api = require('podcast-index-api')(API_KEY, API_SECRET) ;
 
 const {

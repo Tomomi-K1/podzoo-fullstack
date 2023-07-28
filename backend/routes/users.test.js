@@ -8,7 +8,7 @@ const request = require("supertest");
 const db = require("../db.js");
 const app = require("../app");
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = require("../secret");
+const { SECRET_KEY } = require("../config");
 const { createToken } = require("../helper/tokens");
 const User = require("../models/user");
 
