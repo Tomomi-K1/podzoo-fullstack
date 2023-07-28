@@ -13,7 +13,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 // key name for storing token in localStorage
 export const TOKEN_STORAGE_ID = 'pod_token'
 
-/** Podcast Searrch application.
+/** Podcast Search application.
  *
  * - infoLoaded: has user data been pulled from API?
  *   (this manages spinner for "loading...")

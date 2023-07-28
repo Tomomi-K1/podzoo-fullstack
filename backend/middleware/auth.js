@@ -2,7 +2,7 @@
 
 /** middleware to handle common auth cases in routes. */
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = require("../secret");
+const { SECRET_KEY } = require("../config");
 const { UnauthorizedError } = require("../expressError");
 
 /* == how should token be included == 

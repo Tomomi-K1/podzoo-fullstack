@@ -4,7 +4,11 @@
 
 require("dotenv").config();
 require("colors");
+const {secretKey, ApiKey, ApiSecret} = require('./secret');
 
+const SECRET_KEY = process.env.SECRET_KEY || secretKey;
+const API_KEY = process.env.API_KEY || ApiKey;
+const API_SECRET = process.env.API_SECRET || ApiSecret;
 const PORT = +process.env.PORT || 3001;
 
 // Use dev database, testing database, or via env var, production database
@@ -30,4 +34,7 @@ module.exports = {
   PORT,
   BCRYPT_WORK_FACTOR,
   getDatabaseUri,
+  SECRET_KEY,
+  API_KEY,
+  API_SECRET
 };

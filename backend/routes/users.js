@@ -1,8 +1,4 @@
 const express = require('express');
-
-const bcrypt = require("bcrypt");
-const { BCRYPT_WORK_FACTOR } = require('../config');
-const db = require('../db');
 const router = new express.Router();
 
 // models to communicate with DB
