@@ -11,7 +11,7 @@ require("colors");
 const SECRET_KEY = process.env.SECRET_KEY;
 const API_KEY = process.env.API_KEY;
 const API_SECRET = process.env.API_SECRET;
-const PORT = +process.env.PORT || 3001;
+const PORT = 3001;
 
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
