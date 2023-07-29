@@ -71,7 +71,7 @@ function PodcastDetailLayout(){
             <Grid container spacing={1} sx={{flexGrow:1, justifyContent:"center"}} >
                 <Grid item xs={12} md={11} lg={8} sx={{ display:"flex", justifyContent:"center"}}>
                     <Grid container spacing={1} sx={{flexGrow:1, justifyContent:"center"}} > 
-                        <Grid item xs={12} md={6} lg={6} sx={{ display:"flex", justifyContent:"center"}}>
+                        <Grid item xs={12} md={6} lg={6} sx={{ display:"flex", justifyContent:"center", alignItems:'center'}}>
                             {/* <Grid container justifyContent="center" spacing={1}> */}
                             <img src={podcast.feed.artwork?podcast.feed.artwork:fallbackImage} height='300px' width='300px' alt='podcast artwork' onError={handleImageError}/>   
                         </Grid>

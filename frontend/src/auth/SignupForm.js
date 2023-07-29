@@ -1,6 +1,7 @@
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import ShowAlert from "../common/ShowAlert";
+import Loader from "../common/Loader";
 // material UI
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -31,6 +32,7 @@ function SignupForm({signup}){
     // ---end of material UI pssword setting related ---
 
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState({
         username:'',
         password:'',
@@ -45,6 +47,7 @@ function SignupForm({signup}){
     */
     async function handleSubmit(evt){
         evt.preventDefault();
+        setIsLoading(true);
         let res =await signup(formData);
         console.debug('handleSubmit', res)
         if(res.success){
@@ -52,6 +55,7 @@ function SignupForm({signup}){
         } else{
             console.log(res.err)
             setFormErrors(res.err);
+            setIsLoading(false);
         }
     }
 
@@ -61,6 +65,10 @@ function SignupForm({signup}){
         setFormData(l => ({ ...l, [name]: value }));
     }
 
+    if(isLoading){
+        return <Loader />;
+    }
+
     return (
         <Container sx ={{
             display:'flex', 
@@ -68,15 +76,15 @@ function SignupForm({signup}){
             // height:'100vh' 
             }}>
            
-            <Paper 
-                alignItems='center' 
-                justifyContent = 'center' 
+            <Paper
                 elevation={4}
                 sx={{
                     p:3,
                     margin: 'auto',
                     maxWidth: 500,
-                    flexGrow: 1
+                    flexGrow: 1,
+                    alignItems:'center', 
+                    justifyContent:'center' 
                 }}>
             <form onSubmit={handleSubmit}>
                 <h2>Signup Form</h2>

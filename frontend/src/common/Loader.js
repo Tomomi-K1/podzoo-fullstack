@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function Loader(){
     return(
         <div>
-            <h1>Loading...</h1>
+            <h3>Loading...</h3>
         </div>
     );
 }

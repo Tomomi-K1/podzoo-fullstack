@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vygzke-MuiPaper-root-MuiCard-root"
+  >
+    <a
+      href="/podcast/1"
+    >
+      <img
+        alt="podcast artwork"
+        class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img css-o69gx8-MuiCardMedia-root"
+        height="auto"
+        src="test-artwork"
+        width="100%"
+      />
+      <div
+        class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-1m4ak0m-MuiTypography-root"
+        >
+          test-title
+        </p>
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+        >
+          test-author
+        </p>
+      </div>
+    </a>
+  </div>
+</DocumentFragment>
+`;

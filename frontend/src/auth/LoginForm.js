@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowAlert from "../common/ShowAlert";
+import Loader from "../common/Loader";
 // Material UI 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -32,6 +33,7 @@ function LoginForm({login}){
     // ---end of material UI password setting related ---
 
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState({
         username:'',
         password:''
@@ -44,6 +46,7 @@ function LoginForm({login}){
     */
     async function handleSubmit(evt){
         evt.preventDefault();
+        setIsLoading(true);
         let res =await login(formData);
         console.debug('handleSubmit', res)
         if(res.success){
@@ -51,6 +54,7 @@ function LoginForm({login}){
         } else{
             console.log(res.err)
             setFormErrors(res.err);
+            setIsLoading(false);
         }
     }
 
@@ -58,6 +62,10 @@ function LoginForm({login}){
     function handleChange(evt) {
     const { name, value } = evt.target;
     setFormData(l => ({ ...l, [name]: value }));
+    }
+
+    if(isLoading){
+        return <Loader />;
     }
     
     return (

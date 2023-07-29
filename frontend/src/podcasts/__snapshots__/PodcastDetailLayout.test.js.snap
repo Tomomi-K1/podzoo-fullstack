@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot: user logged in 1`] = `
+<DocumentFragment>
+  <div>
+    <h3>
+      Loading...
+    </h3>
+  </div>
+</DocumentFragment>
+`;

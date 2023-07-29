@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root 1 css-15xjbqe-MuiPaper-root-MuiCard-root"
+  >
+    <div
+      class="MuiBox-root css-1nqrw45"
+    >
+      <img
+        alt="episode artwork"
+        class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img css-gganah-MuiCardMedia-root"
+        src="test-image-url"
+      />
+    </div>
+    <div
+      class="MuiBox-root css-1ylu0bo"
+    >
+      <div
+        class="MuiCardContent-root css-1k2e1n7-MuiCardContent-root"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-1nebxi1-MuiTypography-root"
+        >
+          test title
+        </p>
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-1yeu3gx-MuiTypography-root"
+        >
+          Published: test-date
+        </p>
+        <audio
+          controls=""
+          src="test-link-to-audio"
+          type="audio/mp3"
+        />
+      </div>
+      <button
+        aria-expanded="false"
+        aria-label="show more"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-3ogxn6-MuiButtonBase-root-MuiIconButton-root"
+        tabindex="0"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="ExpandMoreIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+          />
+        </svg>
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-pxpt32"
+  >
+    <ul
+      class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body2 css-8gubce-MuiTypography-root"
+      >
+        Number of Episodes shown here is 100. For more episode and details, visit
+        <a
+          href="testurl"
+          target="_blank"
+        >
+           Podcast Homepage
+        </a>
+      </p>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-td5piu-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-9 MuiGrid-grid-lg-7 css-svdq89-MuiGrid-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root undefined css-15xjbqe-MuiPaper-root-MuiCard-root"
+            >
+              <div
+                class="MuiBox-root css-1nqrw45"
+              >
+                <img
+                  alt="episode artwork"
+                  class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img css-gganah-MuiCardMedia-root"
+                  src="default.jpg"
+                />
+              </div>
+              <div
+                class="MuiBox-root css-1ylu0bo"
+              >
+                <div
+                  class="MuiCardContent-root css-1k2e1n7-MuiCardContent-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1nebxi1-MuiTypography-root"
+                  >
+                    J'peux Pas J'ai Business par TheBBoost
+                  </p>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-1yeu3gx-MuiTypography-root"
+                  >
+                    Published: 
+                  </p>
+                  <audio
+                    controls=""
+                    type=""
+                  />
+                </div>
+                <button
+                  aria-expanded="false"
+                  aria-label="show more"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-3ogxn6-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="ExpandMoreIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+          </li>
+        </div>
+      </div>
+    </ul>
+  </div>
+</DocumentFragment>
+`;
