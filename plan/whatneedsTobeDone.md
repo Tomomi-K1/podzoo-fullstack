@@ -8,7 +8,7 @@
 
 ### user login
 - [x] password should be hidden
-- [ ] change submit botton from "onClick" to "onSubmit" (having issue onSubmit not working)
+- [x] change submit botton from "onClick" to "onSubmit" (having issue onSubmit not working)
 
 ### user profile edit
 - [x] user can edit email
@@ -20,7 +20,7 @@
 - [ ] add button next to search box
 
 ### search page
-- [ ] sort and filter ( more than CRUD)
+- [x] sort and filter ( more than CRUD)
 
 ### Podcast
 - [x] filter out description has html tag.
@@ -43,11 +43,11 @@
 
 ### others
 - [x] protect route that a specific user can access
-- [ ] Loader component update
+- [x] Loader component update
 - [ ] audio error handling
-- [ ] [make Material UI font responsive] (https://mui.com/material-ui/customization/typography/#responsive-font-sizes) especially on PodcastList.js
+- [x] [make Material UI font responsive] (https://mui.com/material-ui/customization/typography/#responsive-font-sizes) especially on PodcastList.js
 - [x] create a page that shows a list of favorites 
-- [ ] clean up each component(remove unused imported/unnecessary console.log/add explanation for components etc.)
+- [x] clean up each component(remove unused imported/unnecessary console.log/add explanation for components etc.)
 
 
 ### DOM  
@@ -70,7 +70,7 @@
 - [x] how do I know which media types? -> episode sent back by api has audio type information
 - [x] artwork of podcast could be not on the web, how do I handle that? -> use `onError`
 - [ ] how do I handle some podcast having over 1000 episode.... do something with backend? -> at this time, I decided to just show up to 100 episodes
-- [ ] how to cache data in the backend?
+- [ ] how to cache data in the backend? => looking `redis`?
 - [ ] is it better to call external API from backend or frontend (if I'm caching data, I should call it from backend)
 - [ ] how do I test backend api route when I have an external api call in it?
 

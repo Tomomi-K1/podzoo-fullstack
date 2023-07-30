@@ -138,7 +138,7 @@ export default function App() {
   }
 
   if(!infoLoaded) return <Loader />;
-
+  // return <Loader />;
   return (
     <BrowserRouter>
       <UserContext.Provider value ={{currentUser, setCurrentUser, favorites, likePod, removeLike, checkFavPod}}> 

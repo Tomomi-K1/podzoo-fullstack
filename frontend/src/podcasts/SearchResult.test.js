@@ -1,14 +1,15 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
-import PodcastDetailLayout from "./PodcastDetailLayout";
+import { MemoryRouter, useNavigate } from "react-router";
+import SearchResult from "./SearchResult";
 import { UserProvider } from "../testUtils";
+import PodApi from "../api/PodApi";
 
 it('renders', () => {
     render(
     <MemoryRouter>
         <UserProvider>
-            <PodcastDetailLayout />
+            <SearchResult />
         </UserProvider>
     </MemoryRouter>
     );
@@ -18,12 +19,10 @@ it('matches snapshot: user logged in', () => {
     const { asFragment } = render(
         <MemoryRouter>
             <UserProvider>
-                <PodcastDetailLayout />
+                <SearchResult />
             </UserProvider>
         </MemoryRouter>
     ) 
     expect(asFragment()).toMatchSnapshot();
 })
-
-
 
