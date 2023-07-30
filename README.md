@@ -1,9 +1,10 @@
 # PodZoo 🎙️
 Live demo: [podzoo.surge.sh](https://podzoo.surge.sh/)
 ![image](plan/screencapture-podzoo-surge-sh-2023-07-29-19_04_17.png)
-PodZoo is a podcast search web application where a user can search and leave reviews.
+PodZoo is a podcast search web application where a user can search and leave reviews.  
 
 # Features
+- Responsive website
 - Search podcasts
 - Filter and Sort on Search result page
 - Like a podcast
