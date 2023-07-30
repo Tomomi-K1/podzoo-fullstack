@@ -48,7 +48,7 @@ PodZoo is a podcast search web application where a user can search and leave rev
     ```
 3. server will start up on `[localhost:3001](http://localhost:3001)`
 
-#### Setting frontend
+#### Starting frontend
 1. Navigate to frontend folder
    ```bash
    $cd sp-capstone2/frontend
@@ -58,7 +58,7 @@ PodZoo is a podcast search web application where a user can search and leave rev
    $npm start
    ```
 # Testing
-#### running backend test
+#### Running backend tests
 1. Navigate to backend folder
     ```bash
    $cd sp-capstone2/backend
@@ -67,7 +67,7 @@ PodZoo is a podcast search web application where a user can search and leave rev
    ```bash
    $jest
    ```
-#### running frontend test
+#### Running frontend tests
 1. Navigate to frontend folder
    ```bash
    $cd sp-capstone2/frontend
