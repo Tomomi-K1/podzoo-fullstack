@@ -30,6 +30,16 @@ const ExpandMore = styled((props) => {
  * shows a episode's audio and info
  * Component using EpisodeCard: PodcastDetailLayout.js
 */
+
+const episodeCardSX = {
+    display:'flex', 
+    width:'100%', 
+    p:1, 
+    m:1,
+    "&:hover" :{
+        boxShadow:8
+    }
+}
 function EpisodeCard({episode}){
     // material UI
     const [expanded, setExpanded] = React.useState(false);
@@ -38,7 +48,7 @@ function EpisodeCard({episode}){
       };
 
     return (
-        <Card className={`${episode.id}`} sx={{display:'flex', width:'100%', p:1, m:1}}>
+        <Card className={`${episode.id}`} sx={episodeCardSX}>
             <Box sx={{display:{xs:'none', md:'flex'}, justifyContent: 'center', alignItems:'center', p:1}} >
                 <CardMedia 
                     component="img"
