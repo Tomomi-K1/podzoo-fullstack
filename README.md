@@ -3,20 +3,20 @@ Live demo: [podzoo.surge.sh](https://podzoo.surge.sh/)
 ![image](plan/screencapture-podzoo-surge-sh-2023-07-29-19_04_17.png)
 PodZoo is a podcast search web application where a user can search and leave reviews.
 
-#Features
+# Features
 - Search podcasts
 - Filter and Sort on Search result page
 - Like a podcast
 - write/edit/delete a review
 - rate podcasts
 
-#Built with
+# Built with
 - Database: PostgreSQL
 - Backend: Node.js, Express.js, pg(node-postgres)
 - frontend: React, Material UI
 - API : [podcast Index API](https://podcastindex-org.github.io/docs-api/#auth).
 
-#Setup
+# Setup
 #### Setting up database on postgreSQL 
 1. start your postgreSQL server and enter your password.
    ```bash
