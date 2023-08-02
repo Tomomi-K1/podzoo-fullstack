@@ -21,13 +21,15 @@ function SearchResult(){
     const navigate = useNavigate();
     const {term} = useParams();
     // podcasts: original data received from backend with searchTerm
-    const [podcasts, setPodcasts] = useState(null);
+    // const [podcasts, setPodcasts] = useState(null);
+    const [originalPods, setOriginalPods] = useState(null);
     // searchTerm for searching podcasts: useEffect
     const [searchTerm, setSearchTerm] = useState('');
     // list of categories received from backend
     const [categories, setCategories] = useState([]);
     // for sort and filter: data is passed in the prop"podcast" to PodcastCard to render the page
-    const [data, setData]= useState(null); 
+    // const [data, setData]= useState(null); 
+    const [podcasts, setPodcasts]= useState(null); 
     // data to save user selected sort item
     const [sortBy, setSortBy] = useState('');
     // data to save user selected filter item
@@ -46,9 +48,9 @@ function SearchResult(){
             categories.sort((a,b) =>{
                 return a.name < b.name? -1: 1;
             })
+            setOriginalPods(res.data)
+            // set initial data to be same as 'originalPods' variable data
             setPodcasts(res.data)
-            // set initial data to be same as 'podcasts' variable data
-            setData(res.data)
             setCategories(categories);
             // reset sortBy, setFilterBy
             setSortBy('');
@@ -76,13 +78,13 @@ function SearchResult(){
     /**handle sorting
      * get user's input as 'value'
      * short depending on either 'title' or 'author'
-     * setData to newly sorted data
+     * setPodcasts to newly sorted data
      */
     function handleSortChange(evt){
         evt.preventDefault()
         const {value} =evt.target
         setSortBy(value);
-        const sortedPodcasts =data.sort((a, b) => {
+        const sortedPodcasts =podcasts.sort((a, b) => {
           if(a[value] < b[value]){
               return -1;
           }else if(a[value] > b[value]){
@@ -92,13 +94,13 @@ function SearchResult(){
           }
 
         }) 
-        setData(p =>[...sortedPodcasts]);
+        setPodcasts(p =>[...sortedPodcasts]);
       };
       
     /**handle filtering
      * -reset filter if value is 0
      * - filter by category id number
-     * - setData to filtered podcasts
+     * - setPodcasts to filtered podcasts
      * - every time we filter, reset sort value
      */
       function handleFilterChange(evt){
@@ -106,25 +108,25 @@ function SearchResult(){
           setFilterByCateg(evt.target.value);
           console.log(evt.target.value===0);
           if(evt.target.value ===0){ 
-            setData(podcasts)
+            setPodcasts(originalPods)
             return;
           };
         //   const data = podcasts.filter(p => p.categories !==null);
         //   const filteredpods = data.filter(d =>evt.target.value in d.categories);
-          const filteredpods = podcasts.filter(p => {
+          const filteredpods = originalPods.filter(p => {
                 if(p.categories !==null){
                     return evt.target.value in p.categories
                 }
             });
-          setData(filteredpods);
+          setPodcasts(filteredpods);
           setSortBy('')
       }    
     
-    if(!podcasts) return <Loader />
+    if(!originalPods) return <Loader />
      
-    console.debug(`data`, data);
+    console.debug(`podcasts`, podcasts);
     console.debug('filteredByCateg', filterByCateg);
-    console.debug(`podcast`, podcasts)
+    console.debug(`podcast`, originalPods)
     return(
         <div className="SearchResult">
             <form onSubmit={handleSubmit}>
@@ -170,8 +172,8 @@ function SearchResult(){
                     </FormControl>
                 </Box>
             </form>
-            {podcasts.length
-            ? <PodcastList podcasts={data} />
+            {originalPods.length
+            ? <PodcastList podcasts={podcasts} />
             : <Typography variant="h6" sx={{mt:5}}> Sorry, no results were found...</Typography>}
             
         </div>
