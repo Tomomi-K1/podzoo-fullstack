@@ -23,7 +23,6 @@ function EditReviewForm(){
     const{reviews, setReviews} =useOutletContext();
     const navigate = useNavigate();
     const {feedid, reviewid} = useParams();
-    const [rating, setRating] =useState(0);
     const matchingReview = reviews.reviews.filter(r => r.id === +reviewid)[0];
     console.debug(`matching review`, matchingReview);
     const [formData, setFormData] = useState(()=>({

@@ -119,7 +119,7 @@ function LoginForm({login}){
                 </FormControl> 
                 {formErrors.length?
                 <Box sx={{m: 1, display:'flex', justifyContent:'center', alignItems:'center'}}>
-                <ShowAlert type ='error' messages={formErrors} />
+                 <ShowAlert type ='error' messages={formErrors} />
                 </Box>
                 : null}
                 <Button type='submit' margin='normal' >Submit</Button>  
