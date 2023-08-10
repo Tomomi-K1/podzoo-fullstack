@@ -43,10 +43,8 @@ router.post('/register', async (req, res, next) => {
  */
 router.post('/login', async (req, res, next) => {
     try{
-        validateSchema(req.body, userLogin);
-            
+        validateSchema(req.body, userLogin);   
         const {username, password} = req.body;
-        console.log(`login username ${username}, password ${password} `)
         const user = await User.authenticate(username, password);
        // createToken only takes user.username as payload
         const token = createToken(user);
@@ -57,22 +55,20 @@ router.post('/login', async (req, res, next) => {
 })
 
 
-/** GET /[username] => { user }
+/** GET users/[username] => { user }
   -Returns { user:{ username, email, fav:[feedId]}} *
   -Authorization required: same user-as-:username
  **/
 router.get('/:username', userOnly, async (req, res, next) => {
     try{
-        console.log(req.params.username)
         const user = await User.get(req.params.username);
-        console.log(`get request after User.get : user: ${user}`)
         return res.json({user})
     } catch (err){
         return next(err);
     } 
 })
 
-/** PATCH /[username] => { user }
+/** PATCH users/[username] => { user }
   -Data that can be updated { email}
   -Returns { user:{username, email}}
   -Authorization required: same user-as-:username
@@ -80,16 +76,14 @@ router.get('/:username', userOnly, async (req, res, next) => {
 router.patch('/:username', userOnly, async (req, res, next) => {
     try{
         validateSchema(req.body, userUpdate);
-        console.log(req.params.username)
         const user = await User.update(req.params.username, req.body);
-        // console.log(`get request after User.get : user: ${user}`)
         return res.json({user})
     } catch (err){
         return next(err);
     } 
 })
 
-/** DELETE /[username] => { deleted: user }
+/** DELETE users/[username] => { deleted: username }
   -Authorization required: same user-as-:username
  **/
   router.delete('/:username', userOnly, async (req, res, next) => {
@@ -106,7 +100,7 @@ router.patch('/:username', userOnly, async (req, res, next) => {
 //================================================//
 
 /** == getting favorite podcast ==
- GET /[username]/fav-podcast => [{podcast1}, {podcast2},...]*/
+ GET users/[username]/fav-podcast => [{podcast1}, {podcast2},...]*/
 router.get('/:username/fav-podcast', userOnly, async (req, res, next) =>{
     try{
         const favPods =await User.getAllFav(req.params.username);
@@ -118,7 +112,7 @@ router.get('/:username/fav-podcast', userOnly, async (req, res, next) =>{
 });
 
 /**== adding favorite podcast ==
- POST /[username]/fav-podcast/[id] => { added: feedId }
+ POST users/[username]/fav-podcast/[id] => { added: feedId }
   -id: podcast's feed id
   -receives podcastData(feedId, author, title, artwork)
   -Authorization required: same user-as-:username **/
@@ -139,7 +133,7 @@ router.post('/:username/fav-podcast/:feedid', userOnly, async (req, res, next) =
 })
 
 // ======== delete from favorite podcast =============//
-/** DELETE /[username]/fav-podcast/[id] => { deleted: feedId }
+/** DELETE users/[username]/fav-podcast/[id] => { deleted: feedId }
   -id: podcast's feed id
   -Authorization required: same user-as-:username
  **/
@@ -158,7 +152,7 @@ router.delete('/:username/fav-podcast/:feedid', userOnly, async (req, res, next)
 //================================================//
 
 /**== adding review comment and rating ==
-POST /[username]/reviews/[feedid] => { id, userId, feedId, comment, rating }
+POST users/[username]/reviews/[feedid] => { newReview:{ id, userId, feedId, comment, rating }}
   -id: review table's feed_id
   -Authorization required: same user-as-:username
  **/
@@ -174,7 +168,7 @@ router.post('/:username/reviews/:feedid', userOnly, async (req, res,next) => {
 })
 
 /**== update review comment and rating ==
-PATCH /[username]/reviews/[id]  => { id, user_id, feed_id, comment, rating }
+PATCH users/[username]/reviews/[id]  => {review: { id, user_id, feed_id, comment, rating }}
   -id: reviews table's id
   -Authorization required: same user-as-:username
  **/
@@ -182,7 +176,6 @@ PATCH /[username]/reviews/[id]  => { id, user_id, feed_id, comment, rating }
     try{
         validateSchema(req.body, reviewSchema);
         const reviewId = +req.params.id;
-        console.log(`reviewId :${reviewId}`)
         const username = req.params.username;
         const review = await User.updateReview(username, reviewId, req.body);
         review.username = username;
@@ -193,7 +186,7 @@ PATCH /[username]/reviews/[id]  => { id, user_id, feed_id, comment, rating }
 })
 
 /**== delete review comment and rating ==
-DELETE /[username]/reviews/[id] => { deleted: id }
+DELETE users/[username]/reviews/[id] => { deleted: id }
   -id: reviews table's id
   -Authorization required: same user-as-:username
  **/

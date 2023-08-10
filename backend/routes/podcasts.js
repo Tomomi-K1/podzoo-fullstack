@@ -33,10 +33,7 @@ router.get('/', async (req, res, next) => {
 
 /** == GET podcasts/trending? cat='' & max=
  * cat : category
- * max: Number
-  == do pagenation? 
-        https://medium.com/learnfactory-nigeria/create-a-pagination-middleware-with-node-js-fe4ec5dca80f
-    
+ * max: Number  
  */
 router.get('/trending', async (req, res, next) => {
      try{
@@ -54,21 +51,16 @@ router.get('/trending', async (req, res, next) => {
  * limit the number of podcasts to 100;
  * params: feedId
  * get all episodes -most recent to the oldest(default)
- * == do pagenation? or have other windows for showing more episodes?
-        https://medium.com/learnfactory-nigeria/create-a-pagination-middleware-with-node-js-fe4ec5dca80f
  */
 router.get('/:feedid/episodes', async (req, res, next) => {
     try{
         const feedId = +req.params.feedid;
-        console.log(feedId)
         const data ={};
         const {feed} = await api.podcastsByFeedId(feedId);
         const resp = await api.episodesByFeedId(feedId, null, 100);
         const episodes = resp.items;
         data.feed=feed;
         data.episodeData = {count: resp.count, episodes}
-   
-        // make object with page number and total count? or should i return everything?
         return res.json(data)
     }catch(err){
         next(err);
@@ -104,7 +96,6 @@ router.get('/categories', async (req, res, next) => {
 
 function simplifyPod(array){
     return array.map(feed => {
-        // check if I need other return items, do I want to specify language?
         return {    
                 feedId: feed.id, 
                 title:feed.title, 
@@ -119,29 +110,5 @@ function simplifyPod(array){
         }
     })
 }
-
-// consider using this. 
-// function simplifyEpisodes(array){
-//     return array.map(episode => {
-//         // check if I need other return items, do I want to specify language?
-//         return {    
-//                 episodeId: episode.id, 
-//                 title:episode.title, 
-//                 link:episode.link, 
-//                 description:episode.description, 
-//                 publishDate: episode.datePublishedPretty,
-//                 audioFile: episode.enclosureUrl,
-//                 author:episode.author, 
-//                 artwork:episode.artwork, 
-//                 language:episode.language,
-//                 medium:episode.medium, 
-//                 categories:episode.categories
-//         }
-//     })
-
-
-
-
-
 
 module.exports = router;

@@ -43,13 +43,3 @@ app.use(function (err, req, res, next) {
 
 
 module.exports = app;
-
-// app.get('/', async function(req, res){
-    // const result = await api.podcastsTrending(max=20, lang='en')
-    // return res.json(result)
-    // const result = await api.categoriesList()
-    // return res.json(result)
-
-    // const result =await api.episodesByFeedId(227573)
-    // return res.send(result)
-// })

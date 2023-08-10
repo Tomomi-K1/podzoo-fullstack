@@ -35,7 +35,6 @@ class User {
         if(isValid) {
           // delete password before returning user information for security
           delete user.password;
-          console.log(`authenticate ${user.username}`);
           return user;
         }
       }
@@ -90,7 +89,6 @@ class User {
       );
 
       const user = userRes.rows[0];
-      console.log(user)
 
       if(!user) throw new NotFoundError(`No User: ${username}`);
 
@@ -101,7 +99,6 @@ class User {
          [user.id]
       )
       user.fav = userFavPods.rows.map(a => a.feed_id);
-      console.log(user)
       return user;
   }
   
@@ -111,7 +108,6 @@ class User {
    - Throws NotFoundError if not found.
    */
    static async update(username, data) {
-    console.log(`User.update ran`)
     const result = await db.query(
         `UPDATE users 
          SET email=$1
@@ -120,7 +116,6 @@ class User {
                    email`,
           [data.email, username]);
     const user = result.rows[0];
-    console.log(username);
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
     return user;
@@ -227,7 +222,6 @@ class User {
       );
 
       const deletedFeedId = result.rows[0];
-      console.log(`deletedfeedid ${deletedFeedId}`);
       if (!deletedFeedId) throw new NotFoundError(`No podcast to delete: feedId${feedId}`);  
       return deletedFeedId;
     }
