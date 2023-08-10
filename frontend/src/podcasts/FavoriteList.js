@@ -24,8 +24,7 @@ function FavoriteList(){
     },[currentUser.username])
 
     if(!favPodcasts) return <Loader />;
-    
-    console.log(favorites)
+   
     if(favorites.size ===0) return (
         <Typography variant="h6" sx={{pt:'20px'}} >You have no Favorites</Typography>
     ) 

@@ -30,7 +30,6 @@ function Home() {
 
     // get trending podcasts data and assign it to podcasts state
     async function api(){
-        console.log(`api call at Home`)
         try{
             let result =await PodApi.getTrendingPodcasts();
             setPodcasts(result);
@@ -51,7 +50,6 @@ function Home() {
         evt.preventDefault();
         let {value} =evt.target;
         setSearchTerm(value);
-        console.log(searchTerm);
     }
     
     // if podcasts is not received yet, then show Loader component

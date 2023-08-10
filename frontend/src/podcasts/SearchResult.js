@@ -21,14 +21,12 @@ function SearchResult(){
     const navigate = useNavigate();
     const {term} = useParams();
     // podcasts: original data received from backend with searchTerm
-    // const [podcasts, setPodcasts] = useState(null);
     const [originalPods, setOriginalPods] = useState(null);
     // searchTerm for searching podcasts: useEffect
     const [searchTerm, setSearchTerm] = useState('');
     // list of categories received from backend
     const [categories, setCategories] = useState([]);
     // for sort and filter: data is passed in the prop"podcast" to PodcastCard to render the page
-    // const [data, setData]= useState(null); 
     const [podcasts, setPodcasts]= useState(null); 
     // data to save user selected sort item
     const [sortBy, setSortBy] = useState('');
@@ -106,13 +104,11 @@ function SearchResult(){
       function handleFilterChange(evt){
           evt.preventDefault();
           setFilterByCateg(evt.target.value);
-          console.log(evt.target.value===0);
           if(evt.target.value ===0){ 
             setPodcasts(originalPods)
             return;
           };
-        //   const data = podcasts.filter(p => p.categories !==null);
-        //   const filteredpods = data.filter(d =>evt.target.value in d.categories);
+
           const filteredpods = originalPods.filter(p => {
                 if(p.categories !==null){
                     return evt.target.value in p.categories
@@ -124,9 +120,6 @@ function SearchResult(){
     
     if(!originalPods) return <Loader />
      
-    console.debug(`podcasts`, podcasts);
-    console.debug('filteredByCateg', filterByCateg);
-    console.debug(`podcast`, originalPods)
     return(
         <div className="SearchResult">
             <form onSubmit={handleSubmit}>

@@ -18,7 +18,6 @@ function EpisodeList(){
     console.debug('episodeList')
     console.log(count, episodes)
     return(
-        // add hover effect
         <Box sx ={{pt:5}}>
             <List>
                 <Typography variant='body2' sx={{p:4}}>

@@ -24,15 +24,11 @@ function EditReviewForm(){
     const navigate = useNavigate();
     const {feedid, reviewid} = useParams();
     const matchingReview = reviews.reviews.filter(r => r.id === +reviewid)[0];
-    console.debug(`matching review`, matchingReview);
     const [formData, setFormData] = useState(()=>({
         rating: Number(matchingReview.rating),
         comment: matchingReview.comment
     }));
-    console.log(formData);
-    
     const [formErrors, setFormErrors] = useState([]);
-    console.debug('reviews', reviews)
     
     /** ==handle submit ==
      * make api calls to backend to update user's review
@@ -42,7 +38,6 @@ function EditReviewForm(){
         evt.preventDefault();
         try{
             let res = await PodApi.updateReviews(currentUser.username, reviewid, formData);
-            console.debug('EditReviewForm: handleSubmit', res);
             let updatedReviews = await PodApi.getReviews(feedid);
             setReviews(updatedReviews)
             return navigate(`../reviews`);
@@ -57,12 +52,10 @@ function EditReviewForm(){
         const { name, value } = evt.target;
         setFormData(l => ({ ...l, [name]: value }));
         }
-    console.log(formData);
     return (
         <Container sx ={{
             display:'flex', 
             mt: 10
-            // height:'100vh' 
             }}>
            
             <Paper

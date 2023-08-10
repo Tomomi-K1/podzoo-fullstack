@@ -25,7 +25,6 @@ const pages = ['Profile', 'Favorites'];
  */
 function Layout({logout}) {
   const {currentUser} = useContext(UserContext);
-  console.log(currentUser)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -107,7 +106,6 @@ function Layout({logout}) {
                 
                   </MenuItem>
                 ))}
-                {/* <MenuItem key="logout" onClick={handleCloseUserMenu}> */}
                 <MenuItem key="logout" onClick={handleUserMenuAndLogout} component ="a"
                   href="/">
                     <Typography textAlign="center">Logout</Typography>
@@ -143,7 +141,6 @@ function Layout({logout}) {
             ))}
             <Button
                 key="logout"
-                // onClick={handleCloseNavMenu}
                 onClick={handleNavMenuAndLogout}
                 sx={{ my: 2, color: 'black', display: 'block' }}
                 component ="a"

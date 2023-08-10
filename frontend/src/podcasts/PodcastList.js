@@ -10,7 +10,6 @@ import Grid from '@mui/material/Grid';
  */
 function PodcastList({podcasts}){
     return(
-        // add hover effect
         <Grid container spacing={1} sx={{flexGrow:1}} justifyContent="center">
             <Grid item xs={12} md={11} lg={10} sx={{ display:"flex", justifyContent:"center"}}>
                 <Grid container justifyContent="center" spacing={1}>

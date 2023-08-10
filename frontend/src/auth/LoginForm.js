@@ -48,7 +48,6 @@ function LoginForm({login}){
         evt.preventDefault();
         setIsLoading(true);
         let res =await login(formData);
-        console.debug('handleSubmit', res)
         if(res.success){
             return navigate("/")
         } else{

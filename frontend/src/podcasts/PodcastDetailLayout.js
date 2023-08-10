@@ -32,10 +32,8 @@ function PodcastDetailLayout(){
     let totalRating = 0;
  
     useEffect(function getPodcastAndEpisodes(){
-        console.log(`feedid in useEffect ${feedid}`)
         getEpisodes();
         getReviews();
-        // updateTotalRating();
     },[feedid, setReviews] )
     
     // function to get episodes of a podcast
@@ -72,7 +70,6 @@ function PodcastDetailLayout(){
                 <Grid item xs={12} md={11} lg={8} sx={{ display:"flex", justifyContent:"center"}}>
                     <Grid container spacing={1} sx={{flexGrow:1, justifyContent:"center"}} > 
                         <Grid item xs={12} md={6} lg={6} sx={{ display:"flex", justifyContent:"center", alignItems:'center'}}>
-                            {/* <Grid container justifyContent="center" spacing={1}> */}
                             <img src={podcast.feed.artwork?podcast.feed.artwork:fallbackImage} height='300px' width='300px' alt='podcast artwork' onError={handleImageError}/>   
                         </Grid>
                         <Grid item xs={10} md={6} lg={6} sx={{ display:"flex", flexDirection: 'column', justifyContent:"left"}}>

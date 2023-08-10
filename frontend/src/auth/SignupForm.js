@@ -49,7 +49,6 @@ function SignupForm({signup}){
         evt.preventDefault();
         setIsLoading(true);
         let res =await signup(formData);
-        console.debug('handleSubmit', res)
         if(res.success){
             return navigate("/")
         } else{
@@ -73,7 +72,6 @@ function SignupForm({signup}){
         <Container sx ={{
             display:'flex', 
             mt: 10
-            // height:'100vh' 
             }}>
            
             <Paper

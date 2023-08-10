@@ -43,8 +43,6 @@ export default function App() {
    * - assign current user's favorite to favorites state as a set
    */
   useEffect(function loadUser(){
-    console.debug("App.js useEffect LoadUser ran", currentUser)
-
     async function getUserInfo(){
       if(token){
         try{
@@ -117,7 +115,6 @@ export default function App() {
       try{
           const res =await PodApi.addFavPodcasts(username, feedId, data)
           setFavorites(new Set([...favorites, +feedId]));
-          console.debug(`added to fav`, data, favorites, res, currentUser);
       } catch(err){
           console.error(err);
       }
@@ -131,14 +128,13 @@ export default function App() {
       const res =await PodApi.deleteFavPodcasts(username, feedId);
       favorites.delete(+feedId);
       setFavorites(favorites => new Set([...favorites]));
-      console.debug(`deleted from fav`, favorites, res, currentUser)
     } catch (err){
         console.error(err);
     }    
   }
 
   if(!infoLoaded) return <Loader />;
-  // return <Loader />;
+
   return (
     <BrowserRouter>
       <UserContext.Provider value ={{currentUser, setCurrentUser, favorites, likePod, removeLike, checkFavPod}}> 

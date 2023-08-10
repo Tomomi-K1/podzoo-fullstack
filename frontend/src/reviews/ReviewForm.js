@@ -28,7 +28,7 @@ function ReviewForm(){
         comment:''
     });
     const [formErrors, setFormErrors] = useState([]);
-    console.debug('reviews', reviews)
+   
     /** handleSubmit
      * if success:
      * -request backend to add a user's review
@@ -39,10 +39,8 @@ function ReviewForm(){
      */
     async function handleSubmit(evt){
         evt.preventDefault();
-        console.log(`did this run?`)
         try{
             let res = await PodApi.addReviews(currentUser.username, feedid, formData);
-            console.debug('ReviewForm: handleSubmit', res);
             let updatedReviews = await PodApi.getReviews(feedid);
             setReviews(updatedReviews)
             return navigate(`../reviews`);
@@ -57,7 +55,6 @@ function ReviewForm(){
         const { name, value } = evt.target;
         setFormData(l => ({ ...l, [name]: value }));
         }
-    console.log(formData);
     return (
         <Container sx ={{display:'flex', mt: 10}}>
             <Paper

@@ -11,8 +11,6 @@ class PodApi{
 
     // ============ method to make api call easier  ======== //
     static async request(endpoint, data = {}, method = "get") {
-        console.debug("API Call:", endpoint, data, method, this.token);
-
         const url = `${BASE_URL}/${endpoint}`;
         const headers = { Authorization: `Bearer ${PodApi.token}` };
         const params = (method === "get")
@@ -86,7 +84,6 @@ class PodApi{
     */
     static async addFavPodcasts(username, feedId, podData){
         let res = await this.request(`users/${username}/fav-podcast/${feedId}`, podData, "post");
-        console.debug(`addFavPodcasts run in PodApi`, res);
         return res.added;
     }
 
@@ -104,7 +101,6 @@ class PodApi{
     */
     static async addReviews(username, feedId, data){
         data = {...data, rating: +(data.rating)};
-        console.log(data);
         let res = await this.request(`users/${username}/reviews/${feedId}`, data, "post");
         return res.newReview;
     }
@@ -159,7 +155,6 @@ class PodApi{
     */
     static async getReviews(feedId){
             let res= await this.request(`podcasts/${feedId}/reviews`);
-            console.log(`getReviews in PodApi ran ${res}`)
             return res; 
     }   
 

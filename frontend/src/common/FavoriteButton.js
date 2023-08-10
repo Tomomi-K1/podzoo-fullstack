@@ -31,11 +31,9 @@ function FavoriteButton({podcastData, feedId}) {
      */
     function handleChange (evt){        
         if(evt.target.checked === true){
-            console.debug(`add`)
             setChecked(true);
             likePod(username, feedId, data);
         } else{
-            console.debug(`remove`)
             setChecked(false);
             removeLike(username, feedId);    
         }

@@ -28,9 +28,6 @@ function ReviewList(){
     const {currentUser} = useContext(UserContext);
     const{reviews, setReviews} =useOutletContext();
     const { feedid } = useParams();
-    console.debug('ReviewList')
-    
-    console.log(reviews)
 
     /**Review Link component
      * a user can only write one review per podcast
@@ -39,7 +36,6 @@ function ReviewList(){
      */
     function ReviewLink(){
         const reviewUsername = reviews.reviews.filter(review=>review.username === currentUser.username);
-        console.log(reviewUsername)
         if(currentUser && reviewUsername.length!==0){
             return(
                 ""

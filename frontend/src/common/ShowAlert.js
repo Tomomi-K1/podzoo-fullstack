@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
  **/
 
 function ShowAlert({ type = "error", messages = [] }) {
-  console.debug("Alert", "type=", type, "messages=", messages);
 
   return (
         <Alert severity={type}>
