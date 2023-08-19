@@ -2,20 +2,66 @@
 
 exports[`matches snapshot when no user 1`] = `
 <DocumentFragment>
-  <div>
-    <h3>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg css-1ib7edi-MuiContainer-root"
+  >
+    <div
+      class="MuiBox-root css-t148r2"
+    >
+      <i
+        class="fa-solid fa-otter fa-beat-fade"
+      />
+      <i
+        class="fa-solid fa-compact-disc"
+      />
+      <i
+        class="fa-solid fa-hippo fa-beat-fade"
+      />
+      <i
+        class="fa-solid fa-compact-disc"
+      />
+      <i
+        class="fa-solid fa-cow fa-beat-fade"
+      />
+    </div>
+    <p
+      class="loading"
+    >
       Loading...
-    </h3>
+    </p>
   </div>
 </DocumentFragment>
 `;
 
 exports[`matches snapshot: user logged in 1`] = `
 <DocumentFragment>
-  <div>
-    <h3>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg css-1ib7edi-MuiContainer-root"
+  >
+    <div
+      class="MuiBox-root css-t148r2"
+    >
+      <i
+        class="fa-solid fa-otter fa-beat-fade"
+      />
+      <i
+        class="fa-solid fa-compact-disc"
+      />
+      <i
+        class="fa-solid fa-hippo fa-beat-fade"
+      />
+      <i
+        class="fa-solid fa-compact-disc"
+      />
+      <i
+        class="fa-solid fa-cow fa-beat-fade"
+      />
+    </div>
+    <p
+      class="loading"
+    >
       Loading...
-    </h3>
+    </p>
   </div>
 </DocumentFragment>
 `;

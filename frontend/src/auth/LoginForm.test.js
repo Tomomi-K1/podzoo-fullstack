@@ -21,7 +21,7 @@ it('matches snapshot', () => {
     expect(asFragment()).toMatchSnapshot();
 })
 
-it('has correctly renders', () => {
+it('has correctly renders login form', () => {
     render(
         <MemoryRouter>
             <LoginForm />

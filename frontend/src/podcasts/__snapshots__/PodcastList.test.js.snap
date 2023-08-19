@@ -15,7 +15,7 @@ exports[`matches snapshot: user logged in 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-md-3 MuiGrid-grid-lg-2 css-1o44jp4-MuiGrid-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vygzke-MuiPaper-root-MuiCard-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1i59dwk-MuiPaper-root-MuiCard-root"
           >
             <a
               href="/podcast/1"
@@ -31,12 +31,12 @@ exports[`matches snapshot: user logged in 1`] = `
                 class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1m4ak0m-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1vweose-MuiTypography-root"
                 >
                   test-title
                 </p>
                 <p
-                  class="MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body2 css-cq90jg-MuiTypography-root"
                 >
                   test-author
                 </p>
