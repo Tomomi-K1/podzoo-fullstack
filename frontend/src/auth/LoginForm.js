@@ -22,7 +22,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
  * - calls login function prop
  * - redirects to homepage ('/') route
  */
-
+const testUser = { username: 'test1', password:'password1'}
 function LoginForm({login}){
     // ---material UI password setting related ---
     const [showPassword, setShowPassword] = useState(false);
@@ -44,10 +44,10 @@ function LoginForm({login}){
      * calls login function prop
      * if successful, redirect to home('/')
     */
-    async function handleSubmit(evt){
+    async function handleSubmit(evt, data){
         evt.preventDefault();
         setIsLoading(true);
-        let res =await login(formData);
+        let res =await login(data);
         if(res.success){
             return navigate("/")
         } else{
@@ -79,7 +79,7 @@ function LoginForm({login}){
                     alignItems:'center', 
                     justifyContent:'center' 
                 }}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(e)=>handleSubmit(e, formData)}>
                 <h2>Login Form</h2>
                 <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
                     <InputLabel htmlFor="username">Username</InputLabel>
@@ -122,7 +122,8 @@ function LoginForm({login}){
                 </Box>
                 : null}
                 <Button type='submit' margin='normal' >Submit</Button>  
-            </form>    
+            </form> 
+            <Button type='button' margin='normal' onClick={(e)=>handleSubmit(e, testUser)}>Demo User</Button>    
         </Paper>            
       </Container>
     )
