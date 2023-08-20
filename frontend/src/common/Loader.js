@@ -13,7 +13,7 @@ function Loader(){
                 <i className="fa-solid fa-compact-disc"></i>
                 <i className="fa-solid fa-cow fa-beat-fade"></i>
             </Box>
-                <p class='loading'>Loading...</p>
+                <p className='loading'>Loading...</p>
         </Container>
     );
 }

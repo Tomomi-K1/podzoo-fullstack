@@ -12,7 +12,7 @@ function CategoryList({categories}){
     return(
         <Grid container spacing={1} sx={{flexGrow:1}} justifyContent="center">
             <Grid item xs={12} md={11} lg={10} sx={{ display:"flex", justifyContent:"center"}}>
-                <Grid container justifyContent="center" spacing={1}>
+                <Grid container sx={{justifyContent:"center"}} spacing={1}>
                 {categories.map(category =>{
                     return (
                     <Grid item key={category.id} xs ={3} md={1} lg={1} sx={{p:1}} >

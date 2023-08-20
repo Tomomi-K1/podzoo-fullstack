@@ -68,10 +68,10 @@ function ProfileForm(){
             }}>
            
             <Paper 
-                alignItems='center' 
-                justifyContent = 'center' 
                 elevation={4}
                 sx={{
+                    alignItems:'center',
+                    justifyContent:'center',
                     p:3,
                     margin: 'auto',
                     maxWidth: 500,

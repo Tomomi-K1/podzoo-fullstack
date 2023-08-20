@@ -15,8 +15,6 @@ import Typography from '@mui/material/Typography';
 */
 function EpisodeList(){
     const{count, episodes, link} =useOutletContext()
-    console.debug('episodeList')
-    console.log(count, episodes)
     return(
         <Box sx ={{pt:5}}>
             <List>
