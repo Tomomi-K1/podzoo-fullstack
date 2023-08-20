@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PodcastCard from "./PodcastCard";
 // Material UI
 import Grid from '@mui/material/Grid';

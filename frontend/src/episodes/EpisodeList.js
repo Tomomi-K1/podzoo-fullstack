@@ -22,7 +22,7 @@ function EpisodeList(){
             <List>
                 <Typography variant='body2' sx={{p:4}}>
                     Number of Episodes shown here is {count}. For more episode and details, visit 
-                    <a href={link} target="_blank"> Podcast Homepage</a>
+                    <a href={link} rel="noreferrer noopener" target="_blank"> Podcast Homepage</a>
                 </Typography>
                 <Grid container spacing={1} sx={{flexGrow:1}} justifyContent="center">
                     <Grid item xs={12} md={9} lg={7} sx={{ display:"flex", justifyContent:"center", flexDirection: 'column'}}>

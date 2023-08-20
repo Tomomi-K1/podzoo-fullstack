@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 // Material UI
 import Grid from '@mui/material/Grid';
 import CategoryCard from "./CategoryCard";

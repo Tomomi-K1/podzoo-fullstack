@@ -8,9 +8,7 @@ import categories from "../category/categories";
 // Material UI
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search';
 
 /** Home
  * Route : '/' main route
