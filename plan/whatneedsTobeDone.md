@@ -73,6 +73,8 @@
 - [ ] how to cache data in the backend? => looking `redis`?
 - [ ] is it better to call external API from backend or frontend (if I'm caching data, I should call it from backend)
 - [ ] how do I test backend api route when I have an external api call in it?
+- [ ] do pagenation or have other windows for trending podcasts/episode routes?
+        https://medium.com/learnfactory-nigeria/create-a-pagination-middleware-with-node-js-fe4ec5dca80f
 
 
 ### what I learned
