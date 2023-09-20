@@ -1,4 +1,3 @@
-```[tasklist]
 # Checklist
 
 ### user registration
@@ -84,4 +83,3 @@
 - variable that is created useState() won't be updated right away so I cannot use the variable new value after using the setter in the same function. For example, I may try to use `data` by declaring like `const[ data, setData] = useState(null)` in `handleSubmit function`. Inside `handleSubmit`, I want to `setData` to new data and use that value in `handleSubmit`. However `data` won't be updated inside `handleSubmit` function.
 - for image fallback, you can use `onerror = ...`
 
-```
