@@ -21,8 +21,13 @@ app.use(morgan('tiny'));
 app.use(authenticateJWT);
 
 /**== Routes == */
+app.get('/', (req,res) => {
+  return res.send("hello, it works!");
+})
+
 app.use('/users', userRoutes);
 app.use('/podcasts', podRoutes);
+
 
 /** == Handle 404 errors == */
 app.use(function (req, res, next) {
