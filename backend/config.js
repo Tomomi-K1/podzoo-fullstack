@@ -4,13 +4,13 @@
 
 require("dotenv").config();
 require("colors");
-const {secretKey, ApiKey, ApiSecret} = require('./secret');
-const SECRET_KEY = process.env.SECRET_KEY || secretKey;
-const API_KEY = process.env.API_KEY || ApiKey;
-const API_SECRET = process.env.API_SECRET || ApiSecret;
-// const SECRET_KEY = process.env.SECRET_KEY;
-// const API_KEY = process.env.API_KEY;
-// const API_SECRET = process.env.API_SECRET;
+// const {secretKey, ApiKey, ApiSecret} = require('./secret');
+// const SECRET_KEY = process.env.SECRET_KEY || secretKey;
+// const API_KEY = process.env.API_KEY || ApiKey;
+// const API_SECRET = process.env.API_SECRET || ApiSecret;
+const SECRET_KEY = process.env.SECRET_KEY;
+const API_KEY = process.env.API_KEY;
+const API_SECRET = process.env.API_SECRET;
 const PORT = 3001;
 
 // Use dev database, testing database, or via env var, production database
