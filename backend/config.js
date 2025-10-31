@@ -15,9 +15,9 @@ const PORT = 3001;
 
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
-  return (process.env.NODE_ENV === "test")
-      ? "postgresql:///podsearch_db_test"
-      : process.env.DATABASE_URL || "postgresql:///podsearch_db";
+  return process.env.NODE_ENV === "test"
+    ? "postgresql:///podsearch_db_test"
+    : process.env.DATABASE_URL || "postgresql:///podsearch_db";
 }
 
 // Speed up bcrypt during tests, since the algorithm safety isn't being tested
@@ -37,5 +37,5 @@ module.exports = {
   getDatabaseUri,
   SECRET_KEY,
   API_KEY,
-  API_SECRET
+  API_SECRET,
 };
