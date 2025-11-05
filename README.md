@@ -1,5 +1,5 @@
 # PodZoo 🎙️
-Live demo: [podzoo.surge.sh](https://podzoo.surge.sh/)
+Live demo: [podzoo-fullstack.vercel.app](https://podzoo-fullstack.vercel.app) (🙏 it may take a while to load since I'm on free tier in deployed environment)
 ![image](plan/podzoo2.png)
 PodZoo is a podcast search web application where a user can search and leave reviews.  
 
@@ -18,6 +18,12 @@ PodZoo is a podcast search web application where a user can search and leave rev
 - API : [podcast Index API](https://podcastindex-org.github.io/docs-api/#auth).
 
 # Setup
+#### Setting up env variable
+1. create `.env` file (make sure to include that in .gitignore file 😄)
+2. go to [api.podcastindex.org](https://api.podcastindex.org/) and get a free API Key
+3. save `API_KEY`, `API_SECRET` that you got from podcastindex.org
+4. save `SECRET_KEY` that will be used for JWT token. 
+
 #### Setting up database on postgreSQL 
 1. start your postgreSQL server and enter your password.
    ```bash
@@ -30,18 +36,18 @@ PodZoo is a podcast search web application where a user can search and leave rev
    ```
 3. go to backend folder. 
     ```bash
-    $cd sp-capstone2/backend
+    $cd podzoo-fullstack/backend
     ```
 
 3. Create tables by using existing sql file. 
     ```bash
-    $psql < dbtable.sql
+    $psql < db-schema.sql
     ```
 
 #### Starting backend
 1. Navigate to backend folder
    ```bash
-   $cd sp-capstone2/backend
+   $cd podzoo-fullstack/backend
    ```
 2.  Start backend server.
     ```bash
@@ -52,7 +58,7 @@ PodZoo is a podcast search web application where a user can search and leave rev
 #### Starting frontend
 1. Navigate to frontend folder
    ```bash
-   $cd sp-capstone2/frontend
+   $cd podzoo-fullstack/frontend
    ```
 2. Run the React app. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
    ```bash
@@ -62,7 +68,7 @@ PodZoo is a podcast search web application where a user can search and leave rev
 #### Running backend tests
 1. Navigate to backend folder
     ```bash
-   $cd sp-capstone2/backend
+   $cd podzoo-fullstack/backend
    ```
 2. run test
    ```bash
@@ -71,7 +77,7 @@ PodZoo is a podcast search web application where a user can search and leave rev
 #### Running frontend tests
 1. Navigate to frontend folder
    ```bash
-   $cd sp-capstone2/frontend
+   $cd podzoo-fullstack/frontend
    ```
 2. run test
    ```bash
